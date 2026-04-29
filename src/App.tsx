@@ -40,6 +40,21 @@ export default function App() {
   const [isChatTooltipVisible, setIsChatTooltipVisible] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
+  // Handle Stripe Redirection Status
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get('status');
+    if (status === 'success') {
+      setStep(4);
+      // Clean up URL
+      window.history.replaceState({}, '', window.location.pathname);
+    } else if (status === 'cancel') {
+      setStep(3);
+      setBookingError("Le paiement a été annulé. Vous pouvez réessayer.");
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
+
   // Close lang menu on click outside
   useEffect(() => {
     const handleClickOutside = () => setIsLangMenuOpen(false);
@@ -664,11 +679,35 @@ export default function App() {
   const handleBooking = async () => {
     setLoading(true);
     setBookingError(null);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setLoading(false);
-    // Redirect to Stripe payment link as requested
-    window.location.href = "https://buy.stripe.com/test_28E00jfos9Zb9W16CQ3VC00";
+    
+    try {
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: totalPrice,
+          vehicleName: (vehicles as any)[bookingData.vehicle].name,
+          pickup: bookingData.pickup,
+          dropoff: bookingData.dropoff,
+          time: bookingData.time,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Une erreur est survenue lors de la création de la session de paiement.");
+      }
+
+      const { url } = await response.json();
+      window.location.href = url;
+    } catch (error: any) {
+      console.error("Booking Error:", error);
+      setBookingError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const reviews = [

@@ -1,0 +1,5 @@
+{
+  "name": "Safeness & Transferts",
+  "description": "Service de chauffeur privé de luxe avec une flotte premium et une présence européenne.",
+  "requestFramePermissions": ["geolocation"]
+}

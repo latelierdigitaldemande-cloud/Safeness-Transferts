@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-stone-925: #141210;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  @apply bg-stone-950 text-white antialiased overflow-x-hidden relative min-h-screen selection:bg-white selection:text-black;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0c0a09; }
+::-webkit-scrollbar-thumb { background: #292524; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #44403c; }
+::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.5; cursor: pointer; }
+
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+    animation: marquee 90s linear infinite;
+}
+
+/* FAQ Smooth Transitions */
+.faq-content {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+}
+.faq-item.open .faq-content {
+    max-height: 200px;
+    opacity: 1;
+}
+.faq-icon {
+    transition: transform 0.3s ease;
+}
+.faq-item.open .faq-icon {
+    transform: rotate(180deg);
+}
+
+/* Carousel Fade */
+.carousel-fade {
+    transition: opacity 0.3s ease;
+}
+.fade-out { opacity: 0; }

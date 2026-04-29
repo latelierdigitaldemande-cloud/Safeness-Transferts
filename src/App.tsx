@@ -5,6 +5,10 @@
 
 import { useEffect, useState, useRef, useMemo, useCallback, Fragment } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Stripe, loadStripe } from '@stripe/stripe-js';
+
+// Initialize Stripe with the public key from Vercel environment
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 import L from 'leaflet';
 import { 
   MapPin, Navigation, Calendar, Clock, Users, Briefcase, Building2,
@@ -681,7 +685,7 @@ export default function App() {
     setBookingError(null);
     
     try {
-      const response = await fetch("/api/create-checkout-session", {
+      const response = await fetch("/api/checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

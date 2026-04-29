@@ -18,40 +18,10 @@ async function startServer() {
 
   app.use(express.json());
 
-  // API Route for Stripe Checkout
-  app.post("/api/create-checkout-session", async (req, res) => {
-    try {
-      const { amount, vehicleName, pickup, dropoff, time } = req.body;
-
-      if (!amount) {
-        return res.status(400).json({ error: "Amount is required" });
-      }
-
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
-        line_items: [
-          {
-            price_data: {
-              currency: "eur",
-              product_data: {
-                name: `Transfert ${vehicleName}`,
-                description: `De ${pickup} à ${dropoff} - ${time}`,
-              },
-              unit_amount: Math.round(amount * 100), // Stripe expects cents
-            },
-            quantity: 1,
-          },
-        ],
-        mode: "payment",
-        success_url: `${process.env.APP_URL || "http://localhost:3000"}?status=success`,
-        cancel_url: `${process.env.APP_URL || "http://localhost:3000"}?status=cancel`,
-      });
-
-      res.json({ url: session.url });
-    } catch (error: any) {
-      console.error("Stripe Error:", error);
-      res.status(500).json({ error: error.message });
-    }
+  // Import checkout handler (simulating Vercel environment)
+  // @ts-ignore
+  import("./api/checkout.js").then((m) => {
+    app.post("/api/checkout", m.default);
   });
 
   // Vite middleware for development

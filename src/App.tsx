@@ -8,7 +8,13 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Stripe, loadStripe } from '@stripe/stripe-js';
 
 // Initialize Stripe with the public key from environment
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
+const STRIPE_PUBLIC_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '';
+
+if (!STRIPE_PUBLIC_KEY) {
+  console.error("Stripe Public Key is missing! Check your .env or Vercel environment variables.");
+}
+
+const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 import L from 'leaflet';
 import { 
   MapPin, Navigation, Calendar, Clock, Users, Briefcase, Building2,

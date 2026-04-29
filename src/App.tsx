@@ -1767,7 +1767,7 @@ export default function App() {
                       <div className="space-y-4">
                         <button 
                           onClick={() => setBookingData(prev => ({ ...prev, isReturnTrip: !prev.isReturnTrip }))}
-                          className={`w-full flex items-center justify-between p-3 md:p-4 rounded-xl border-2 transition-all ${bookingData.isReturnTrip ? 'border-stone-900 bg-stone-50' : 'border-stone-100 bg-white hover:border-stone-200'}`}
+                          className={`w-full flex items-center justify-between p-2.5 md:p-3.5 rounded-xl border-2 transition-all ${bookingData.isReturnTrip ? 'border-stone-900 bg-stone-50' : 'border-stone-100 bg-white hover:border-stone-200'}`}
                         >
                           <div className="flex items-center gap-3">
                             <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${bookingData.isReturnTrip ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-400'}`}>
@@ -1802,16 +1802,10 @@ export default function App() {
                       </div>
 
                       <div className="flex gap-4">
-                        <a 
-                          href="#europe"
-                          className="flex-1 bg-stone-100 text-stone-600 py-5 rounded-xl font-bold hover:bg-stone-200 transition-all text-center flex items-center justify-center"
-                        >
-                          {t('back')}
-                        </a>
                         <button 
                           onClick={handleNextStep1}
                           disabled={loading}
-                          className="flex-[2] bg-stone-900 text-white py-4 md:py-5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 disabled:opacity-50"
+                          className="w-full bg-stone-900 text-white py-3 md:py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 disabled:opacity-50"
                         >
                           {loading ? <Loader2 className="animate-spin" size={20} /> : t('next')}
                         </button>
@@ -1852,13 +1846,13 @@ export default function App() {
                       <div className="flex gap-4">
                         <button 
                           onClick={() => setStep(1)}
-                          className="flex-1 bg-stone-100 text-stone-600 py-4 md:py-5 rounded-xl font-bold hover:bg-stone-200 transition-all"
+                          className="flex-1 bg-stone-100 text-stone-600 py-3 md:py-4 rounded-xl font-bold hover:bg-stone-200 transition-all"
                         >
                           {t('back')}
                         </button>
                         <button 
                           onClick={() => setStep(3)}
-                          className="flex-[2] bg-stone-900 text-white py-4 md:py-5 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200"
+                          className="flex-[2] bg-stone-900 text-white py-3 md:py-4 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200"
                         >
                           {t('next')}
                         </button>
@@ -1934,14 +1928,14 @@ export default function App() {
                       <div className="flex gap-4">
                         <button 
                           onClick={() => setStep(2)}
-                          className="flex-1 bg-stone-100 text-stone-600 py-4 md:py-5 rounded-xl font-bold hover:bg-stone-200 transition-all"
+                          className="flex-1 bg-stone-100 text-stone-600 py-3 md:py-4 rounded-xl font-bold hover:bg-stone-200 transition-all"
                         >
                           {t('back')}
                         </button>
                         <button 
                           onClick={handleBooking}
                           disabled={loading}
-                          className="flex-[2] bg-stone-900 text-white py-4 md:py-5 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200"
+                          className="flex-[2] bg-stone-900 text-white py-3 md:py-4 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200"
                         >
                           {loading ? <Loader2 className="animate-spin" size={20} /> : <Check size={20} />}
                           {t('confirm')}

@@ -1149,13 +1149,13 @@ export default function App() {
                 { key: 'route_orly', price: '65€', time: '35 min', icon: <MapPin size={20} />, image: 'https://images.unsplash.com/photo-1672310708154-771583101dbb?auto=format&fit=crop&q=80&w=800' },
                 { key: 'route_beauvais', price: '160€', time: '80 min', icon: <Plane size={20} />, image: 'https://images.unsplash.com/photo-1768420281710-0887af16eded?auto=format&fit=crop&q=80&w=800' },
                 { key: 'route_disney', price: '110€', time: '50 min', icon: <Sparkles size={20} />, image: 'https://hubertraguet.com/wp-content/uploads/2021/05/laeroport-de-roissy-charles-de-gaulle-11.jpg' },
-                { key: 'route_versailles', price: '90€', time: '40 min', icon: <Building2 size={20} />, image: 'https://media.istockphoto.com/id/978664034/fr/photo/a%C3%A9roport-de-paris-charles-de-gaulle-terminal.jpg?s=612x612&w=0&k=20&c=3HoBuKqPiTOXgOctNh35qZuzEUWM691p8WUcjAX4YRQ=' },
-                { key: 'route_giverny', price: '250€', time: '75 min', icon: <Palette size={20} />, image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?fm=jpg&q=60&w=3000&auto=format&fit=crop' },
+                { key: 'route_versailles', price: '90€', time: '40 min', icon: <Building2 size={20} />, image: 'https://media.istockphoto.com/id/978664034/fr/photo/a%C3%A9roport-de-paris-charles-de-gaulle-terminal.jpg?s=612x612&w=0&k=20&c=3HoBuKqPiTOXgOctNh35qZuzEUWM691p8WUcjAX4YRQ=', mobileHidden: true },
+                { key: 'route_giverny', price: '250€', time: '75 min', icon: <Palette size={20} />, image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?fm=jpg&q=60&w=3000&auto=format&fit=crop', mobileHidden: true },
               ].map((item, i) => {
                 return (
                   <div 
                     key={i}
-                    className="group relative border rounded-[2.5rem] transition-all duration-500 overflow-hidden h-[320px] flex flex-col bg-stone-900 border-white/10 hover:border-white/20 shadow-2xl"
+                    className={`group relative border rounded-[2.5rem] transition-all duration-500 overflow-hidden h-[320px] flex flex-col bg-stone-900 border-white/10 hover:border-white/20 shadow-2xl ${item.mobileHidden ? 'hidden md:flex' : 'flex'}`}
                   >
                     {/* Background Image with Overlay */}
                     <div className="absolute inset-0 z-0">

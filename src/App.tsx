@@ -89,8 +89,7 @@ export default function App() {
     dropoff: '',
     pickupCoords: null as [number, number] | null,
     dropoffCoords: null as [number, number] | null,
-    date: '',
-    time: '',
+    time: '12:00 - 12:15',
     vehicle: 'business',
     passengers: 1,
     luggage: 1,
@@ -102,11 +101,28 @@ export default function App() {
     flightNumber: '',
     paymentMethod: 'card',
     isReturnTrip: false,
-    returnDate: '',
-    returnTime: '',
+    returnTime: '12:00 - 12:15',
     distance: 0,
     duration: 0
   });
+
+  const timeSlots = useMemo(() => {
+    const slots = [];
+    for (let hour = 6; hour <= 23; hour++) {
+      for (let min = 0; min < 60; min += 15) {
+        const start = `${hour.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}`;
+        let endHour = hour;
+        let endMin = min + 15;
+        if (endMin === 60) {
+          endMin = 0;
+          endHour++;
+        }
+        const end = `${endHour.toString().padStart(2, '0')}:${endMin.toString().padStart(2, '0')}`;
+        slots.push(`${start} - ${end}`);
+      }
+    }
+    return slots;
+  }, []);
 
   const [bookingError, setBookingError] = useState<string | null>(null);
   const [suggestions, setSuggestions] = useState<{
@@ -1721,26 +1737,20 @@ export default function App() {
                         </motion.div>
                       </div>
 
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">Date</label>
-                          <input 
-                            type="date" 
-                            value={bookingData.date}
-                            onChange={(e) => setBookingData(prev => ({ ...prev, date: e.target.value }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">Heure</label>
-                          <input 
-                            type="time" 
+                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">Créneau Horaire</label>
+                          <select 
                             value={bookingData.time}
                             onChange={(e) => setBookingData(prev => ({ ...prev, time: e.target.value }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
-                          />
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
+                          >
+                            {timeSlots.map(slot => (
+                              <option key={slot} value={slot}>{slot}</option>
+                            ))}
+                          </select>
                         </div>
-                        <div className="space-y-2 col-span-2 md:col-span-1">
+                        <div className="space-y-2">
                           <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">Passagers</label>
                           <select 
                             value={bookingData.passengers}
@@ -1774,24 +1784,18 @@ export default function App() {
                         </button>
 
                         {bookingData.isReturnTrip && (
-                          <div className="grid grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                          <div className="grid grid-cols-1 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
                             <div className="space-y-2">
-                              <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('returnDate')}</label>
-                              <input 
-                                type="date" 
-                                value={bookingData.returnDate}
-                                onChange={(e) => setBookingData(prev => ({ ...prev, returnDate: e.target.value }))}
-                                className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
-                              />
-                            </div>
-                            <div className="space-y-2">
-                              <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('returnTime')}</label>
-                              <input 
-                                type="time" 
+                              <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">Créneau Horaire Retour</label>
+                              <select 
                                 value={bookingData.returnTime}
                                 onChange={(e) => setBookingData(prev => ({ ...prev, returnTime: e.target.value }))}
-                                className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
-                              />
+                                className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
+                              >
+                                {timeSlots.map(slot => (
+                                  <option key={slot} value={slot}>{slot}</option>
+                                ))}
+                              </select>
                             </div>
                           </div>
                         )}
@@ -2009,13 +2013,13 @@ export default function App() {
 
                       <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5">
                         <div className="space-y-0.5">
-                          <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('dateTime')}</div>
-                          <div className="text-xs text-white/80 font-medium">{bookingData.date || '—'} à {bookingData.time || '—'}</div>
+                          <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">Créneau</div>
+                          <div className="text-xs text-white/80 font-medium">{bookingData.time || '—'}</div>
                         </div>
                         {bookingData.isReturnTrip && (
                           <div className="space-y-0.5">
                             <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('returnTrip')}</div>
-                            <div className="text-xs text-white/80 font-medium">{bookingData.returnDate || '—'} à {bookingData.returnTime || '—'}</div>
+                            <div className="text-xs text-white/80 font-medium">{bookingData.returnTime || '—'}</div>
                           </div>
                         )}
                         <div className="space-y-0.5">

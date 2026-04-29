@@ -1,8 +1,16 @@
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2025-01-27.acacia" as any,
-});
+console.log("Clé détectée :", process.env.STRIPE_SECRET_KEY ? "OUI" : "NON");
+
+const getStripe = () => {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) {
+    throw new Error("STRIPE_SECRET_KEY is missing from environment variables");
+  }
+  return new Stripe(key, {
+    apiVersion: "2025-01-27.acacia" as any,
+  });
+};
 
 export default async function handler(req: any, res: any) {
   if (req.method !== "POST") {
@@ -16,6 +24,7 @@ export default async function handler(req: any, res: any) {
       return res.status(400).json({ error: "Amount is required" });
     }
 
+    const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [

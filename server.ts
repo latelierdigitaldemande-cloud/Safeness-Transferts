@@ -2,7 +2,6 @@ import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
 import { fileURLToPath } from "url";
-import Stripe from "stripe";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -14,13 +13,11 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
-
   app.use(express.json());
 
   // Import checkout handler (simulating Vercel environment)
   // @ts-ignore
-  import("./api/checkout.js").then((m) => {
+  import("./api/checkout.ts").then((m) => {
     app.post("/api/checkout", m.default);
   });
 

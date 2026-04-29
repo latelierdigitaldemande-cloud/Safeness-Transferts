@@ -12,6 +12,8 @@ const STRIPE_PUBLIC_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '';
 
 if (!STRIPE_PUBLIC_KEY) {
   console.error("Stripe Public Key is missing! Check your .env or Vercel environment variables.");
+} else {
+  console.log("Stripe Public Key detected on Client: YES");
 }
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);

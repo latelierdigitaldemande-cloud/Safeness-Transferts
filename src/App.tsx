@@ -7,8 +7,8 @@ import { useEffect, useState, useRef, useMemo, useCallback, Fragment } from 'rea
 import { motion, AnimatePresence } from 'motion/react';
 import { Stripe, loadStripe } from '@stripe/stripe-js';
 
-// Initialize Stripe with the public key from Vercel environment
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
+// Initialize Stripe with the public key from environment
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
 import L from 'leaflet';
 import { 
   MapPin, Navigation, Calendar, Clock, Users, Briefcase, Building2,
@@ -684,32 +684,41 @@ export default function App() {
     setLoading(true);
     setBookingError(null);
     
-    try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: totalPrice,
-          vehicleName: (vehicles as any)[bookingData.vehicle].name,
-          pickup: bookingData.pickup,
-          dropoff: bookingData.dropoff,
-          time: bookingData.time,
-        }),
-      });
+    // If credit card, redirect to Stripe
+    if (bookingData.paymentMethod === 'card') {
+      try {
+        const response = await fetch("/api/checkout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: totalPrice,
+            vehicleName: (vehicles as any)[bookingData.vehicle].name,
+            pickup: bookingData.pickup,
+            dropoff: bookingData.dropoff,
+            time: bookingData.time,
+          }),
+        });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Une erreur est survenue lors de la création de la session de paiement.");
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || "Une erreur est survenue lors de la création de la session de paiement.");
+        }
+
+        const { url } = await response.json();
+        window.location.href = url;
+      } catch (error: any) {
+        console.error("Booking Error:", error);
+        setBookingError(error.message);
+        alert("Erreur: " + error.message);
+      } finally {
+        setLoading(false);
       }
-
-      const { url } = await response.json();
-      window.location.href = url;
-    } catch (error: any) {
-      console.error("Booking Error:", error);
-      setBookingError(error.message);
-    } finally {
+    } else {
+      // Mock logic for other payment methods (e.g., cash)
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      setStep(4);
       setLoading(false);
     }
   };

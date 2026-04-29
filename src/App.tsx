@@ -1621,9 +1621,9 @@ export default function App() {
               <div className="grid lg:grid-cols-12">
                 
                 {/* Left Side: Form */}
-                <div className="lg:col-span-7 p-8 md:p-12 border-r border-stone-100">
+                <div className="lg:col-span-7 p-6 md:p-12 border-r border-stone-100">
                   {/* Progress */}
-                  <div className="flex items-center gap-4 mb-12">
+                  <div className="flex items-center gap-4 mb-8 md:mb-12">
                     {[1, 2, 3].map((s) => (
                       <div key={s} className="flex items-center gap-2">
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold transition-all ${step >= s ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-400'}`}>
@@ -1636,8 +1636,8 @@ export default function App() {
 
                   {/* Step 1: Ride Details */}
                   {step === 1 && (
-                    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                      <div className="space-y-6 relative flex flex-col">
+                    <div className="space-y-5 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                      <div className="space-y-4 md:space-y-6 relative flex flex-col">
                         <motion.div layout className="space-y-2 order-1">
                           <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('pickup_label')}</label>
                           <div className="relative">
@@ -1651,7 +1651,7 @@ export default function App() {
                                 if (bookingError) setBookingError(null);
                               }}
                               placeholder={t('pickup_placeholder')} 
-                              className="w-full bg-stone-50 border border-stone-200 rounded-xl py-4 pl-12 pr-4 text-stone-900 placeholder:text-stone-300 focus:border-stone-900 focus:bg-white outline-none transition-all"
+                              className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 pl-12 pr-4 text-stone-900 placeholder:text-stone-300 focus:border-stone-900 focus:bg-white outline-none transition-all"
                             />
                           </div>
                           {suggestions.pickup.length > 0 && (
@@ -1702,7 +1702,7 @@ export default function App() {
                                 if (bookingError) setBookingError(null);
                               }}
                               placeholder={t('dropoff_placeholder')} 
-                              className="w-full bg-stone-50 border border-stone-200 rounded-xl py-4 pl-12 pr-4 text-stone-900 placeholder:text-stone-300 focus:border-stone-900 focus:bg-white outline-none transition-all"
+                              className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 pl-12 pr-4 text-stone-900 placeholder:text-stone-300 focus:border-stone-900 focus:bg-white outline-none transition-all"
                             />
                           </div>
                           {suggestions.dropoff.length > 0 && (
@@ -1728,7 +1728,7 @@ export default function App() {
                             type="date" 
                             value={bookingData.date}
                             onChange={(e) => setBookingData(prev => ({ ...prev, date: e.target.value }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -1737,7 +1737,7 @@ export default function App() {
                             type="time" 
                             value={bookingData.time}
                             onChange={(e) => setBookingData(prev => ({ ...prev, time: e.target.value }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                         <div className="space-y-2 col-span-2 md:col-span-1">
@@ -1745,7 +1745,7 @@ export default function App() {
                           <select 
                             value={bookingData.passengers}
                             onChange={(e) => setBookingData(prev => ({ ...prev, passengers: parseInt(e.target.value) }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
                           >
                             {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
                               <option key={n} value={n}>{n} {n > 1 ? 'Passagers' : 'Passager'}</option>
@@ -1757,7 +1757,7 @@ export default function App() {
                       <div className="space-y-4">
                         <button 
                           onClick={() => setBookingData(prev => ({ ...prev, isReturnTrip: !prev.isReturnTrip }))}
-                          className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all ${bookingData.isReturnTrip ? 'border-stone-900 bg-stone-50' : 'border-stone-100 bg-white hover:border-stone-200'}`}
+                          className={`w-full flex items-center justify-between p-3 md:p-4 rounded-xl border-2 transition-all ${bookingData.isReturnTrip ? 'border-stone-900 bg-stone-50' : 'border-stone-100 bg-white hover:border-stone-200'}`}
                         >
                           <div className="flex items-center gap-3">
                             <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${bookingData.isReturnTrip ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-400'}`}>
@@ -1781,7 +1781,7 @@ export default function App() {
                                 type="date" 
                                 value={bookingData.returnDate}
                                 onChange={(e) => setBookingData(prev => ({ ...prev, returnDate: e.target.value }))}
-                                className="w-full bg-stone-50 border border-stone-200 rounded-xl py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                                className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
                               />
                             </div>
                             <div className="space-y-2">
@@ -1790,7 +1790,7 @@ export default function App() {
                                 type="time" 
                                 value={bookingData.returnTime}
                                 onChange={(e) => setBookingData(prev => ({ ...prev, returnTime: e.target.value }))}
-                                className="w-full bg-stone-50 border border-stone-200 rounded-xl py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                                className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
                               />
                             </div>
                           </div>
@@ -1807,7 +1807,7 @@ export default function App() {
                         <button 
                           onClick={handleNextStep1}
                           disabled={loading}
-                          className="flex-[2] bg-stone-900 text-white py-5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 disabled:opacity-50"
+                          className="flex-[2] bg-stone-900 text-white py-4 md:py-5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 disabled:opacity-50"
                         >
                           {loading ? <Loader2 className="animate-spin" size={20} /> : t('next')}
                         </button>
@@ -1817,13 +1817,13 @@ export default function App() {
 
                   {/* Step 2: Vehicle */}
                   {step === 2 && (
-                    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                      <div className="space-y-4">
+                    <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                      <div className="space-y-3 md:space-y-4">
                         {Object.entries(vehicles).map(([key, vehicle]) => (
                           <button 
                             key={key}
                             onClick={() => setBookingData(prev => ({ ...prev, vehicle: key }))}
-                            className={`w-full flex items-center gap-6 p-5 rounded-2xl border-2 transition-all ${bookingData.vehicle === key ? 'border-stone-900 bg-stone-50' : 'border-stone-100 bg-white hover:border-stone-200'}`}
+                            className={`w-full flex items-center gap-4 md:gap-6 p-4 md:p-5 rounded-2xl border-2 transition-all ${bookingData.vehicle === key ? 'border-stone-900 bg-stone-50' : 'border-stone-100 bg-white hover:border-stone-200'}`}
                           >
                             <div className="w-24 h-16 bg-stone-100 rounded-xl flex items-center justify-center p-2 shrink-0">
                               <img src={vehicle.img} alt={vehicle.name} className="w-full object-contain mix-blend-multiply" />
@@ -1848,13 +1848,13 @@ export default function App() {
                       <div className="flex gap-4">
                         <button 
                           onClick={() => setStep(1)}
-                          className="flex-1 bg-stone-100 text-stone-600 py-5 rounded-xl font-bold hover:bg-stone-200 transition-all"
+                          className="flex-1 bg-stone-100 text-stone-600 py-4 md:py-5 rounded-xl font-bold hover:bg-stone-200 transition-all"
                         >
                           {t('back')}
                         </button>
                         <button 
                           onClick={() => setStep(3)}
-                          className="flex-[2] bg-stone-900 text-white py-5 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200"
+                          className="flex-[2] bg-stone-900 text-white py-4 md:py-5 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200"
                         >
                           {t('next')}
                         </button>
@@ -1864,15 +1864,15 @@ export default function App() {
 
                   {/* Step 3: Contact & Recap */}
                   {step === 3 && (
-                    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                      <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                      <div className="grid grid-cols-2 gap-3 md:gap-4">
                         <div className="space-y-2">
                           <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('firstName')}</label>
                           <input 
                             type="text" 
                             value={bookingData.firstName}
                             onChange={(e) => setBookingData(prev => ({ ...prev, firstName: e.target.value }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -1881,19 +1881,19 @@ export default function App() {
                             type="text" 
                             value={bookingData.lastName}
                             onChange={(e) => setBookingData(prev => ({ ...prev, lastName: e.target.value }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                         <div className="space-y-2">
                           <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('email')}</label>
                           <input 
                             type="email" 
                             value={bookingData.email}
                             onChange={(e) => setBookingData(prev => ({ ...prev, email: e.target.value }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -1902,7 +1902,7 @@ export default function App() {
                             type="tel" 
                             value={bookingData.phone}
                             onChange={(e) => setBookingData(prev => ({ ...prev, phone: e.target.value }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                       </div>
@@ -1930,14 +1930,14 @@ export default function App() {
                       <div className="flex gap-4">
                         <button 
                           onClick={() => setStep(2)}
-                          className="flex-1 bg-stone-100 text-stone-600 py-5 rounded-xl font-bold hover:bg-stone-200 transition-all"
+                          className="flex-1 bg-stone-100 text-stone-600 py-4 md:py-5 rounded-xl font-bold hover:bg-stone-200 transition-all"
                         >
                           {t('back')}
                         </button>
                         <button 
                           onClick={handleBooking}
                           disabled={loading}
-                          className="flex-[2] bg-stone-900 text-white py-5 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200"
+                          className="flex-[2] bg-stone-900 text-white py-4 md:py-5 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200"
                         >
                           {loading ? <Loader2 className="animate-spin" size={20} /> : <Check size={20} />}
                           {t('confirm')}
@@ -1948,9 +1948,9 @@ export default function App() {
 
                   {/* Step 4: Success */}
                   {step === 4 && (
-                    <div className="py-12 text-center space-y-8 animate-in zoom-in duration-500">
-                      <div className="w-24 h-24 bg-stone-900 rounded-full flex items-center justify-center mx-auto shadow-2xl">
-                        <Check size={48} className="text-white" strokeWidth={3} />
+                    <div className="py-8 md:py-12 text-center space-y-6 md:space-y-8 animate-in zoom-in duration-500">
+                      <div className="w-20 h-20 md:w-24 md:h-24 bg-stone-900 rounded-full flex items-center justify-center mx-auto shadow-2xl">
+                        <Check size={40} className="text-white" strokeWidth={3} />
                       </div>
                       <div className="space-y-3">
                         <h3 className="text-3xl font-bold text-stone-900">{t('success')}</h3>
@@ -1977,7 +1977,7 @@ export default function App() {
                 {/* Right Side: Map & Dynamic Summary */}
                 <div className="lg:col-span-5 bg-stone-50 p-6 md:p-10 flex flex-col transition-all duration-500">
                   {/* Map Container - Consistent height across all steps */}
-                  <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm relative h-[250px] mb-6 transition-all duration-500">
+                  <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm relative h-[180px] md:h-[250px] mb-4 md:mb-6 transition-all duration-500">
                     <div ref={mapContainerRef} className="w-full h-full z-0" />
                     <div className="absolute bottom-4 right-4 z-10">
                       <div className="bg-white border border-stone-200 rounded-lg p-2 px-3 text-[10px] font-bold text-stone-900 uppercase tracking-widest flex items-center gap-3 shadow-lg">
@@ -1989,7 +1989,7 @@ export default function App() {
                   </div>
 
                   {/* Summary - Visible in Step 1, 2 and 3 with Dark Design */}
-                  <div className={`flex-1 flex flex-col transition-all duration-500 overflow-hidden bg-stone-900 rounded-2xl p-6 border border-white/5 ${step >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none h-0'}`}>
+                  <div className={`flex-1 flex flex-col transition-all duration-500 overflow-hidden bg-stone-900 rounded-2xl p-4 md:p-6 border border-white/5 ${step >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none h-0'}`}>
                     <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] mb-4">{t('orderSummary')}</h3>
                     
                     <div className="space-y-4 flex-1">

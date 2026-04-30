@@ -49,6 +49,8 @@ export default function App() {
   const [currentCityIndex, setCurrentCityIndex] = useState(0);
   const [isCityTransitioning, setIsCityTransitioning] = useState(false);
   const [selectedTransfer, setSelectedTransfer] = useState<number | null>(null);
+  const [isChatTooltipVisible, setIsChatTooltipVisible] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   // Handle Stripe Redirection Status
   useEffect(() => {
@@ -73,6 +75,21 @@ export default function App() {
     }
     return () => window.removeEventListener('click', handleClickOutside);
   }, [isLangMenuOpen]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const footer = document.getElementById('contact');
+      if (footer) {
+        const footerPosition = footer.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        // Show button if footer is within view or user has scrolled past 80% of page
+        setShowScrollTop(footerPosition < windowHeight + 100);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const nextCity = useCallback(() => {
     if (isCityTransitioning) return;
@@ -2185,6 +2202,36 @@ export default function App() {
           </div>
         </footer>
 
+      </div>
+
+      {/* WHATSAPP & SCROLL TOP FLOTTANT */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+        <div 
+          className={`bg-stone-900 border border-white/10 text-white px-3 py-2.5 rounded-2xl shadow-2xl text-[10.2px] font-normal tracking-wide backdrop-blur-md transition-all duration-300 origin-bottom-right flex items-center gap-2.5 ${isChatTooltipVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+          id="chat-tooltip"
+        >
+          <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
+          {t('whatsapp_tooltip')}
+        </div>
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className={`w-12 h-12 md:w-14 md:h-14 bg-stone-900 border border-white/10 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-stone-800 transition-all shadow-2xl ${showScrollTop ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-90 pointer-events-none'}`}
+            title="Scroll to Top"
+          >
+            <iconify-icon icon="solar:alt-arrow-up-linear" width="22" style={{ strokeWidth: 1.5 }}></iconify-icon>
+          </button>
+          <a 
+            href="https://wa.me/33782274920" 
+            target="_blank"
+            rel="noreferrer"
+            className="w-12 h-12 md:w-14 md:h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(37,211,102,0.3)] text-white hover:scale-110 transition-transform"
+            onMouseEnter={() => setIsChatTooltipVisible(true)}
+            onMouseLeave={() => setIsChatTooltipVisible(false)}
+          >
+            <iconify-icon icon="ic:baseline-whatsapp" width="28"></iconify-icon>
+          </a>
+        </div>
       </div>
     </>
   );

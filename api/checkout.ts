@@ -1,6 +1,5 @@
 import Stripe from "stripe";
-
-console.log("Clé détectée :", process.env.STRIPE_SECRET_KEY ? "OUI" : "NON");
+import { Request, Response } from "express";
 
 const getStripe = () => {
   const key = process.env.STRIPE_SECRET_KEY;
@@ -12,17 +11,72 @@ const getStripe = () => {
   });
 };
 
-export default async function handler(req: any, res: any) {
+const vehicles = {
+  business: { name: "Business Class", basePrice: 80 },
+  van: { name: "Business Van", basePrice: 120 },
+  first: { name: "First Class", basePrice: 160 },
+};
+
+const extrasList = {
+  child_seat: { price: 15 },
+  greeter: { price: 30 },
+  extra_luggage: { price: 20 },
+};
+
+interface CheckoutRequestBody {
+  vehicle: string;
+  distance: number;
+  extras: string[];
+  time: string;
+  isReturnTrip: boolean;
+  pickup: string;
+  dropoff: string;
+}
+
+export default async function handler(req: Request, res: Response) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
-    const { amount, vehicleName, pickup, dropoff, time } = req.body;
+    const { vehicle, distance, extras, time, isReturnTrip, pickup, dropoff } = req.body as CheckoutRequestBody;
 
-    if (!amount) {
-      return res.status(400).json({ error: "Amount is required" });
+    if (!vehicle || !(vehicles as any)[vehicle]) {
+      return res.status(400).json({ error: "Valid vehicle type is required" });
     }
+
+    // Calculation logic (matching App.tsx)
+    const selectedVehicle = (vehicles as any)[vehicle];
+    let calculatedPrice = selectedVehicle.basePrice;
+
+    // Distance pricing: base + 2€/km after 10km
+    if (distance > 10) {
+      calculatedPrice += (distance - 10) * 2;
+    }
+
+    // Extras
+    if (Array.isArray(extras)) {
+      extras.forEach((extraKey: string) => {
+        if ((extrasList as any)[extraKey]) {
+          calculatedPrice += (extrasList as any)[extraKey].price;
+        }
+      });
+    }
+
+    // Night surcharge (21h - 06h)
+    if (time) {
+      const hour = parseInt(time.split(":")[0]);
+      if (hour >= 21 || hour <= 6) {
+        calculatedPrice *= 1.2;
+      }
+    }
+
+    // Double for return trip
+    if (isReturnTrip) {
+      calculatedPrice *= 2;
+    }
+
+    const finalAmount = Math.round(calculatedPrice);
 
     const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
@@ -32,10 +86,10 @@ export default async function handler(req: any, res: any) {
           price_data: {
             currency: "eur",
             product_data: {
-              name: `Transfert ${vehicleName}`,
-              description: `De ${pickup} à ${dropoff} - ${time}`,
+              name: `Transfert ${selectedVehicle.name}`,
+              description: `De ${pickup} à ${dropoff}${time ? ` - ${time}` : ""}`,
             },
-            unit_amount: Math.round(amount * 100),
+            unit_amount: finalAmount * 100, // Stripe expects cents
           },
           quantity: 1,
         },
@@ -48,6 +102,6 @@ export default async function handler(req: any, res: any) {
     return res.status(200).json({ url: session.url });
   } catch (error: any) {
     console.error("Stripe Error:", error);
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: "Une erreur est survenue lors de la préparation de votre paiement. Veuillez réessayer plus tard." });
   }
 }

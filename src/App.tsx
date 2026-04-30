@@ -701,11 +701,13 @@ export default function App() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            amount: totalPrice,
-            vehicleName: (vehicles as any)[bookingData.vehicle].name,
+            vehicle: bookingData.vehicle,
+            distance: bookingData.distance,
+            extras: bookingData.extras,
+            time: bookingData.time,
+            isReturnTrip: bookingData.isReturnTrip,
             pickup: bookingData.pickup,
             dropoff: bookingData.dropoff,
-            time: bookingData.time,
           }),
         });
 
@@ -954,10 +956,10 @@ export default function App() {
         {/* COUVERTURE EUROPE - REDESIGNED BENTO GRID */}
         <section 
           id="europe"
-          className="bg-stone-900 w-full py-16 px-6 border-t border-white/5 relative overflow-hidden"
+          className="bg-stone-900 w-full py-16 px-6 border-t border-white/5 relative overflow-x-hidden md:overflow-hidden"
         >
           {/* Decorative background elements: Subtle map-inspired lines */}
-          <div className="absolute inset-0 pointer-events-none opacity-20">
+          <div className="absolute inset-0 pointer-events-none opacity-20 hidden md:block">
             <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
               <path d="M10,20 Q40,10 70,30 T90,80" fill="none" stroke="white" strokeWidth="0.05" strokeDasharray="1,2" />
               <path d="M20,70 Q50,60 80,90" fill="none" stroke="white" strokeWidth="0.05" strokeDasharray="1,2" />
@@ -965,7 +967,7 @@ export default function App() {
             </svg>
           </div>
           
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/[0.03] to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/[0.03] to-transparent pointer-events-none hidden md:block"></div>
           
           <div 
             ref={el => { if (el) revealRefs.current[0] = el; }}
@@ -1304,7 +1306,7 @@ export default function App() {
         {/* Promesse / Valeurs */}
         <div className="bg-[#1e1c1a] w-full py-32 flex flex-col items-center border-y border-white/5 relative overflow-hidden">
           {/* Subtle background lift - custom depth matched to user request */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none hidden md:block"></div>
           
           <div 
             ref={el => { if (el) revealRefs.current[6] = el; }}
@@ -1343,7 +1345,7 @@ export default function App() {
           className="bg-stone-900 w-full py-32 px-6 border-t border-white/5 relative overflow-hidden"
         >
           {/* Subtle background lift */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none hidden md:block"></div>
           
           <div 
             ref={el => { if (el) revealRefs.current[1] = el; }}
@@ -1433,7 +1435,7 @@ export default function App() {
         {/* Flotte */}
         <div id="fleet" className="bg-stone-925 w-full py-32 flex flex-col items-center border-t border-white/5 relative overflow-hidden">
           {/* Subtle background lift */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none hidden md:block"></div>
           
           <div 
             ref={el => { if (el) revealRefs.current[7] = el; }}
@@ -1492,7 +1494,7 @@ export default function App() {
           className="bg-stone-900 w-full py-20 border-t border-white/5 relative overflow-hidden"
         >
           {/* Subtle background lift */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none hidden md:block"></div>
           
           <div 
             ref={el => { if (el) revealRefs.current[4] = el; }}
@@ -1567,7 +1569,7 @@ export default function App() {
           className="bg-stone-900 w-full py-32 px-6 border-t border-white/5 relative overflow-hidden"
         >
           {/* Subtle background lift */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none hidden md:block"></div>
           
           <div 
             ref={el => { if (el) revealRefs.current[2] = el; }}
@@ -1681,7 +1683,7 @@ export default function App() {
         {/* Booking / Estimate Form */}
         <section id="booking" className="bg-stone-925 w-full py-32 flex flex-col items-center border-t border-white/5 relative overflow-hidden">
           {/* Subtle background lift */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none hidden md:block"></div>
           
           <div className="flex flex-col items-center mb-16 text-center px-6 relative z-10">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">

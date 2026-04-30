@@ -21,7 +21,7 @@ import L from 'leaflet';
 import { 
   MapPin, Navigation, Calendar, Clock, Users, Briefcase, Building2,
   ChevronRight, ChevronLeft, Check, CreditCard, Plane, Tag, Sparkles, Palette,
-  Train, Info, ShieldCheck, Star, ArrowRight, ArrowLeft, X, Menu,
+  Train, Info, ShieldCheck, Star, ArrowRight, ArrowLeft, X, Menu, Plus,
   Phone, Mail, MessageSquare, Globe, Search, Loader2,
   Instagram, Linkedin
 } from 'lucide-react';
@@ -103,6 +103,7 @@ export default function App() {
     return () => clearInterval(timer);
   }, [nextCity]);
 
+  const [openWhyIndex, setOpenWhyIndex] = useState<number | null>(0);
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
   const [isGalleryPaused, setIsGalleryPaused] = useState(false);
@@ -412,7 +413,23 @@ export default function App() {
       rev3_text: '"Utilisé pour un déplacement professionnel de Paris vers Milan. Un trajet longue distance qui s\'est déroulé dans un confort parfait. Mon bureau mobile le temps d\'une journée."',
       rev4_text: '"Une expérience de luxe du début à la fin. L\'accueil VIP à l\'aéroport CDG a rendu mon arrivée à Paris totalement sans stress. Je ne voyagerai plus autrement."',
       rev5_text: '"Chauffeur extrêmement professionnel et discret. La Classe E était parfaite pour mes rendez-vous d\'affaires toute la journée. Un service 5 étoiles."',
-      rev6_text: '"Ponctualité et discrétion. Le service de conciergerie à bord est un vrai plus. Je recommande Safeness & Transferts pour tous vos déplacements d\'affaires à Paris."'
+      rev6_text: '"Ponctualité et discrétion. Le service de conciergerie à bord est un vrai plus. Je recommande Safeness & Transferts pour tous vos déplacements d\'affaires à Paris."',
+      why_tag: 'About Us',
+      why_title: 'Pourquoi nous choisir',
+      why_item1_title: '10+ ans d\'Expertise',
+      why_item1_desc: 'Fort de plus d\'une décennie d\'excellence dans le transport de luxe international, Safeness & Transferts a perfectionné l\'art du voyage sur mesure. Nous maîtrisons chaque aspect logistique et chaque itinéraire européen pour vous garantir une ponctualité absolue, une sécurité rigoureuse et une sérénité totale lors de tous vos déplacements.',
+      why_item2_title: 'Réseau International',
+      why_item2_desc: 'Notre réseau s\'étend sur les pôles économiques les plus dynamiques d\'Europe, incluant Paris, Milan, Berlin et Londres. Cette présence stratégique nous permet d\'assurer des transferts transfrontaliers fluides et une continuité de service irréprochable. Vous bénéficiez ainsi d\'une expertise locale combinée à un standard de qualité international constant partout.',
+      why_item3_title: 'Conciergerie Dédiée',
+      why_item3_desc: 'Bien plus qu\'un simple service de chauffeur, notre conciergerie dédiée s\'occupe de chaque détail de votre voyage. De l\'accueil personnalisé aux terminaux privés jusqu\'à la réservation de restaurants exclusifs ou la gestion de bagages fragiles, nous anticipons vos besoins pour transformer chaque trajet en une expérience de luxe unique.',
+      why_item4_title: 'Solutions Entreprises',
+      why_item4_desc: 'Nous offrons aux entreprises des solutions de mobilité intelligentes et personnalisées. Profitez d\'une plateforme de gestion centralisée, d\'une facturation transparente et d\'un support prioritaire disponible 24/7. Nos services sont conçus pour s\'adapter aux exigences élevées du monde des affaires, permettant à vos collaborateurs de rester productifs en déplacement.',
+      why_stat1_val: '10+',
+      why_stat1_label: 'Années d\'expertise',
+      why_stat2_val: '98%',
+      why_stat2_label: 'Satisfaction client',
+      why_stat3_val: '24/7',
+      why_stat3_label: 'Disponibilité',
     },
     en: {
       title: 'Premium Booking',
@@ -564,7 +581,23 @@ export default function App() {
       rev3_text: '"Used for a business trip from Paris to Milan. A long-distance journey that took place in perfect comfort. My mobile office for a day."',
       rev4_text: '"A luxury experience from start to finish. The VIP welcome at CDG airport made my arrival in Paris totally stress-free. I won\'t travel any other way."',
       rev5_text: '"Extremely professional and discreet driver. The E-Class was perfect for my business meetings all day. A 5-star service."',
-      rev6_text: '"Punctuality and discretion. The on-board concierge service is a real plus. I recommend Safeness & Transferts for all your business travels in Paris."'
+      rev6_text: '"Punctuality and discretion. The on-board concierge service is a real plus. I recommend Safeness & Transferts for all your business travels in Paris."',
+      why_tag: 'About Us',
+      why_title: 'Why Choose Us',
+      why_item1_title: '10+ Years of Expertise',
+      why_item1_desc: 'With over a decade of excellence in international luxury transport, Safeness & Transferts has perfected the art of tailor-made travel. We master every logistical aspect and every European route to guarantee you absolute punctuality, rigorous security, and total serenity during all your journeys, regardless of their complexity.',
+      why_item2_title: 'Global Network',
+      why_item2_desc: 'Our network spans Europe\'s most dynamic economic hubs, including Paris, Milan, Berlin, and London. This strategic presence allows us to ensure smooth cross-border transfers and irreproachable service continuity. You thus benefit from local expertise combined with a constant international quality standard, ensuring a premium experience wherever you go.',
+      why_item3_title: 'Bespoke Concierge',
+      why_item3_desc: 'Much more than a simple chauffeur service, our dedicated concierge takes care of every single detail of your journey. From personalized welcomes at private terminals to booking exclusive restaurants or managing fragile luggage, we anticipate your needs to transform every trip into a seamless and refined luxury travel experience.',
+      why_item4_title: 'Business Solutions',
+      why_item4_desc: 'We offer companies intelligent and personalized mobility solutions. Benefit from a centralized management platform, transparent invoicing, and 24/7 priority support. Our services are specifically designed to adapt to the high demands of the business world, allowing your employees and executives to remain fully productive while traveling in comfort.',
+      why_stat1_val: '10+',
+      why_stat1_label: 'Years of expertise',
+      why_stat2_val: '98%',
+      why_stat2_label: 'Customer satisfaction',
+      why_stat3_val: '24/7',
+      why_stat3_label: 'Availability',
     }
   };
 
@@ -807,25 +840,29 @@ export default function App() {
 
       {/* HEADER */}
       <header className="relative z-50 flex items-center justify-between px-6 py-5 w-full max-w-7xl mx-auto">
-        <button 
-          onClick={() => setIsMobileMenuOpen(true)}
-          className="text-white/90 hover:text-white transition-all active:scale-90 p-2 -ml-2" 
-          aria-label="Menu"
-        >
-          <Menu size={28} strokeWidth={1.5} />
-        </button>
-        <div className="flex flex-col items-center">
-          <div className="flex items-end gap-1 mb-1.5 h-6 opacity-90">
-            <div className="w-1 h-5 bg-white rounded-t-sm"></div>
-            <div className="w-1 h-3 bg-white/60 rounded-t-sm"></div>
-            <div className="w-1 h-6 bg-white rounded-t-sm"></div>
-            <div className="w-1 h-4 bg-white/60 rounded-t-sm"></div>
-            <div className="w-1 h-5 bg-white rounded-t-sm"></div>
-          </div>
-          <h1 className="text-lg font-normal tracking-[0.25em] uppercase text-white/90">Safeness & Transferts</h1>
-          <p className="text-xs tracking-[0.15em] text-white/50 uppercase mt-0.5">Global Chauffeur Network</p>
+        <div className="w-10 flex justify-start">
+          <button 
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="text-white/90 hover:text-white transition-all active:scale-90 p-2 -ml-2" 
+            aria-label="Menu"
+          >
+            <Menu size={24} strokeWidth={1.5} className="md:w-7 md:h-7" />
+          </button>
         </div>
-        <div className="relative group/lang">
+        
+        <div className="flex-1 flex flex-col items-center text-center px-2">
+          <div className="flex items-end gap-1 mb-1.5 h-5 md:h-6 opacity-90">
+            <div className="w-1 h-4 md:h-5 bg-white rounded-t-sm"></div>
+            <div className="w-1 h-2.5 md:h-3 bg-white/60 rounded-t-sm"></div>
+            <div className="w-1 h-5 md:h-6 bg-white rounded-t-sm"></div>
+            <div className="w-1 h-3 md:h-4 bg-white/60 rounded-t-sm"></div>
+            <div className="w-1 h-4 md:h-5 bg-white rounded-t-sm"></div>
+          </div>
+          <h1 className="text-[15px] md:text-lg font-normal tracking-[0.18em] md:tracking-[0.25em] uppercase text-white/90 whitespace-nowrap">Safeness & Transferts</h1>
+          <p className="text-[9px] md:text-xs tracking-[0.1em] md:tracking-[0.15em] text-white/50 uppercase mt-0.5 whitespace-nowrap">Global Chauffeur Network</p>
+        </div>
+
+        <div className="w-10 flex justify-end relative group/lang">
           <button 
             onClick={(e) => {
               e.stopPropagation();
@@ -834,7 +871,7 @@ export default function App() {
             className="text-white/90 hover:text-white transition-all active:scale-90 p-2 -mr-2" 
             aria-label="Languages"
           >
-            <Globe size={24} strokeWidth={1.5} />
+            <Globe size={24} strokeWidth={1.5} className="md:w-7 md:h-7" />
           </button>
           <div 
             className={`absolute right-0 mt-3 w-40 bg-stone-900/95 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-300 z-50 ${isLangMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}`}
@@ -979,7 +1016,7 @@ export default function App() {
                   <Globe size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('europe_tag')}</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight uppercase text-white leading-[0.95]">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">
                   {t('europe_title')} <br/> 
                   <span className="font-bold">{t('europe_subtitle')}</span>
                 </h2>
@@ -994,7 +1031,7 @@ export default function App() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-2 gap-4 h-auto lg:h-[550px]">
               
               {/* PARIS: Main Hub - Large Bento Item */}
-              <div className="lg:col-span-2 lg:row-span-2 group relative border border-white/10 rounded-[3rem] overflow-hidden">
+              <div className="lg:col-span-2 lg:row-span-2 group relative border border-white/10 rounded-[2.4rem] overflow-hidden">
                 <img 
                   src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073&auto=format&fit=crop" 
                   alt="Paris" 
@@ -1017,7 +1054,7 @@ export default function App() {
               </div>
 
               {/* MUNICH */}
-              <div className="lg:col-span-1 group relative border border-white/10 rounded-[2.5rem] overflow-hidden h-64 lg:h-full">
+              <div className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full">
                 <img 
                   src="https://images.unsplash.com/photo-1595867818082-083862f3d630?q=80&w=2070&auto=format&fit=crop" 
                   alt="Munich" 
@@ -1032,9 +1069,9 @@ export default function App() {
               </div>
 
               {/* MILAN */}
-              <div className="lg:col-span-1 group relative border border-white/10 rounded-[2.5rem] overflow-hidden h-64 lg:h-full">
+              <div className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full">
                 <img 
-                  src="https://images.unsplash.com/photo-1520440229334-962aae45c55d?q=80&w=2070&auto=format&fit=crop" 
+                  src="https://images.unsplash.com/photo-1610016302534-6f67f1c968d8?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&dl=ouael-ben-salah-0xe2FGo7Vc0-unsplash.jpg" 
                   alt="Milan" 
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-65 group-hover:opacity-80"
                   referrerPolicy="no-referrer"
@@ -1047,7 +1084,7 @@ export default function App() {
               </div>
 
               {/* BERLIN */}
-              <div className="lg:col-span-1 group relative border border-white/10 rounded-[2.5rem] overflow-hidden h-64 lg:h-full">
+              <div className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full">
                 <img 
                   src="https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070&auto=format&fit=crop" 
                   alt="Berlin" 
@@ -1062,7 +1099,7 @@ export default function App() {
               </div>
 
               {/* FRANCE / AMSTERDAM Hybrid Duo */}
-              <div className="lg:col-span-1 group relative border border-white/10 rounded-[2.5rem] overflow-hidden h-64 lg:h-full bg-stone-800/40">
+              <div className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full bg-stone-800/40">
                 <div className="absolute inset-0 p-8 flex flex-col justify-between">
                   <div>
                     <h3 className="text-xl font-semibold text-white uppercase mb-2 tracking-tight">{t('europe_connect_title')}</h3>
@@ -1337,6 +1374,91 @@ export default function App() {
             </div>
           </div>
         </div>
+
+        {/* WHY CHOOSE US - ACCORDION SECTION */}
+        <section className="bg-[#1e1c1a] w-full py-32 px-6 border-t border-white/5 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-white/[0.01] to-transparent pointer-events-none"></div>
+          
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="grid lg:grid-cols-12 gap-16 items-start">
+              {/* Left Title Area */}
+              <div 
+                ref={el => { if (el) revealRefs.current[15] = el; }}
+                className="lg:col-span-5 reveal"
+              >
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
+                  <Star size={12} className="text-white/60" />
+                  <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('why_tag')}</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">
+                  {t('why_title')}
+                </h2>
+                <div className="h-1 w-12 bg-white/20 rounded-full mt-8 mb-12"></div>
+                <p className="text-stone-400 text-base font-light leading-relaxed max-w-md">
+                  Safeness & Transferts redéfinit les standards du transport privé en alliant expertise historique et élégance contemporaine.
+                </p>
+
+                <div className="mt-12 flex flex-wrap gap-8 lg:gap-12">
+                  {[1, 2, 3].map((s) => (
+                    <div key={s} className="flex flex-col">
+                      <span className="text-3xl md:text-4xl font-bold text-white mb-2">{t(`why_stat${s}_val`)}</span>
+                      <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/40">{t(`why_stat${s}_label`)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right Accordion Area */}
+              <div 
+                ref={el => { if (el) revealRefs.current[16] = el; }}
+                className="lg:col-span-7 reveal"
+              >
+                {[1, 2, 3, 4].map((idx) => (
+                  <div 
+                    key={idx}
+                    className="group border-b border-white/10 transition-all duration-500 overflow-hidden"
+                  >
+                    <button 
+                      onClick={() => setOpenWhyIndex(openWhyIndex === idx - 1 ? null : idx - 1)}
+                      className="w-full py-8 flex items-center justify-between text-left group/btn"
+                    >
+                      <h3 className="text-xl md:text-2xl font-medium uppercase tracking-tight text-white transition-colors duration-500">
+                        {t(`why_item${idx}_title`)}
+                      </h3>
+                      <div className={`w-8 h-8 flex items-center justify-center transition-all duration-500 ${openWhyIndex === idx - 1 ? 'rotate-45 text-white' : 'rotate-0 text-white/30 group-hover/btn:text-white/60'}`}>
+                         <Plus size={24} strokeWidth={1.5} />
+                      </div>
+                    </button>
+                    
+                    <motion.div 
+                      initial={false}
+                      animate={{ height: openWhyIndex === idx - 1 ? 'auto' : 0, opacity: openWhyIndex === idx - 1 ? 1 : 0 }}
+                      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pb-8 pr-12">
+                        <p className="text-stone-400 text-base leading-relaxed font-light">
+                          {t(`why_item${idx}_desc`)}
+                        </p>
+                        {idx === 4 && (
+                          <div className="mt-8">
+                            <a 
+                              href="#business" 
+                              className="inline-flex items-center gap-2.5 text-white text-[11px] font-bold uppercase tracking-[0.2em] border-b border-white/20 hover:border-white transition-all pb-1.5 group"
+                            >
+                              {lang === 'fr' ? 'Ouvrir un compte entreprise' : 'Open a business account'}
+                              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* BUSINESS B2B */}
         <section 

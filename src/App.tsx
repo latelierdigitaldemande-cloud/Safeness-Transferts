@@ -967,7 +967,7 @@ export default function App() {
             <p className="text-xs font-normal text-white/30 tracking-[0.2em] mb-12 uppercase">Corporate Partners</p>
             
             {/* Infinite Marquee */}
-            <div className="relative flex overflow-x-hidden w-full">
+            <div className="relative flex overflow-hidden w-full">
               <div className="animate-marquee flex whitespace-nowrap w-max">
                 <div className="flex items-center gap-12 md:gap-24 px-6 md:px-12 flex-none">
                   <span className="text-xl md:text-2xl font-medium tracking-tighter text-stone-400 uppercase">Uniformation</span>
@@ -1149,7 +1149,7 @@ export default function App() {
           </div>
 
           {/* Horizontal Scroll Layout - Version Full-Width "Hors Cadre" */}
-          <div className="relative mt-12">
+          <div className="relative mt-12 overflow-hidden">
             {/* Native Horizontal Scroll Container with Edge Bleed */}
             <div 
               ref={servicesScrollRef}

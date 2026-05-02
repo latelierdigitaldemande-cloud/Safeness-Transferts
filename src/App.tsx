@@ -1149,11 +1149,11 @@ export default function App() {
           </div>
 
           {/* Horizontal Scroll Layout - Version Full-Width "Hors Cadre" */}
-          <div className="relative mt-12">
+          <div className="relative mt-12 overflow-hidden">
             {/* Native Horizontal Scroll Container with Edge Bleed */}
             <div 
               ref={servicesScrollRef}
-              className="flex gap-6 overflow-x-auto snap-x snap-mandatory px-6 lg:px-0 lg:pl-[max(1.5rem,calc((100vw-1280px)/2+1.5rem))]"
+              className="flex gap-6 overflow-x-auto pb-12 snap-x snap-mandatory px-6 lg:px-0 lg:pl-[max(1.5rem,calc((100vw-1280px)/2+1.5rem))]"
             >
               {[...Array(5)].map((_, i) => (
                 <div 

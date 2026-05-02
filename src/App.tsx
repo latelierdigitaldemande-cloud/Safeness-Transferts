@@ -6,6 +6,14 @@
 import { useEffect, useState, useRef, useMemo, useCallback, Fragment } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Stripe, loadStripe } from '@stripe/stripe-js';
+import L from 'leaflet';
+import { 
+  MapPin, Navigation, Calendar, Clock, Users, Briefcase, Building2,
+  ChevronRight, ChevronLeft, ChevronDown, ArrowUpRight, Check, CreditCard, Plane, Tag, Sparkles, Palette,
+  Train, Info, ShieldCheck, Star, ArrowRight, ArrowLeft, X, Menu, Plus,
+  Phone, Mail, MessageSquare, Globe, Search, Loader2,
+  Instagram, Linkedin
+} from 'lucide-react';
 
 // Initialize Stripe with the public key from environment
 const STRIPE_PUBLIC_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '';
@@ -17,14 +25,6 @@ if (!STRIPE_PUBLIC_KEY) {
 }
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
-import L from 'leaflet';
-import { 
-  MapPin, Navigation, Calendar, Clock, Users, Briefcase, Building2,
-  ChevronRight, ChevronLeft, Check, CreditCard, Plane, Tag, Sparkles, Palette,
-  Train, Info, ShieldCheck, Star, ArrowRight, ArrowLeft, X, Menu, Plus,
-  Phone, Mail, MessageSquare, Globe, Search, Loader2,
-  Instagram, Linkedin
-} from 'lucide-react';
 
 // Extend JSX namespace for iconify-icon
 declare global {
@@ -51,6 +51,7 @@ export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
+  const [activeServiceCard, setActiveServiceCard] = useState<number | null>(null);
   const [currentCityIndex, setCurrentCityIndex] = useState(0);
   const [isCityTransitioning, setIsCityTransitioning] = useState(false);
   const [selectedTransfer, setSelectedTransfer] = useState<number | null>(null);
@@ -139,7 +140,6 @@ export default function App() {
   }, [nextCity]);
 
   const [openWhyIndex, setOpenWhyIndex] = useState<number | null>(0);
-  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
   const [isGalleryPaused, setIsGalleryPaused] = useState(false);
 
@@ -371,6 +371,7 @@ export default function App() {
       service4_desc: 'Logistique de transport pour vos mariages, galas et lancements de produits.',
       service5_title: 'Roadshow Business',
       service5_desc: 'Optimisation de vos déplacements professionnels complexes sur plusieurs jours.',
+      service_book: 'Réserver ce service',
       engagement_tag: 'Engagement',
       engagement_title: 'L\'Excellence Absolue',
       val1_title: 'Chauffeurs Experts',
@@ -383,7 +384,7 @@ export default function App() {
       val4_desc: 'Votre temps est précieux. Nos chauffeurs arrivent 15 minutes avant chaque prestation.',
       corp_tag: 'Corporate',
       corp_title: 'Solutions Business',
-      corp_subtitle: 'Des solutions dédiées aux professionnels',
+      corp_subtitle: 'Solutions pour professionnels',
       corp_desc: 'Safeness & Transferts propose des comptes corporate sur-mesure pour les entreprises, les hôtels de luxe et les agences événementielles. Optimisez la gestion des déplacements de vos collaborateurs et de vos clients VIP avec un partenaire fiable.',
       corp_li1: 'Facturation simplifiée et relevés mensuels détaillés.',
       corp_li2: 'Priorité sur les réservations et support client dédié 24/7.',
@@ -392,6 +393,7 @@ export default function App() {
       contact_pro: 'Contact Pro',
       field_name: 'Nom Complet',
       field_company: 'Société',
+      phone_contact: 'Téléphone',
       field_message: 'Message',
       placeholder_name: 'Jean Dupont',
       placeholder_company: 'Entreprise S.A.',
@@ -408,8 +410,8 @@ export default function App() {
       gallery_img1_alt: 'Intérieur Luxe',
       gallery_img2_alt: 'Vue Classe V Mercedes',
       gallery_img3_alt: 'Détail Cabine Premium',
-      reviews_tag: 'Reviews',
-      reviews_title: 'L\'avis de nos clients',
+      reviews_tag: 'Témoignages',
+      reviews_title: 'Avis Clients',
       transfers_tag: 'Tarifs',
       transfers_title: 'Transferts Populaires',
       transfers_desc: 'Nos itinéraires les plus demandés avec des tarifs fixes et transparents.',
@@ -539,6 +541,7 @@ export default function App() {
       service4_desc: 'Transport logistics for your weddings, galas and product launches.',
       service5_title: 'Business Roadshow',
       service5_desc: 'Optimization of your complex professional travels over several days.',
+      service_book: 'Book this service',
       engagement_tag: 'Engagement',
       engagement_title: 'Absolute Excellence',
       val1_title: 'Expert Chauffeurs',
@@ -551,7 +554,7 @@ export default function App() {
       val4_desc: 'Your time is precious. Our drivers arrive 15 minutes before each service.',
       corp_tag: 'Corporate',
       corp_title: 'Business Solutions',
-      corp_subtitle: 'Dedicated solutions for professionals',
+      corp_subtitle: 'Solutions for professionals',
       corp_desc: 'Safeness & Transferts offers bespoke corporate accounts for companies, luxury hotels and event agencies. Optimize the management of your employees and VIP clients travels with a reliable partner.',
       corp_li1: 'Simplified billing and detailed monthly statements.',
       corp_li2: 'Priority on bookings and dedicated 24/7 client support.',
@@ -560,6 +563,7 @@ export default function App() {
       contact_pro: 'Contact Pro',
       field_name: 'Full Name',
       field_company: 'Company',
+      phone_contact: 'Phone Number',
       field_message: 'Message',
       placeholder_name: 'John Doe',
       placeholder_company: 'Company Inc.',
@@ -576,8 +580,8 @@ export default function App() {
       gallery_img1_alt: 'Luxury Interior',
       gallery_img2_alt: 'Mercedes V-Class View',
       gallery_img3_alt: 'Premium Cabin Detail',
-      reviews_tag: 'Reviews',
-      reviews_title: 'Customer Feedback',
+      reviews_tag: 'Testimonials',
+      reviews_title: 'Client Reviews',
       transfers_tag: 'Rates',
       transfers_title: 'Popular Transfers',
       transfers_desc: 'Our most requested routes with fixed and transparent pricing.',
@@ -633,6 +637,67 @@ export default function App() {
   };
 
   const t = (key: string) => (translations as any)[lang][key] || key;
+
+  // Reviews Carousel State
+  const reviews = useMemo(() => [
+    { name: 'Marc J.', initial: 'MJ', text: t('rev1_text') },
+    { name: 'Sophie L.', initial: 'SL', text: t('rev2_text') },
+    { name: 'Antoine D.', initial: 'AD', text: t('rev3_text') },
+    { name: 'Elena R.', initial: 'ER', text: t('rev4_text') },
+    { name: 'Thomas B.', initial: 'TB', text: t('rev5_text') },
+    { name: 'Julie M.', initial: 'JM', text: t('rev6_text') }
+  ], [t]);
+
+  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
+  const [isReviewsPaused, setIsReviewsPaused] = useState(false);
+
+  const getItemsPerPage = useCallback(() => {
+    if (typeof window === 'undefined') return 3;
+    if (window.innerWidth >= 1024) return 3;
+    if (window.innerWidth >= 768) return 2;
+    return 1;
+  }, []);
+
+  const nextReview = useCallback(() => {
+    setCurrentReviewIndex((prev) => {
+      const itemsPerPage = getItemsPerPage();
+      const max = Math.ceil(reviews.length / itemsPerPage) - 1;
+      return prev >= max ? 0 : prev + 1;
+    });
+  }, [reviews.length, getItemsPerPage]);
+
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+    setIsReviewsPaused(true);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    setIsReviewsPaused(false);
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      nextReview();
+    } else if (isRightSwipe) {
+      setCurrentReviewIndex((prev) => (prev === 0 ? Math.ceil(reviews.length / getItemsPerPage()) - 1 : prev - 1));
+    }
+  };
+
+  useEffect(() => {
+    if (isReviewsPaused) return;
+    const timer = setInterval(nextReview, 3000);
+    return () => clearInterval(timer);
+  }, [nextReview, isReviewsPaused]);
 
   // Initialize Map
   useEffect(() => {
@@ -804,15 +869,6 @@ export default function App() {
     }
   };
 
-  const reviews = [
-    { name: 'Marc J.', initial: 'MJ', text: t('rev1_text') },
-    { name: 'Sophie L.', initial: 'SL', text: t('rev2_text') },
-    { name: 'Antoine D.', initial: 'AD', text: t('rev3_text') },
-    { name: 'Elena R.', initial: 'ER', text: t('rev4_text') },
-    { name: 'Thomas B.', initial: 'TB', text: t('rev5_text') },
-    { name: 'Julie M.', initial: 'JM', text: t('rev6_text') }
-  ];
-
   return (
     <>
       {/* OVERLAY MENU */}
@@ -940,10 +996,10 @@ export default function App() {
         </div>
         <div className="flex flex-col items-center mb-12">
           <div className="relative inline-block pb-1 mb-1">
-            <h2 className="text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight uppercase text-white drop-shadow-sm">{t('hero_luxura')}</h2>
+            <h2 className="text-[50px] md:text-7xl lg:text-8xl font-semibold tracking-tight uppercase text-white drop-shadow-sm">{t('hero_luxura')}</h2>
             <div className="absolute bottom-0 left-[15%] right-[15%] h-px bg-zinc-300 rounded-full opacity-80"></div>
           </div>
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight uppercase text-white drop-shadow-sm mt-1">{t('hero_worldwide')}</h2>
+          <h2 className="text-[50px] md:text-7xl lg:text-8xl font-semibold tracking-tight uppercase text-white drop-shadow-sm mt-1">{t('hero_worldwide')}</h2>
         </div>
         <a 
           href="#booking"
@@ -1008,20 +1064,16 @@ export default function App() {
             <div className="relative flex overflow-hidden w-full">
               <div className="animate-marquee flex whitespace-nowrap w-max">
                 <div className="flex items-center gap-12 md:gap-24 px-6 md:px-12 flex-none">
-                  <span className="text-xl md:text-2xl font-medium tracking-tighter text-stone-400 uppercase">Uniformation</span>
-                  <span className="text-xl md:text-2xl font-medium tracking-tighter text-stone-400 uppercase">Prada</span>
-                  <span className="text-xl md:text-2xl font-medium tracking-tighter text-stone-400 uppercase">Vaisala</span>
-                  <span className="text-xl md:text-2xl font-medium tracking-tighter text-stone-400 uppercase">ETS Global</span>
-                  <span className="text-xl md:text-2xl font-medium tracking-tighter text-stone-400 uppercase">LVMH</span>
-                  <span className="text-xl md:text-2xl font-medium tracking-tighter text-stone-400 uppercase">Cartier</span>
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/uniformation.png" alt="Uniformation" className="h-6 object-contain brightness-0 invert opacity-40" />
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/2560px-Prada-Logo.svg-1024x159-1.webp" alt="Prada" className="h-4 object-contain brightness-0 invert opacity-40" />
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/1200px-Vaisala_logo.svg.png" alt="Vaisala" className="h-6 object-contain brightness-0 invert opacity-40" />
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/ETSGlobal_logo.a83452a9.png" alt="ETS Global" className="h-8 object-contain brightness-0 invert opacity-40" />
                 </div>
                 <div className="flex items-center gap-12 md:gap-24 px-6 md:px-12 flex-none">
-                  <span className="text-xl md:text-2xl font-medium tracking-tighter text-stone-400 uppercase">Uniformation</span>
-                  <span className="text-xl md:text-2xl font-medium tracking-tighter text-stone-400 uppercase">Prada</span>
-                  <span className="text-xl md:text-2xl font-medium tracking-tighter text-stone-400 uppercase">Vaisala</span>
-                  <span className="text-xl md:text-2xl font-medium tracking-tighter text-stone-400 uppercase">ETS Global</span>
-                  <span className="text-xl md:text-2xl font-medium tracking-tighter text-stone-400 uppercase">LVMH</span>
-                  <span className="text-xl md:text-2xl font-medium tracking-tighter text-stone-400 uppercase">Cartier</span>
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/uniformation.png" alt="Uniformation" className="h-6 object-contain brightness-0 invert opacity-40" />
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/2560px-Prada-Logo.svg-1024x159-1.webp" alt="Prada" className="h-4 object-contain brightness-0 invert opacity-40" />
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/1200px-Vaisala_logo.svg.png" alt="Vaisala" className="h-6 object-contain brightness-0 invert opacity-40" />
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/ETSGlobal_logo.a83452a9.png" alt="ETS Global" className="h-8 object-contain brightness-0 invert opacity-40" />
                 </div>
               </div>
             </div>
@@ -1054,7 +1106,7 @@ export default function App() {
                   <Globe size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('europe_tag')}</span>
                 </div>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">
+                <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">
                   {t('europe_title')} <br/> 
                   <span className="font-bold">{t('europe_subtitle')}</span>
                 </h2>
@@ -1073,10 +1125,10 @@ export default function App() {
                 <img 
                   src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073&auto=format&fit=crop" 
                   alt="Paris" 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-65 group-hover:opacity-80"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-95"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/40 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/20 to-transparent"></div>
                 <div className="absolute bottom-8 left-8 right-8 lg:bottom-12 lg:left-12 lg:right-12">
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center bg-white/5 backdrop-blur-md">
@@ -1096,10 +1148,10 @@ export default function App() {
                 <img 
                   src="https://images.unsplash.com/photo-1595867818082-083862f3d630?q=80&w=2070&auto=format&fit=crop" 
                   alt="Munich" 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-65 group-hover:opacity-80"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-95"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/40 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/20 to-transparent"></div>
                 <div className="absolute bottom-8 left-8">
                   <h3 className="text-xl font-semibold text-white uppercase tracking-wider">Munich</h3>
                   <span className="text-white/40 text-[10px] uppercase font-bold tracking-[0.1em]">{t('europe_munich_tag')}</span>
@@ -1111,10 +1163,10 @@ export default function App() {
                 <img 
                   src="https://images.unsplash.com/photo-1610016302534-6f67f1c968d8?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&dl=ouael-ben-salah-0xe2FGo7Vc0-unsplash.jpg" 
                   alt="Milan" 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-65 group-hover:opacity-80"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-95"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/40 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/20 to-transparent"></div>
                 <div className="absolute bottom-8 left-8">
                   <h3 className="text-xl font-semibold text-white uppercase tracking-wider">Milan</h3>
                   <span className="text-white/40 text-[10px] uppercase font-bold tracking-[0.1em]">{t('europe_milan_tag')}</span>
@@ -1126,10 +1178,10 @@ export default function App() {
                 <img 
                   src="https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070&auto=format&fit=crop" 
                   alt="Berlin" 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-65 group-hover:opacity-80"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-95"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/40 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/20 to-transparent"></div>
                 <div className="absolute bottom-8 left-8">
                   <h3 className="text-xl font-semibold text-white uppercase tracking-wider">Berlin</h3>
                   <span className="text-white/40 text-[10px] uppercase font-bold tracking-[0.1em]">{t('europe_berlin_tag')}</span>
@@ -1161,7 +1213,7 @@ export default function App() {
         </section>
 
         {/* Section Nos Services */}
-        <section id="services" className="bg-stone-900 w-full py-20 border-t border-white/5 relative overflow-hidden">
+        <section id="services" className="bg-stone-925 w-full py-20 border-t border-white/5 relative overflow-hidden">
           <div className="max-w-7xl mx-auto relative z-10 px-6">
             {/* Header with standard project SPEC - Split Layout */}
             <div 
@@ -1173,7 +1225,7 @@ export default function App() {
                   <Briefcase size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('services_tag')}</span>
                 </div>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-none">
+                <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-none">
                   {t('services_title')}
                 </h2>
                 <div className="h-1 w-12 bg-white/20 rounded-full mt-10"></div>
@@ -1193,54 +1245,97 @@ export default function App() {
               ref={servicesScrollRef}
               className="flex gap-6 overflow-x-auto pb-12 snap-x snap-mandatory px-6 lg:px-0 lg:pl-[max(1.5rem,calc((100vw-1280px)/2+1.5rem))]"
             >
-              {[...Array(5)].map((_, i) => (
-                <div 
+              {[
+                { 
+                  icon: <Navigation size={22} />, 
+                  img: "https://mcslimo.fr/wp-content/uploads/2025/01/MCS-Services-5.jpg",
+                  features: ["Aéroports & Gares", "Ponctualité garantie", "Wi-Fi & Rafraîchissements"]
+                },
+                { 
+                  icon: <Briefcase size={22} />, 
+                  img: "https://mcslimo.fr/wp-content/uploads/2025/01/MCS-Services-4.jpg",
+                  features: ["Chauffeur dédié", "Flexibilité totale", "Discrétion absolue"]
+                },
+                { 
+                  icon: <MapPin size={22} />, 
+                  img: "https://mcslimo.fr/wp-content/uploads/2025/01/MCS-Services-8.jpg",
+                  features: ["Accueil pancarte", "Gestion des bagages", "Sortie prioritaire"]
+                },
+                { 
+                  icon: <Calendar size={22} />, 
+                  img: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069",
+                  features: ["Mariages & Galas", "Logistique complète", "Véhicules décorés"]
+                },
+                { 
+                  icon: <Building2 size={22} />, 
+                  img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070",
+                  features: ["Multi-arrêts", "Support logistique", "Optimisation de trajet"]
+                }
+              ].map((service, i) => (
+                <motion.div 
                   key={`card-${i}`} 
-                  className="w-[85vw] md:w-[calc(50%-12px)] lg:w-[420px] h-[550px] border border-white/5 rounded-[2.5rem] bg-stone-950 shadow-2xl flex flex-col shrink-0 group transition-all hover:scale-[1.01] overflow-hidden snap-center relative"
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setActiveServiceCard(activeServiceCard === i ? null : i)}
+                  className={`w-[85vw] md:w-[calc(50%-12px)] lg:w-[420px] h-[460px] md:h-[550px] border border-white/10 rounded-[2.5rem] bg-stone-950 shadow-2xl flex flex-col shrink-0 group overflow-hidden snap-center relative cursor-pointer transition-colors ${activeServiceCard === i ? 'border-white/30' : ''}`}
                 >
                   {/* Full Card Background Image */}
                   <img 
-                    src={[
-                      "https://mcslimo.fr/wp-content/uploads/2025/01/MCS-Services-5.jpg",
-                      "https://mcslimo.fr/wp-content/uploads/2025/01/MCS-Services-4.jpg",
-                      "https://mcslimo.fr/wp-content/uploads/2025/01/MCS-Services-8.jpg",
-                      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069",
-                      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070"
-                    ][i]}
+                    src={service.img}
                     alt={t(`service${i + 1}_title`)}
-                    className="absolute inset-0 w-full h-full object-cover opacity-65 group-hover:opacity-80 transition-all duration-1000 grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-110"
+                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 grayscale-[0.1] ${activeServiceCard === i ? 'opacity-90 scale-105 grayscale-0' : 'opacity-70 group-hover:opacity-90 group-hover:grayscale-0'}`}
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/40 to-transparent"></div>
-                  <div className="absolute inset-0 bg-gradient-to-b from-stone-950/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/20 to-transparent"></div>
 
                   {/* Overlay Content */}
-                  <div className="relative z-10 h-full p-10 flex flex-col justify-between">
-                    <div className="flex justify-start items-start">
-                      <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/50 group-hover:text-white group-hover:bg-white/10 group-hover:border-white/20 transition-all backdrop-blur-sm">
-                        {[<Navigation size={20} />, <Briefcase size={20} />, <MapPin size={20} />, <Calendar size={20} />, <Building2 size={20} />][i]}
+                  <div className="relative z-10 h-full p-8 md:p-10 flex flex-col justify-between">
+                    <div className="flex justify-between items-start">
+                      <div className={`w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/70 transition-all backdrop-blur-md ${activeServiceCard === i ? 'bg-white/20 text-white border-white/30' : 'group-hover:bg-white/10 group-hover:border-white/20'}`}>
+                        {service.icon}
                       </div>
                     </div>
 
-                    <div className="space-y-6">
-                      <div className="space-y-2">
-                        <h3 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-tight leading-none">
+                    <div className="flex flex-col">
+                      <div className="mb-4 space-y-3">
+                        <h3 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-tight leading-tight">
                            {t(`service${i + 1}_title`)}
                         </h3>
-                        <div className="h-0.5 w-8 bg-white/20 group-hover:w-16 transition-all duration-700"></div>
+                        <p className="text-stone-400 text-sm font-light leading-relaxed">
+                          {t(`service${i + 1}_desc`)}
+                        </p>
                       </div>
-                      
-                      <p className="text-stone-300 text-sm font-light leading-relaxed max-w-[280px] opacity-80 group-hover:opacity-100 transition-opacity">
-                        {t(`service${i + 1}_desc`)}
-                      </p>
 
-                      <div className="flex items-center gap-2 pt-6 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
-                        <span className="text-[10px] font-bold text-white uppercase tracking-widest">En savoir plus</span>
-                        <ArrowRight size={14} className="text-white transition-all group-hover:translate-x-1" />
-                      </div>
+                      <motion.div
+                        initial={false}
+                        animate={{ 
+                          height: activeServiceCard === i ? 'auto' : '0px',
+                          opacity: activeServiceCard === i ? 1 : 0
+                        }}
+                        transition={{ duration: 0.4, ease: "circOut" }}
+                        className="overflow-hidden md:!h-auto md:!opacity-100 flex flex-col gap-5"
+                      >
+                        <ul className="space-y-2 opacity-80">
+                          {service.features.map((feature, idx) => (
+                            <li key={idx} className="flex items-center gap-2 text-[11px] text-white/70 uppercase tracking-wider font-medium">
+                              <div className="w-1 h-1 rounded-full bg-white/30" />
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
+                        
+                        <div className="pt-2">
+                          <a 
+                            href="#booking"
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 text-white text-[10px] font-bold uppercase tracking-widest rounded-xl hover:bg-white/20 transition-all group/btn backdrop-blur-sm"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {t('service_book')}
+                          </a>
+                        </div>
+                      </motion.div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
               {/* Extra spacer to allow last card clean finish */}
               <div className="w-6 lg:w-12 shrink-0"></div>
@@ -1249,25 +1344,29 @@ export default function App() {
             {/* Navigation Arrows and Scroll Hint */}
             <div className="max-w-7xl mx-auto px-6 mt-8 flex justify-between items-center">
               <div className="flex gap-4">
-                <button 
+                <motion.button 
+                  whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                  whileTap={{ scale: 0.9 }}
                   onClick={() => scrollServices('prev')}
-                  className="w-12 h-12 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all backdrop-blur-sm"
+                  className="w-10 h-10 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
                   aria-label="Previous service"
                 >
-                  <ChevronLeft size={20} />
-                </button>
-                <button 
+                  <ArrowLeft size={18} strokeWidth={1.5} />
+                </motion.button>
+
+                <motion.button 
+                  whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                  whileTap={{ scale: 0.9 }}
                   onClick={() => scrollServices('next')}
-                  className="w-12 h-12 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all backdrop-blur-sm"
+                  className="w-10 h-10 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
                   aria-label="Next service"
                 >
-                  <ChevronRight size={20} />
-                </button>
+                  <ArrowRight size={18} strokeWidth={1.5} />
+                </motion.button>
               </div>
               
               <div className="flex justify-end gap-2 text-white/10 text-[10px] font-bold uppercase tracking-[0.2em]">
                 <span className="hidden sm:inline">Scroll to explore</span>
-                <ArrowRight size={10} className="mt-0.5 animate-pulse" />
               </div>
             </div>
           </div>
@@ -1285,7 +1384,7 @@ export default function App() {
                 <Tag size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('transfers_tag')}</span>
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm text-center">
+              <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm text-center">
                 {t('transfers_title')}
               </h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
@@ -1297,12 +1396,12 @@ export default function App() {
             {/* Transfers Grid - Static Tall Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                { key: 'route_cdg', price: '75€', time: '45 min', icon: <Navigation size={20} />, image: 'https://images.unsplash.com/photo-1594431795323-9267a492ad46?auto=format&fit=crop&q=80&w=800' },
-                { key: 'route_orly', price: '65€', time: '35 min', icon: <MapPin size={20} />, image: 'https://images.unsplash.com/photo-1672310708154-771583101dbb?auto=format&fit=crop&q=80&w=800' },
-                { key: 'route_beauvais', price: '160€', time: '80 min', icon: <Plane size={20} />, image: 'https://images.unsplash.com/photo-1768420281710-0887af16eded?auto=format&fit=crop&q=80&w=800' },
-                { key: 'route_disney', price: '110€', time: '50 min', icon: <Sparkles size={20} />, image: 'https://hubertraguet.com/wp-content/uploads/2021/05/laeroport-de-roissy-charles-de-gaulle-11.jpg' },
+                { key: 'route_cdg', price: '120€', time: '45 min', icon: <Navigation size={20} />, image: 'https://images.unsplash.com/photo-1594431795323-9267a492ad46?auto=format&fit=crop&q=80&w=800' },
+                { key: 'route_orly', price: '120€', time: '35 min', icon: <MapPin size={20} />, image: 'https://images.unsplash.com/photo-1672310708154-771583101dbb?auto=format&fit=crop&q=80&w=800' },
+                { key: 'route_disney', price: '120€', time: '50 min', icon: <Sparkles size={20} />, image: 'https://hubertraguet.com/wp-content/uploads/2021/05/laeroport-de-roissy-charles-de-gaulle-11.jpg' },
                 { key: 'route_versailles', price: '90€', time: '40 min', icon: <Building2 size={20} />, image: 'https://media.istockphoto.com/id/978664034/fr/photo/a%C3%A9roport-de-paris-charles-de-gaulle-terminal.jpg?s=612x612&w=0&k=20&c=3HoBuKqPiTOXgOctNh35qZuzEUWM691p8WUcjAX4YRQ=', mobileHidden: true },
                 { key: 'route_giverny', price: '250€', time: '75 min', icon: <Palette size={20} />, image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?fm=jpg&q=60&w=3000&auto=format&fit=crop', mobileHidden: true },
+                { key: 'route_beauvais', price: '140€', time: '80 min', icon: <Plane size={20} />, image: 'https://images.unsplash.com/photo-1768420281710-0887af16eded?auto=format&fit=crop&q=80&w=800' },
               ].map((item, i) => {
                 return (
                   <div 
@@ -1314,10 +1413,10 @@ export default function App() {
                       <img 
                         src={item.image} 
                         alt={t(item.key)}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-65 group-hover:opacity-80"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-95"
                         referrerPolicy="no-referrer"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/40 to-transparent"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/20 to-transparent"></div>
                     </div>
 
                     <div className="p-8 relative z-10 flex flex-col h-full">
@@ -1393,7 +1492,11 @@ export default function App() {
 
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="flex flex-col text-base font-light text-stone-400 tracking-wide">
-                  <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-6 leading-tight uppercase">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8 w-fit">
+                  <Briefcase size={12} className="text-white/60" />
+                  <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('corp_tag')}</span>
+                </div>
+                <h3 className="text-3xl md:text-3xl font-bold tracking-tight text-white mb-6 leading-tight uppercase">
                     {t('corp_subtitle')}
                   </h3>
               <p className="leading-relaxed mb-8">
@@ -1418,51 +1521,71 @@ export default function App() {
                 <iconify-icon icon="solar:arrow-right-up-linear" width="16" style={{ strokeWidth: 1.5 }}></iconify-icon>
               </a>
             </div>
-            <div className="relative w-full rounded-3xl overflow-hidden border border-white/10 bg-stone-900/50 flex items-center justify-center py-12 px-6 md:p-12">
+            <div className="relative w-full rounded-3xl flex items-center justify-center py-12 md:py-20 lg:py-24">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 to-transparent"></div>
               
-              <div className="w-full max-w-md border border-stone-200 rounded-[2rem] bg-white p-8 relative z-10 shadow-2xl">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-stone-100 border border-stone-200 mb-6">
-                  <Mail size={12} className="text-stone-500" />
-                  <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-stone-600">{t('contact_pro')}</span>
+              <div className="w-full max-w-7xl border border-white/10 rounded-3xl bg-stone-950/40 backdrop-blur-xl p-8 md:p-16 lg:p-20 relative z-10 shadow-2xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
+                  <Mail size={12} className="text-white/60" />
+                  <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/80">{t('contact_pro')}</span>
                 </div>
                 
-                <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-widest text-stone-900 font-bold mb-2 block ml-1">{t('field_name')}</label>
+                <form className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8" onSubmit={(e) => e.preventDefault()}>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] uppercase tracking-widest text-white font-bold ml-1">
+                      {t('field_name')}
+                    </label>
                     <input 
                       type="text" 
-                      className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-stone-900 text-sm focus:outline-none focus:border-stone-900 transition-all placeholder:text-stone-300"
+                      className="w-full bg-transparent border-b border-white/20 py-2 text-white text-base focus:outline-none focus:border-white transition-all placeholder:text-white/20"
                       placeholder={t('placeholder_name')}
                     />
                   </div>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-widest text-stone-900 font-bold mb-2 block ml-1">{t('field_company')}</label>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] uppercase tracking-widest text-white font-bold ml-1">
+                      {t('field_company')}
+                    </label>
                     <input 
                       type="text" 
-                      className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-stone-900 text-sm focus:outline-none focus:border-stone-900 transition-all placeholder:text-stone-300"
+                      className="w-full bg-transparent border-b border-white/20 py-2 text-white text-base focus:outline-none focus:border-white transition-all placeholder:text-white/20"
                       placeholder={t('placeholder_company')}
                     />
                   </div>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-widest text-stone-900 font-bold mb-2 block ml-1">{t('email')}</label>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] uppercase tracking-widest text-white font-bold ml-1">
+                      {t('email')}
+                    </label>
                     <input 
                       type="email" 
-                      className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-stone-900 text-sm focus:outline-none focus:border-stone-900 transition-all placeholder:text-stone-300"
-                      placeholder={t('placeholder_email')}
+                      className="w-full bg-transparent border-b border-white/20 py-2 text-white text-base focus:outline-none focus:border-white transition-all placeholder:text-white/20"
+                      placeholder="email@example.com"
                     />
                   </div>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-widest text-stone-900 font-bold mb-2 block ml-1">{t('field_message')}</label>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] uppercase tracking-widest text-white font-bold ml-1">
+                      {t('phone_contact') || 'Phone Number'}
+                    </label>
+                    <input 
+                      type="tel" 
+                      className="w-full bg-transparent border-b border-white/20 py-2 text-white text-base focus:outline-none focus:border-white transition-all placeholder:text-white/20"
+                      placeholder="+33 6 00 00 00 00"
+                    />
+                  </div>
+                  <div className="md:col-span-2 flex flex-col gap-2">
+                    <label className="text-[10px] uppercase tracking-widest text-white font-bold ml-1">
+                      {t('field_message')}
+                    </label>
                     <textarea 
-                      className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-stone-900 text-sm focus:outline-none focus:border-stone-900 transition-all h-24 resize-none placeholder:text-stone-300"
+                      className="w-full bg-transparent border-b border-white/20 py-2 text-white text-base focus:outline-none focus:border-white transition-all h-24 resize-none placeholder:text-white/20"
                       placeholder={t('placeholder_message')}
                     ></textarea>
                   </div>
-                  <button className="w-full bg-stone-900 text-white font-bold uppercase tracking-widest text-[10px] py-4 rounded-xl hover:bg-stone-800 transition-all mt-4 flex items-center justify-center gap-2 group">
-                    <span>{t('contact_btn')}</span>
-                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                  </button>
+                  <div className="md:col-span-2 pt-4">
+                    <button className="w-full md:w-auto md:px-12 bg-white text-stone-900 font-bold uppercase tracking-widest text-[11px] py-5 rounded-xl hover:bg-stone-200 transition-all flex items-center justify-center gap-3 group shadow-xl">
+                      <span>{t('contact_btn')}</span>
+                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
                 </form>
               </div>
             </div>
@@ -1484,7 +1607,7 @@ export default function App() {
                 <Navigation size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('fleet_tag')}</span>
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('fleet_title')}</h2>
+              <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('fleet_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 text-base font-light text-stone-400 tracking-wide">
@@ -1543,7 +1666,7 @@ export default function App() {
                 <Star size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('vision_tag')}</span>
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('vision_title')}</h2>
+              <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('vision_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
               <p className="mt-8 text-stone-400 font-light tracking-wide max-w-xl mx-auto text-sm">
                 {t('vision_desc')}
@@ -1556,43 +1679,43 @@ export default function App() {
               <div className="absolute right-0 top-0 bottom-0 w-32 z-20 bg-gradient-to-l from-stone-900 via-stone-900/50 to-transparent pointer-events-none"></div>
 
               <div 
-                className={`flex gap-6 w-max animate-marquee ${isGalleryPaused ? '[animation-play-state:paused]' : ''}`}
+                className={`flex gap-3 md:gap-6 w-max animate-marquee ${isGalleryPaused ? '[animation-play-state:paused]' : ''}`}
                 onMouseEnter={() => setIsGalleryPaused(true)}
                 onMouseLeave={() => setIsGalleryPaused(false)}
               >
                 {[...Array(4)].map((_, setIndex) => (
                   <Fragment key={`set-${setIndex}`}>
                     {/* Image 1: Portrait Interior */}
-                    <div className="group relative overflow-hidden rounded-[1.5rem] md:rounded-[2rem] border border-white/10 aspect-[3/4] h-[320px] md:h-[420px] flex-shrink-0">
+                    <div className="group relative overflow-hidden rounded-[1.5rem] md:rounded-[2rem] border border-white/10 aspect-[3/4] h-[384px] md:h-[420px] flex-shrink-0">
                       <img 
                         src="https://images.unsplash.com/photo-1629019878688-f5d58a41b188?q=85&fm=jpg&crop=entropy&cs=srgb" 
                         alt={t('gallery_img1_alt')} 
-                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105 opacity-90 group-hover:opacity-100"
                         referrerPolicy="no-referrer"
                       />
-                      <div className="absolute inset-0 bg-stone-950/20 group-hover:bg-stone-950/0 transition-colors duration-500"></div>
+                      <div className="absolute inset-0 bg-stone-950/5 group-hover:bg-transparent transition-colors duration-500"></div>
                     </div>
 
                     {/* Image 2: Portrait Center Detail */}
-                    <div className="group relative overflow-hidden rounded-[1.5rem] md:rounded-[2rem] border border-white/10 aspect-[3/4] h-[320px] md:h-[420px] flex-shrink-0">
+                    <div className="group relative overflow-hidden rounded-[1.5rem] md:rounded-[2rem] border border-white/10 aspect-[3/4] h-[384px] md:h-[420px] flex-shrink-0">
                       <img 
                         src="https://prestige-transfer-london.com/transfer/mercedes-v-londone_web.jpg" 
                         alt={t('gallery_img2_alt')} 
-                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105 opacity-90 group-hover:opacity-100"
                         referrerPolicy="no-referrer"
                       />
-                      <div className="absolute inset-0 bg-stone-950/10 group-hover:bg-stone-950/0 transition-colors duration-500"></div>
+                      <div className="absolute inset-0 bg-stone-950/5 group-hover:bg-transparent transition-colors duration-500"></div>
                     </div>
 
                     {/* Image 3: Portrait End Detail */}
-                    <div className="group relative overflow-hidden rounded-[1.5rem] md:rounded-[2rem] border border-white/10 aspect-[3/4] h-[320px] md:h-[420px] flex-shrink-0">
+                    <div className="group relative overflow-hidden rounded-[1.5rem] md:rounded-[2rem] border border-white/10 aspect-[3/4] h-[384px] md:h-[420px] flex-shrink-0">
                       <img 
                         src="https://images.unsplash.com/photo-1720731035872-7aa3708996c1?q=85&fm=jpg&crop=entropy&cs=srgb" 
                         alt={t('gallery_img3_alt')} 
-                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105 opacity-90 group-hover:opacity-100"
                         referrerPolicy="no-referrer"
                       />
-                      <div className="absolute inset-0 bg-stone-950/20 group-hover:bg-stone-950/0 transition-colors duration-500"></div>
+                      <div className="absolute inset-0 bg-stone-950/5 group-hover:bg-transparent transition-colors duration-500"></div>
                     </div>
                   </Fragment>
                 ))}
@@ -1618,7 +1741,7 @@ export default function App() {
                 <MessageSquare size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('reviews_tag')}</span>
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('reviews_title')}</h2>
+              <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('reviews_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
               
               <div className="flex flex-wrap items-center justify-center gap-6 mt-12">
@@ -1642,60 +1765,71 @@ export default function App() {
               </div>
             </div>
 
-            <div className="relative overflow-hidden py-12 px-4 md:px-12">
-              {/* Navigation chevrons */}
-              <div className="absolute top-1/2 -translate-y-1/2 left-0 z-30">
+            <div 
+              className="relative py-12"
+              onMouseEnter={() => setIsReviewsPaused(true)}
+              onMouseLeave={() => setIsReviewsPaused(false)}
+            >
+              {/* Navigation Desktop */}
+              <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 left-0 z-30 px-2 lg:px-4">
                 <button 
                   onClick={() => setCurrentReviewIndex(prev => Math.max(0, prev - 1))}
                   disabled={currentReviewIndex === 0}
-                  className={`w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all ${currentReviewIndex === 0 ? 'opacity-30 cursor-not-allowed' : 'bg-white/5 hover:bg-white/10 text-white active:scale-95'}`}
-                  aria-label={t('previous')}
+                  className={`w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all ${currentReviewIndex === 0 ? 'opacity-20 cursor-not-allowed' : 'bg-white/5 hover:bg-white/10 text-white active:scale-95'}`}
                 >
                   <ChevronLeft size={20} />
                 </button>
               </div>
-              <div className="absolute top-1/2 -translate-y-1/2 right-0 z-30">
+              <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 right-0 z-30 px-2 lg:px-4">
                 <button 
-                  onClick={() => setCurrentReviewIndex(prev => {
-                    const itemsPerPage = typeof window !== 'undefined' ? (window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1) : 3;
-                    const max = Math.ceil(reviews.length / itemsPerPage) - 1;
-                    return Math.min(max, prev + 1);
-                  })}
+                  onClick={() => nextReview()}
                   className="w-12 h-12 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition-all active:scale-95"
-                  aria-label={t('next')}
                 >
                   <ChevronRight size={20} />
                 </button>
               </div>
 
               {/* Slider Container */}
-              <div className="overflow-hidden">
+              <div className="overflow-hidden px-4 md:px-12 lg:px-20">
                 <motion.div 
-                  className="flex gap-6 transition-all duration-700 ease-in-out"
-                  animate={{ x: `calc(-${currentReviewIndex * 100}% - ${currentReviewIndex * 24}px)` }}
+                  className="flex will-change-transform"
+                  onTouchStart={onTouchStart}
+                  onTouchMove={onTouchMove}
+                  onTouchEnd={onTouchEnd}
+                  animate={{ 
+                    x: `-${currentReviewIndex * 100}%` 
+                  }}
+                  transition={{ 
+                    duration: 0.6,
+                    ease: [0.23, 1, 0.32, 1] 
+                  }}
                 >
                   {reviews.map((review, i) => (
                     <div 
                       key={`rev-${i}`} 
-                      className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] border border-white/5 rounded-2xl p-8 bg-white/[0.03] backdrop-blur-sm shadow-xl flex flex-col shrink-0 group transition-all hover:bg-white/[0.05] hover:border-white/10"
+                      className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-3 flex flex-col transform-gpu"
+                      style={{ backfaceVisibility: 'hidden' }}
                     >
-                      <div className="flex gap-1 text-[#FBBC05] mb-6">
-                        <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
-                        <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
-                        <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
-                        <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
-                        <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
-                      </div>
-                      <p className="leading-relaxed mb-8 text-stone-300 font-light text-[15px] italic">
-                        {review.text}
-                      </p>
-                      <div className="flex items-center gap-4 mt-auto pt-6 border-t border-white/5">
-                        <div className="w-12 h-12 rounded-full bg-stone-800 flex items-center justify-center text-sm font-semibold text-white border border-white/10 group-hover:bg-stone-700 transition-colors">
-                          {review.initial}
+                      <div className="h-full border border-white/5 rounded-3xl p-8 bg-white/[0.03] backdrop-blur-md shadow-2xl flex flex-col hover:bg-white/[0.05] hover:border-white/10 transition-colors duration-500">
+                        <div className="flex gap-1 text-[#FBBC05] mb-8">
+                          {[...Array(5)].map((_, idx) => (
+                            <iconify-icon key={idx} icon="solar:star-bold" width="18"></iconify-icon>
+                          ))}
                         </div>
-                        <div className="flex flex-col">
-                          <span className="text-sm font-medium text-white/90">{review.name}</span>
-                          <span className="text-[10px] text-stone-500 uppercase tracking-widest font-bold mt-0.5">{t('verified_label')}</span>
+                        <p className="leading-relaxed mb-8 text-stone-200/90 font-light text-[15px] italic flex-grow">
+                          "{review.text}"
+                        </p>
+                        <div className="flex items-center gap-4 pt-6 border-t border-white/5 mt-auto">
+                          <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xs font-semibold text-white">
+                            {review.initial}
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-sm font-medium text-white/95">{review.name}</span>
+                            <div className="flex items-center gap-1.5 mt-0.5">
+                              <iconify-icon icon="solar:check-circle-bold" width="12" className="text-emerald-500"></iconify-icon>
+                              <span className="text-[10px] text-stone-500 uppercase tracking-[0.1em] font-bold">{t('verified_label')}</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1704,12 +1838,12 @@ export default function App() {
               </div>
 
               {/* Pagination Dots */}
-              <div className="flex justify-center gap-2 mt-12">
-                {[...Array(Math.ceil(reviews.length / (typeof window !== 'undefined' && window.innerWidth >= 1024 ? 3 : typeof window !== 'undefined' && window.innerWidth >= 768 ? 2 : 1)))].map((_, i) => (
+              <div className="flex justify-center gap-2.5 mt-10">
+                {Array.from({ length: Math.ceil(reviews.length / getItemsPerPage()) }).map((_, i) => (
                   <button
-                    key={i}
+                    key={`dot-${i}`}
                     onClick={() => setCurrentReviewIndex(i)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${currentReviewIndex === i ? 'w-8 bg-white' : 'bg-white/20 hover:bg-white/40'}`}
+                    className={`h-1 rounded-full transition-all duration-700 ${currentReviewIndex === i ? 'bg-white w-10' : 'bg-white/10 w-2 hover:bg-white/25'}`}
                     aria-label={`Go to page ${i + 1}`}
                   />
                 ))}
@@ -1728,7 +1862,7 @@ export default function App() {
               <Calendar size={12} className="text-white/60" />
               <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">Booking</span>
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('title')}</h2>
+            <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('title')}</h2>
             <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
           </div>
           
@@ -2163,17 +2297,17 @@ export default function App() {
                 <Info size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">FAQ</span>
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('faq_title')}</h2>
+              <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('faq_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
             </div>
-            <div className="flex flex-col border-t border-white/15">
+            <div className="flex flex-col">
               {[
                 { q: t('q1'), a: t('a1') },
                 { q: t('q2'), a: t('a2') },
                 { q: t('q3'), a: t('a3') },
                 { q: t('q4'), a: t('a4') }
               ].map((faq, i) => (
-                <div key={i} className={`faq-item w-full border-b border-white/15 group ${openFaqIndex === i ? 'open' : ''}`}>
+                <div key={i} className={`faq-item w-full border-b border-white/15 last:border-b-0 group ${openFaqIndex === i ? 'open' : ''}`}>
                   <button 
                     onClick={() => toggleFaq(i)}
                     className="w-full py-6 flex justify-between items-center text-base md:text-lg font-normal text-white hover:text-stone-300 transition-colors text-left" 
@@ -2205,7 +2339,7 @@ export default function App() {
                 <div className="w-1 h-5 bg-white rounded-t-sm"></div>
               </div>
               <h1 className="text-[19px] font-medium tracking-[0.25em] uppercase text-white/70 mb-5">Safeness & Transferts</h1>
-              <p className="text-[13.5px] md:text-[15px] font-light text-stone-400 tracking-wide max-w-lg">
+              <p className="text-[13.5px] md:text-[15px] font-light text-white/30 tracking-wide max-w-lg">
                 {t('footer_desc')}
               </p>
             </div>
@@ -2231,7 +2365,7 @@ export default function App() {
                 </a>
               </div>
             </div>
-            <div className="flex flex-col md:flex-row items-center justify-between w-full text-[12px] text-white/30 uppercase tracking-[0.2em] mt-8 gap-4 text-center font-normal">
+            <div className="flex flex-col md:flex-row items-center justify-between w-full text-[10px] md:text-[12px] text-white/30 uppercase tracking-[0.2em] mt-8 gap-4 text-center font-normal">
               <p>Safeness & Transferts © 2026. All Rights Reserved.</p>
               <div className="flex gap-8">
                 <a href="#" className="hover:text-white/60 transition-colors">{t('legal')}</a>

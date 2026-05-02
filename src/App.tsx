@@ -1418,7 +1418,7 @@ export default function App() {
                 <iconify-icon icon="solar:arrow-right-up-linear" width="16" style={{ strokeWidth: 1.5 }}></iconify-icon>
               </a>
             </div>
-            <div className="relative w-full aspect-square md:aspect-auto rounded-3xl overflow-hidden border border-white/10 bg-stone-900/50 flex items-center justify-center p-6 md:p-12">
+            <div className="relative w-full rounded-3xl overflow-hidden border border-white/10 bg-stone-900/50 flex items-center justify-center py-12 px-6 md:p-12">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 to-transparent"></div>
               
               <div className="w-full max-w-md border border-stone-200 rounded-[2rem] bg-white p-8 relative z-10 shadow-2xl">

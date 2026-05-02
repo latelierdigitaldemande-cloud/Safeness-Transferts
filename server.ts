@@ -3,6 +3,12 @@ import { createServer as createViteServer } from "vite";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
+import fs from "fs";
+
+// API handlers (Import after setup if needed, but top level is fine with tsx)
+import checkoutHandler from "./api/checkout.ts";
+import webhookHandler from "./api/webhook.ts";
+import verifyHandler from "./api/verify-session.ts";
 
 dotenv.config();
 
@@ -13,22 +19,22 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
+  // IMPORTANT: Webhook needs raw body for signature verification
   app.use(express.json({
     verify: (req: any, _res, buf) => {
-      if (req.originalUrl.startsWith('/api/webhook')) {
+      if (req.originalUrl && req.originalUrl.startsWith('/api/webhook')) {
         req.rawBody = buf;
       }
     }
   }));
 
-  // API routes
-  const { default: checkoutHandler } = await import("./api/checkout.ts");
-  const { default: webhookHandler } = await import("./api/webhook.ts");
-  const { default: verifyHandler } = await import("./api/verify-session.ts");
-
+  // API Routes
   app.post("/api/checkout", checkoutHandler);
-  app.post("/api/webhook", webhookHandler);
+  app.all("/api/webhook", webhookHandler);
   app.get("/api/verify-session", verifyHandler);
+  
+  // Health check
+  app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
@@ -36,7 +42,22 @@ async function startServer() {
       server: { middlewareMode: true },
       appType: "spa",
     });
+    
     app.use(vite.middlewares);
+    
+    // Explicitly handle SPA fallback in dev mode if needed
+    app.get('*', async (req, res, next) => {
+      if (req.originalUrl.startsWith('/api')) return next();
+      
+      try {
+        let template = fs.readFileSync(path.resolve(process.cwd(), 'index.html'), 'utf-8');
+        template = await vite.transformIndexHtml(req.originalUrl, template);
+        res.status(200).set({ 'Content-Type': 'text/html' }).end(template);
+      } catch (e) {
+        next(e);
+      }
+    });
+
   } else {
     const distPath = path.join(process.cwd(), "dist");
     app.use(express.static(distPath));
@@ -50,4 +71,4 @@ async function startServer() {
   });
 }
 
-startServer();
+startServer().catch(console.error);

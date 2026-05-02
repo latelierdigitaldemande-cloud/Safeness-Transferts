@@ -78,11 +78,15 @@ export default function App() {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Show WhatsApp/Floating actions after scrolling past 400px (Hero area)
+      const scrollPosition = window.scrollY;
+      setIsChatTooltipVisible(scrollPosition > 400);
+
       const footer = document.getElementById('contact');
       if (footer) {
         const footerPosition = footer.getBoundingClientRect().top;
         const windowHeight = window.innerHeight;
-        // Show button if footer is within view or user has scrolled past 80% of page
+        // Show scroll top button if footer is within view
         setShowScrollTop(footerPosition < windowHeight + 100);
       }
     };
@@ -404,8 +408,8 @@ export default function App() {
       a4: 'Nous suivons en temps réel l\'état de votre vol ou de votre train grâce au numéro communiqué lors de la réservation. Le chauffeur ajustera son heure d\'arrivée en conséquence, sans frais supplémentaires.',
       footer_desc: "L'élite du transport : prestige mondial, excellence sans compromis",
       legal: 'Mentions légales',
-      privacy: 'Privacy Policy',
-      whatsapp_tooltip: 'Besoin d\'un chauffeur ? Réservez sur WhatsApp.',
+      privacy: 'Mentions légales',
+      whatsapp_tooltip: 'Réserver par WhatsApp',
       lang_fr: 'Français',
       lang_en: 'Anglais',
       rev1_text: '"Service impeccable pour mon transfert vers Orly. Le chauffeur était en avance, le véhicule (Classe S) d\'une propreté absolue. Conduite très douce. Je recommande vivement Safeness & Transferts."',
@@ -573,7 +577,7 @@ export default function App() {
       footer_desc: 'Elite transport: global prestige, uncompromising excellence',
       legal: 'Legal notice',
       privacy: 'Privacy Policy',
-      whatsapp_tooltip: 'Need a driver? Book on WhatsApp.',
+      whatsapp_tooltip: 'Book on WhatsApp',
       lang_fr: 'French',
       lang_en: 'English',
       rev1_text: '"Impeccable service for my transfer to Orly. The driver was early, the vehicle (S-Class) was absolutely clean. Very smooth driving. I highly recommend Safeness & Transferts."',
@@ -1398,14 +1402,7 @@ export default function App() {
                   Safeness & Transferts redéfinit les standards du transport privé en alliant expertise historique et élégance contemporaine.
                 </p>
 
-                <div className="mt-12 flex flex-wrap gap-8 lg:gap-12">
-                  {[1, 2, 3].map((s) => (
-                    <div key={s} className="flex flex-col">
-                      <span className="text-3xl md:text-4xl font-bold text-white mb-2">{t(`why_stat${s}_val`)}</span>
-                      <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/40">{t(`why_stat${s}_label`)}</span>
-                    </div>
-                  ))}
-                </div>
+
               </div>
 
               {/* Right Accordion Area */}
@@ -2329,16 +2326,18 @@ export default function App() {
       {/* WHATSAPP & SCROLL TOP FLOTTANT */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
         <div 
-          className={`bg-stone-900 border border-white/10 text-white px-3 py-2.5 rounded-2xl shadow-2xl text-[10.2px] font-normal tracking-wide backdrop-blur-md transition-all duration-300 origin-bottom-right flex items-center gap-2.5 ${isChatTooltipVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+          className={`bg-white border border-stone-200 text-stone-900 px-3 py-1.5 rounded-full shadow-2xl text-[9px] font-bold tracking-tight transition-all duration-500 origin-bottom-right flex items-center gap-2 relative mb-1 ${isChatTooltipVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-2 scale-90 pointer-events-none'}`}
           id="chat-tooltip"
         >
           <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
           {t('whatsapp_tooltip')}
+          {/* Bubble Tail */}
+          <div className="absolute -bottom-1 right-6 w-2 h-2 bg-white border-r border-b border-stone-200 rotate-45"></div>
         </div>
         <div className="flex items-center gap-3">
           <button 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className={`w-12 h-12 md:w-14 md:h-14 bg-stone-900 border border-white/10 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-stone-800 transition-all shadow-2xl ${showScrollTop ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-90 pointer-events-none'}`}
+            className={`w-14 h-14 bg-stone-900 border border-white/10 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-stone-800 transition-all shadow-2xl ${showScrollTop ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-90 pointer-events-none'}`}
             title="Scroll to Top"
           >
             <iconify-icon icon="solar:alt-arrow-up-linear" width="22" style={{ strokeWidth: 1.5 }}></iconify-icon>
@@ -2347,9 +2346,7 @@ export default function App() {
             href="https://wa.me/33782274920" 
             target="_blank"
             rel="noreferrer"
-            className="w-12 h-12 md:w-14 md:h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(37,211,102,0.3)] text-white hover:scale-110 transition-transform"
-            onMouseEnter={() => setIsChatTooltipVisible(true)}
-            onMouseLeave={() => setIsChatTooltipVisible(false)}
+            className="w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(37,211,102,0.3)] text-white hover:scale-110 transition-transform"
           >
             <iconify-icon icon="ic:baseline-whatsapp" width="28"></iconify-icon>
           </a>

@@ -1343,120 +1343,6 @@ export default function App() {
 
 
 
-        {/* Promesse / Valeurs */}
-        <div className="bg-[#1e1c1a] w-full py-32 flex flex-col items-center border-y border-white/5 relative overflow-hidden">
-          {/* Subtle background lift - custom depth matched to user request */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none hidden md:block"></div>
-          
-          <div 
-            ref={el => { if (el) revealRefs.current[6] = el; }}
-            className="max-w-7xl mx-auto px-6 w-full reveal relative z-10"
-          >
-            <div className="flex flex-col items-center mb-20 text-center">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
-                <ShieldCheck size={12} className="text-white/60" />
-                <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('engagement_tag')}</span>
-              </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('engagement_title')}</h2>
-              <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-base font-light text-stone-400 tracking-wide">
-              {[
-                { title: t('val1_title'), icon: 'solar:user-id-linear', desc: t('val1_desc') },
-                { title: t('val2_title'), icon: 'solar:star-fall-linear', desc: t('val2_desc') },
-                { title: t('val3_title'), icon: 'solar:calendar-mark-linear', desc: t('val3_desc') },
-                { title: t('val4_title'), icon: 'solar:history-linear', desc: t('val4_desc') }
-              ].map((val, i) => (
-                <div key={i} className="flex flex-col items-center text-center group">
-                  <div className="w-20 h-20 rounded-full border border-white/10 flex items-center justify-center mb-8 bg-black/40 shadow-xl transition-all group-hover:scale-110 group-hover:bg-black/60 duration-500">
-                    <iconify-icon icon={val.icon} width="32" className="text-white/80" style={{ strokeWidth: 1.5 }}></iconify-icon>
-                  </div>
-                  <h4 className="text-base font-medium tracking-[0.15em] uppercase text-white/90 mb-4">{val.title}</h4>
-                  <p className="leading-relaxed max-w-[250px]">{val.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* WHY CHOOSE US - ACCORDION SECTION */}
-        <section className="bg-[#1e1c1a] w-full py-32 px-6 border-t border-white/5 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-white/[0.01] to-transparent pointer-events-none"></div>
-          
-          <div className="max-w-7xl mx-auto relative z-10">
-            <div className="grid lg:grid-cols-12 gap-16 items-start">
-              {/* Left Title Area */}
-              <div 
-                ref={el => { if (el) revealRefs.current[15] = el; }}
-                className="lg:col-span-5 reveal"
-              >
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
-                  <Star size={12} className="text-white/60" />
-                  <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('why_tag')}</span>
-                </div>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">
-                  {t('why_title')}
-                </h2>
-                <div className="h-1 w-12 bg-white/20 rounded-full mt-8 mb-12"></div>
-                <p className="text-stone-400 text-base font-light leading-relaxed max-w-md">
-                  Safeness & Transferts redéfinit les standards du transport privé en alliant expertise historique et élégance contemporaine.
-                </p>
-
-
-              </div>
-
-              {/* Right Accordion Area */}
-              <div 
-                ref={el => { if (el) revealRefs.current[16] = el; }}
-                className="lg:col-span-7 reveal"
-              >
-                {[1, 2, 3, 4].map((idx) => (
-                  <div 
-                    key={idx}
-                    className="group border-b border-white/10 transition-all duration-500 overflow-hidden"
-                  >
-                    <button 
-                      onClick={() => setOpenWhyIndex(openWhyIndex === idx - 1 ? null : idx - 1)}
-                      className="w-full py-8 flex items-center justify-between text-left group/btn"
-                    >
-                      <h3 className="text-xl md:text-2xl font-medium uppercase tracking-tight text-white transition-colors duration-500">
-                        {t(`why_item${idx}_title`)}
-                      </h3>
-                      <div className={`w-8 h-8 flex items-center justify-center transition-all duration-500 ${openWhyIndex === idx - 1 ? 'rotate-45 text-white' : 'rotate-0 text-white/30 group-hover/btn:text-white/60'}`}>
-                         <Plus size={24} strokeWidth={1.5} />
-                      </div>
-                    </button>
-                    
-                    <motion.div 
-                      initial={false}
-                      animate={{ height: openWhyIndex === idx - 1 ? 'auto' : 0, opacity: openWhyIndex === idx - 1 ? 1 : 0 }}
-                      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pb-8 pr-12">
-                        <p className="text-stone-400 text-base leading-relaxed font-light">
-                          {t(`why_item${idx}_desc`)}
-                        </p>
-                        {idx === 4 && (
-                          <div className="mt-8">
-                            <a 
-                              href="#business" 
-                              className="inline-flex items-center gap-2.5 text-white text-[11px] font-bold uppercase tracking-[0.2em] border-b border-white/20 hover:border-white transition-all pb-1.5 group"
-                            >
-                              {lang === 'fr' ? 'Ouvrir un compte entreprise' : 'Open a business account'}
-                              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                            </a>
-                          </div>
-                        )}
-                      </div>
-                    </motion.div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* BUSINESS B2B */}
         <section 
           id="business" 
@@ -2290,7 +2176,7 @@ export default function App() {
               </p>
             </div>
             
-            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-5 mb-16 text-[11px] font-normal tracking-[0.15em] uppercase text-white/50">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-x-12 gap-y-6 md:gap-y-5 mb-16 text-[11px] font-normal tracking-[0.15em] uppercase text-white/50">
               <a href="#services" className="hover:text-white transition-colors">{t('nav_services')}</a>
               <a href="#fleet" className="hover:text-white transition-colors">{t('nav_fleet')}</a>
               <a href="#gallery" className="hover:text-white transition-colors">{t('nav_gallery')}</a>

@@ -43,6 +43,11 @@ const cities = [
 ];
 
 export default function App() {
+  const [step, setStep] = useState(1);
+  const [lang, setLang] = useState('en');
+  const [loading, setLoading] = useState(false);
+  const [bookingError, setBookingError] = useState<string | null>(null);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
@@ -56,16 +61,42 @@ export default function App() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const status = params.get('status');
-    if (status === 'success') {
-      setStep(4);
-      // Clean up URL
-      window.history.replaceState({}, '', window.location.pathname);
+    const sessionId = params.get('session_id');
+
+    if (status === 'success' && sessionId) {
+      setLoading(true);
+      fetch(`/api/verify-session?session_id=${sessionId}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            setStep(4);
+          } else {
+            setStep(3);
+            setBookingError(lang === 'fr' 
+              ? "La vérification du paiement a échoué. Veuillez contacter le support si vous avez été débité." 
+              : "Payment verification failed. Please contact support if you have been charged.");
+          }
+        })
+        .catch(err => {
+          console.error("Verification error:", err);
+          setStep(3);
+          setBookingError(lang === 'fr'
+            ? "Une erreur est survenue lors de la vérification de votre paiement."
+            : "An error occurred while verifying your payment.");
+        })
+        .finally(() => {
+          setLoading(false);
+          // Clean up URL
+          window.history.replaceState({}, '', window.location.pathname);
+        });
     } else if (status === 'cancel') {
       setStep(3);
-      setBookingError("Le paiement a été annulé. Vous pouvez réessayer.");
+      setBookingError(lang === 'fr' 
+        ? "Le paiement a été annulé. Vous pouvez réessayer." 
+        : "Payment was cancelled. You can try again.");
       window.history.replaceState({}, '', window.location.pathname);
     }
-  }, []);
+  }, [lang]);
 
   // Close lang menu on click outside
   useEffect(() => {
@@ -113,9 +144,6 @@ export default function App() {
   const [isGalleryPaused, setIsGalleryPaused] = useState(false);
 
   // Booking Form State
-  const [step, setStep] = useState(1);
-  const [lang, setLang] = useState('en');
-  const [loading, setLoading] = useState(false);
   const [bookingData, setBookingData] = useState({
     pickup: '',
     dropoff: '',
@@ -156,7 +184,6 @@ export default function App() {
     return slots;
   }, []);
 
-  const [bookingError, setBookingError] = useState<string | null>(null);
   const [suggestions, setSuggestions] = useState<{
     pickup: any[];
     dropoff: any[];
@@ -745,6 +772,13 @@ export default function App() {
             isReturnTrip: bookingData.isReturnTrip,
             pickup: bookingData.pickup,
             dropoff: bookingData.dropoff,
+            firstName: bookingData.firstName,
+            lastName: bookingData.lastName,
+            email: bookingData.email,
+            phone: bookingData.phone,
+            passengers: bookingData.passengers,
+            luggage: bookingData.luggage,
+            flightNumber: bookingData.flightNumber,
           }),
         });
 
@@ -2171,12 +2205,12 @@ export default function App() {
                 <div className="w-1 h-5 bg-white rounded-t-sm"></div>
               </div>
               <h1 className="text-[19px] font-medium tracking-[0.25em] uppercase text-white/70 mb-5">Safeness & Transferts</h1>
-              <p className="text-[15px] font-light text-stone-400 tracking-wide max-w-lg">
+              <p className="text-[13.5px] md:text-[15px] font-light text-stone-400 tracking-wide max-w-lg">
                 {t('footer_desc')}
               </p>
             </div>
             
-            <div className="flex flex-col md:flex-row items-center justify-center gap-x-12 gap-y-6 md:gap-y-5 mb-16 text-[13px] font-normal tracking-[0.15em] uppercase text-white/95 md:text-white/50">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-x-12 gap-y-6 md:gap-y-5 mb-16 text-[13px] font-normal tracking-[0.15em] uppercase text-white/60 md:text-white/50">
               <a href="#services" className="hover:text-white transition-colors">{t('nav_services')}</a>
               <a href="#fleet" className="hover:text-white transition-colors">{t('nav_fleet')}</a>
               <a href="#gallery" className="hover:text-white transition-colors">{t('nav_gallery')}</a>

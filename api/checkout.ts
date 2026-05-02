@@ -31,6 +31,13 @@ interface CheckoutRequestBody {
   isReturnTrip: boolean;
   pickup: string;
   dropoff: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  passengers: number;
+  luggage: number;
+  flightNumber: string;
 }
 
 export default async function handler(req: Request, res: Response) {
@@ -39,7 +46,10 @@ export default async function handler(req: Request, res: Response) {
   }
 
   try {
-    const { vehicle, distance, extras, time, isReturnTrip, pickup, dropoff } = req.body as CheckoutRequestBody;
+    const { 
+      vehicle, distance, extras, time, isReturnTrip, pickup, dropoff,
+      firstName, lastName, email, phone, passengers, luggage, flightNumber
+    } = req.body as CheckoutRequestBody;
 
     if (!vehicle || !(vehicles as any)[vehicle]) {
       return res.status(400).json({ error: "Valid vehicle type is required" });
@@ -95,7 +105,23 @@ export default async function handler(req: Request, res: Response) {
         },
       ],
       mode: "payment",
-      success_url: `${process.env.APP_URL || process.env.VITE_APP_URL || "http://localhost:3000"}?status=success`,
+      customer_email: email,
+      metadata: {
+        firstName,
+        lastName,
+        email,
+        phone,
+        pickup,
+        dropoff,
+        time,
+        vehicle: selectedVehicle.name,
+        passengers: passengers.toString(),
+        luggage: luggage.toString(),
+        flightNumber: flightNumber || "N/A",
+        extras: Array.isArray(extras) ? extras.join(", ") : "None",
+        isReturnTrip: isReturnTrip.toString(),
+      },
+      success_url: `${process.env.APP_URL || process.env.VITE_APP_URL || "http://localhost:3000"}?status=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.APP_URL || process.env.VITE_APP_URL || "http://localhost:3000"}?status=cancel`,
     });
 

@@ -13,13 +13,22 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
-  app.use(express.json());
+  app.use(express.json({
+    verify: (req: any, _res, buf) => {
+      if (req.originalUrl.startsWith('/api/webhook')) {
+        req.rawBody = buf;
+      }
+    }
+  }));
 
-  // Import checkout handler (simulating Vercel environment)
-  // @ts-ignore
-  import("./api/checkout.ts").then((m) => {
-    app.post("/api/checkout", m.default);
-  });
+  // API routes
+  const { default: checkoutHandler } = await import("./api/checkout.ts");
+  const { default: webhookHandler } = await import("./api/webhook.ts");
+  const { default: verifyHandler } = await import("./api/verify-session.ts");
+
+  app.post("/api/checkout", checkoutHandler);
+  app.post("/api/webhook", webhookHandler);
+  app.get("/api/verify-session", verifyHandler);
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {

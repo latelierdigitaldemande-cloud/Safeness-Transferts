@@ -2176,7 +2176,7 @@ export default function App() {
               </p>
             </div>
             
-            <div className="flex flex-col md:flex-row items-center justify-center gap-x-12 gap-y-6 md:gap-y-5 mb-16 text-[13px] font-normal tracking-[0.15em] uppercase text-white/50">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-x-12 gap-y-6 md:gap-y-5 mb-16 text-[13px] font-normal tracking-[0.15em] uppercase text-white md:text-white/50">
               <a href="#services" className="hover:text-white transition-colors">{t('nav_services')}</a>
               <a href="#fleet" className="hover:text-white transition-colors">{t('nav_fleet')}</a>
               <a href="#gallery" className="hover:text-white transition-colors">{t('nav_gallery')}</a>

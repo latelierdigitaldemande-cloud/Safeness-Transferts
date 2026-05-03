@@ -121,8 +121,8 @@ export default async function handler(req: Request, res: Response) {
         extras: Array.isArray(extras) ? extras.join(", ") : "None",
         isReturnTrip: isReturnTrip.toString(),
       },
-      success_url: `${process.env.APP_URL || process.env.VITE_APP_URL || "http://localhost:3000"}?status=success&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.APP_URL || process.env.VITE_APP_URL || "http://localhost:3000"}?status=cancel`,
+      success_url: `${process.env.APP_URL || process.env.VITE_APP_URL}/?status=success&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.APP_URL || process.env.VITE_APP_URL}/?status=cancel`,
     });
 
     return res.status(200).json({ url: session.url });

@@ -19,10 +19,17 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
-  // IMPORTANT: Webhook needs raw body for signature verification
+  // IMPORTANT: Webhook needs raw body for signature verification.
+  // We use express.raw for this specific route and ensure express.json() doesn't touch it.
   app.use("/api/webhook", express.raw({ type: "application/json" }));
 
-  app.use(express.json());
+  // Global JSON parser for all other routes
+  app.use((req, res, next) => {
+    if (req.originalUrl.startsWith("/api/webhook")) {
+      return next();
+    }
+    express.json()(req, res, next);
+  });
 
   // API Routes
   app.post("/api/checkout", checkoutHandler);

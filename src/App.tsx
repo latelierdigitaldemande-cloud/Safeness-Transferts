@@ -997,11 +997,11 @@ export default function App() {
           {t('hero_badge')}
         </div>
         <div className="flex flex-col items-center mb-12">
-          <div className="relative inline-block pb-1 mb-1">
+          <div className="relative inline-block pb-1 mb-[2px] md:mb-1">
             <h2 className="text-[50px] md:text-7xl lg:text-8xl font-semibold tracking-tight uppercase text-white drop-shadow-sm">{t('hero_luxura')}</h2>
             <div className="absolute bottom-0 left-[15%] right-[15%] h-px bg-zinc-300 rounded-full opacity-80"></div>
           </div>
-          <h2 className="text-[50px] md:text-7xl lg:text-8xl font-semibold tracking-tight uppercase text-white drop-shadow-sm mt-1">{t('hero_worldwide')}</h2>
+          <h2 className="text-[50px] md:text-7xl lg:text-8xl font-semibold tracking-tight uppercase text-white drop-shadow-sm mt-[2px] md:mt-1">{t('hero_worldwide')}</h2>
         </div>
         <a 
           href="#booking"

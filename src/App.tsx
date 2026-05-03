@@ -436,6 +436,10 @@ export default function App() {
       a3: 'Oui, lors de votre réservation, nous vous communiquons un tarif fixe et définitif. Il n\'y a aucun frais caché lié au trafic ou au temps de trajet (hors temps d\'attente exceptionnel non prévu).',
       q4: 'Que se passe-t-il si mon vol ou mon train est en retard ?',
       a4: 'Nous suivons en temps réel l\'état de votre vol ou de votre train grâce au numéro communiqué lors de la réservation. Le chauffeur ajustera son heure d\'arrivée en conséquence, sans frais supplémentaires.',
+      q5: 'Quels sont les modes de paiement acceptés ?',
+      a5: 'Nous acceptons les paiements par carte bancaire (Visa, Mastercard, Amex) directement à bord du véhicule, les espèces, ainsi que les virements bancaires pour les réservations effectuées à l\'avance.',
+      q6: 'Puis-je modifier ou annuler ma réservation ?',
+      a6: 'Oui, vous pouvez modifier ou annuler votre réservation. Nous vous recommandons de nous contacter au moins 24 heures à l\'avance. Les conditions spécifiques d\'annulation vous seront précisées lors de la confirmation.',
       footer_desc: "L'élite du transport : prestige mondial, excellence sans compromis",
       legal: 'Mentions légales',
       privacy: 'Mentions légales',
@@ -607,6 +611,10 @@ export default function App() {
       a3: 'Yes, when you book, we communicate a fixed and final rate. There are no hidden fees related to traffic or travel time (except for exceptional, unplanned waiting time).',
       q4: 'What happens if my flight or train is late?',
       a4: 'We monitor the status of your flight or train in real time using the number provided during booking. The driver will adjust their arrival time accordingly, at no extra cost.',
+      q5: 'What payment methods do you accept?',
+      a5: 'We accept credit card payments (Visa, Mastercard, Amex) directly on board, cash, as well as bank transfers for bookings made in advance.',
+      q6: 'Can I modify or cancel my booking?',
+      a6: 'Yes, you can modify or cancel your booking. We recommend contacting us at least 24 hours in advance. Specific cancellation conditions will be provided upon confirmation.',
       footer_desc: 'Elite transport: global prestige, uncompromising excellence',
       legal: 'Legal notice',
       privacy: 'Privacy Policy',
@@ -1290,7 +1298,7 @@ export default function App() {
                   <img 
                     src={service.img}
                     alt={t(`service${i + 1}_title`)}
-                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 grayscale-[0.1] ${activeServiceCard === i ? 'opacity-90 scale-105 grayscale-0' : 'opacity-70 group-hover:opacity-90 group-hover:grayscale-0'}`}
+                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${activeServiceCard === i ? 'opacity-90 scale-105' : 'opacity-70 group-hover:opacity-90'}`}
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/20 to-transparent"></div>
@@ -1501,9 +1509,9 @@ export default function App() {
                   <Briefcase size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('corp_tag')}</span>
                 </div>
-                <h3 className="text-3xl md:text-3xl font-bold tracking-tight text-white mb-6 leading-tight uppercase">
-                    {t('corp_subtitle')}
-                  </h3>
+                <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm mb-10">
+                  {t('corp_subtitle')}
+                </h2>
               <p className="leading-relaxed mb-8">
                 {t('corp_desc')}
               </p>
@@ -1529,7 +1537,7 @@ export default function App() {
             <div className="relative w-full rounded-3xl flex items-center justify-center py-12 md:py-20 lg:py-24">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 to-transparent"></div>
               
-              <div className="w-full max-w-7xl border border-white/10 rounded-3xl bg-stone-950/40 backdrop-blur-xl p-8 md:p-16 lg:p-20 relative z-10 shadow-2xl">
+              <div className="w-full max-w-7xl lg:max-w-5xl border border-white/20 rounded-3xl bg-stone-800/40 backdrop-blur-xl p-8 md:p-16 lg:p-20 relative z-10 shadow-2xl">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
                   <Mail size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/80">{t('contact_pro')}</span>
@@ -1628,7 +1636,7 @@ export default function App() {
                   </span>
                   <h3 className="text-3xl font-bold tracking-tight uppercase text-white/90 mb-10">{car.model}</h3>
                   <div className="w-full aspect-[4/3] flex items-center justify-center mb-10 bg-white rounded-3xl p-6">
-                    <img src={car.img} alt={car.model} className="w-full object-contain grayscale group-hover:scale-105 transition-transform duration-700 mix-blend-multiply" referrerPolicy="no-referrer" />
+                    <img src={car.img} alt={car.model} className="w-full object-contain group-hover:scale-105 transition-transform duration-700 mix-blend-multiply" referrerPolicy="no-referrer" />
                   </div>
                   <div className={`w-full grid grid-cols-2 gap-y-6 pt-8 border-t ${car.isPremium ? 'border-white/20' : 'border-white/10'}`}>
                     <div className="flex items-center gap-3 justify-center">
@@ -2310,7 +2318,9 @@ export default function App() {
                 { q: t('q1'), a: t('a1') },
                 { q: t('q2'), a: t('a2') },
                 { q: t('q3'), a: t('a3') },
-                { q: t('q4'), a: t('a4') }
+                { q: t('q4'), a: t('a4') },
+                { q: t('q5'), a: t('a5') },
+                { q: t('q6'), a: t('a6') }
               ].map((faq, i) => (
                 <div key={i} className={`faq-item w-full border-b border-white/15 last:border-b-0 group ${openFaqIndex === i ? 'open' : ''}`}>
                   <button 

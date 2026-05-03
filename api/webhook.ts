@@ -32,7 +32,7 @@ export default async function handler(req: Request, res: Response) {
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent((req as any).rawBody, sig, webhookSecret);
+    event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
   } catch (err: any) {
     console.error(`Webhook Error: ${err.message}`);
     return res.status(400).send(`Webhook Error: ${err.message}`);

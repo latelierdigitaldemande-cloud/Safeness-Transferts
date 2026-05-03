@@ -360,7 +360,7 @@ export default function App() {
       europe_connect_desc: 'Liaisons quotidiennes vers Amsterdam, Bruxelles, et les métropoles régionales françaises.',
       services_tag: 'Prestations',
       services_title: 'Nos Services',
-      services_desc: 'EXCLUSIVE',
+      services_desc: 'Solutions de transport haut de gamme conçues pour répondre parfaitement à vos besoins professionnels et personnels les plus complexes.',
       service1_title: 'Transferts Privés',
       service1_desc: 'Liaisons aéroports, gares et trajets urbains avec une ponctualité absolue.',
       service2_title: 'Mise à Disposition',
@@ -372,6 +372,7 @@ export default function App() {
       service5_title: 'Roadshow Business',
       service5_desc: 'Optimisation de vos déplacements professionnels complexes sur plusieurs jours.',
       service_book: 'Réserver ce service',
+      section_book_btn: 'Réserver un service',
       engagement_tag: 'Engagement',
       engagement_title: 'L\'Excellence Absolue',
       val1_title: 'Chauffeurs Experts',
@@ -528,9 +529,9 @@ export default function App() {
       europe_berlin_tag: 'European Tech Hub',
       europe_connect_title: 'Europe Connect',
       europe_connect_desc: 'Daily links to Amsterdam, Brussels, and major French regional cities.',
-      services_tag: 'Exclusive Services',
+      services_tag: 'Expertise',
       services_title: 'Our Services',
-      services_desc: 'EXCLUSIVE',
+      services_desc: 'Premium tailored transportation solutions specifically designed to meet all of your most demanding professional and personal travel requirements efficiently.',
       service1_title: 'Private Transfers',
       service1_desc: 'Airport, station and city trips with absolute punctuality.',
       service2_title: 'Chauffeur Service',
@@ -542,6 +543,7 @@ export default function App() {
       service5_title: 'Business Roadshow',
       service5_desc: 'Optimization of your complex professional travels over several days.',
       service_book: 'Book this service',
+      section_book_btn: 'Book a service',
       engagement_tag: 'Engagement',
       engagement_title: 'Absolute Excellence',
       val1_title: 'Expert Chauffeurs',
@@ -1230,10 +1232,16 @@ export default function App() {
                 </h2>
                 <div className="h-1 w-12 bg-white/20 rounded-full mt-10"></div>
               </div>
-              <div className="lg:col-span-6 lg:border-l lg:border-white/10 lg:pl-12">
-                <p className="text-stone-400 text-lg md:text-xl font-light leading-relaxed mb-0 italic">
+              <div className="lg:col-span-6 lg:border-l lg:border-white/10 lg:pl-12 flex flex-col items-start gap-8">
+                <p className="text-stone-400 text-lg md:text-[17px] font-light leading-relaxed mb-0 italic">
                   {t('services_desc')}
                 </p>
+                <a 
+                  href="#booking"
+                  className="px-8 py-4 bg-white text-stone-950 text-xs font-bold uppercase tracking-[0.2em] rounded-full hover:bg-stone-100 transition-all shadow-xl shadow-white/5 active:scale-95"
+                >
+                  {t('section_book_btn')}
+                </a>
               </div>
             </div>
           </div>
@@ -1312,7 +1320,7 @@ export default function App() {
                           opacity: activeServiceCard === i ? 1 : 0
                         }}
                         transition={{ duration: 0.4, ease: "circOut" }}
-                        className="overflow-hidden md:!h-auto md:!opacity-100 flex flex-col gap-5"
+                        className="overflow-hidden flex flex-col gap-5"
                       >
                         <ul className="space-y-2 opacity-80">
                           {service.features.map((feature, idx) => (
@@ -1365,9 +1373,6 @@ export default function App() {
                 </motion.button>
               </div>
               
-              <div className="flex justify-end gap-2 text-white/10 text-[10px] font-bold uppercase tracking-[0.2em]">
-                <span className="hidden sm:inline">Scroll to explore</span>
-              </div>
             </div>
           </div>
         </section>
@@ -1744,23 +1749,23 @@ export default function App() {
               <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('reviews_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
               
-              <div className="flex flex-wrap items-center justify-center gap-6 mt-12">
-                <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
-                  <iconify-icon icon="logos:google-icon" width="20"></iconify-icon>
-                  <span className="text-white font-medium">Google</span>
+              <div className="flex flex-col items-center gap-4 mt-12">
+                <div className="flex flex-col items-center">
+                  <span className="text-white font-medium text-lg leading-none">{t('excellent')}</span>
+                  <span className="text-[10px] text-stone-500 uppercase tracking-[0.15em] mt-2">{t('verified_count')}</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="flex text-[#FBBC05]">
-                    <iconify-icon icon="solar:star-bold" width="14"></iconify-icon>
-                    <iconify-icon icon="solar:star-bold" width="14"></iconify-icon>
-                    <iconify-icon icon="solar:star-bold" width="14"></iconify-icon>
-                    <iconify-icon icon="solar:star-bold" width="14"></iconify-icon>
-                    <iconify-icon icon="solar:star-bold" width="14"></iconify-icon>
-                  </div>
-                  <div className="flex flex-col items-start">
-                    <span className="text-white font-medium leading-none text-sm">{t('excellent')}</span>
-                    <span className="text-[9px] text-stone-500 uppercase tracking-widest mt-1">{t('verified_count')}</span>
-                  </div>
+                
+                <div className="flex text-[#FBBC05] gap-0.5">
+                  <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
+                  <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
+                  <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
+                  <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
+                  <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
+                </div>
+
+                <div className="flex items-center gap-2.5 bg-white/5 px-5 py-2 rounded-full border border-white/10 mt-2">
+                  <iconify-icon icon="logos:google-icon" width="18"></iconify-icon>
+                  <span className="text-white font-medium text-sm">Google</span>
                 </div>
               </div>
             </div>

@@ -1,6 +1,16 @@
 import Stripe from "stripe";
 import { Request, Response } from "express";
 import { Resend } from "resend";
+import { Readable } from "stream";
+
+// Utility to read the raw body from the request stream (for Vercel with bodyParser: false)
+async function buffer(readable: Readable) {
+  const chunks: any[] = [];
+  for await (const chunk of readable) {
+    chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk);
+  }
+  return Buffer.concat(chunks);
+}
 
 const getStripe = () => {
   const key = process.env.STRIPE_SECRET_KEY;
@@ -32,7 +42,10 @@ export default async function handler(req: Request, res: Response) {
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+    // On Vercel with bodyParser: false, req is a stream that hasn't been read.
+    // In our local Express dev server, it's already a Buffer thanks to express.raw().
+    const rawBody = Buffer.isBuffer(req.body) ? req.body : await buffer(req);
+    event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
   } catch (err: any) {
     console.error(`Webhook Error: ${err.message}`);
     return res.status(400).send(`Webhook Error: ${err.message}`);

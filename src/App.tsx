@@ -1684,7 +1684,7 @@ export default function App() {
               <div className="absolute right-0 top-0 bottom-0 w-32 z-20 bg-gradient-to-l from-stone-900 via-stone-900/50 to-transparent pointer-events-none"></div>
 
               <div 
-                className={`flex gap-3 md:gap-6 w-max animate-marquee ${isGalleryPaused ? '[animation-play-state:paused]' : ''}`}
+                className={`flex gap-3 md:gap-6 w-max animate-marquee-slow ${isGalleryPaused ? '[animation-play-state:paused]' : ''}`}
                 onMouseEnter={() => setIsGalleryPaused(true)}
                 onMouseLeave={() => setIsGalleryPaused(false)}
               >

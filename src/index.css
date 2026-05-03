@@ -38,6 +38,9 @@ body {
 .animate-marquee {
     animation: marquee 30s linear infinite;
 }
+.animate-marquee-slow {
+    animation: marquee 60s linear infinite;
+}
 
 /* FAQ Smooth Transitions */
 .faq-content {

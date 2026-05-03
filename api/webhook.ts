@@ -12,6 +12,12 @@ async function buffer(readable: Readable) {
   return Buffer.concat(chunks);
 }
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 const getStripe = () => {
   const key = process.env.STRIPE_SECRET_KEY;
   if (!key) {

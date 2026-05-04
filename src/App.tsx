@@ -398,7 +398,7 @@ export default function App() {
       corp_cta: 'Ouvrir un compte professionnel',
       contact_pro: 'Contact Pro',
       field_name: 'Nom Complet',
-      field_company: 'Société',
+      field_company: 'Société (facultatif)',
       phone_contact: 'Téléphone',
       field_message: 'Message',
       placeholder_name: 'Jean Dupont',
@@ -575,7 +575,7 @@ export default function App() {
       corp_cta: 'Open a business account',
       contact_pro: 'Contact Pro',
       field_name: 'Full Name',
-      field_company: 'Company',
+      field_company: 'Company (optional)',
       phone_contact: 'Phone Number',
       field_message: 'Message',
       placeholder_name: 'John Doe',
@@ -1568,10 +1568,6 @@ export default function App() {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 to-transparent"></div>
               
               <div className="w-full max-w-7xl lg:max-w-5xl border border-white/20 rounded-3xl bg-stone-800/40 backdrop-blur-xl p-8 md:p-16 lg:p-20 relative z-10 shadow-2xl">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
-                  <Mail size={12} className="text-white/60" />
-                  <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/80">{t('contact_pro')}</span>
-                </div>
                 
                 <form className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8" onSubmit={(e) => e.preventDefault()}>
                   <div className="flex flex-col gap-2">

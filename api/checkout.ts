@@ -38,6 +38,7 @@ interface CheckoutRequestBody {
   passengers: number;
   luggage: number;
   flightNumber: string;
+  lang?: string;
 }
 
 export default async function handler(req: Request, res: Response) {
@@ -48,7 +49,8 @@ export default async function handler(req: Request, res: Response) {
   try {
     const { 
       vehicle, distance, extras, time, isReturnTrip, pickup, dropoff,
-      firstName, lastName, email, phone, passengers, luggage, flightNumber
+      firstName, lastName, email, phone, passengers, luggage, flightNumber,
+      lang = 'fr'
     } = req.body as CheckoutRequestBody;
 
     if (!vehicle || !(vehicles as any)[vehicle]) {
@@ -89,6 +91,13 @@ export default async function handler(req: Request, res: Response) {
     const finalAmount = Math.round(calculatedPrice);
 
     const stripe = getStripe();
+
+    const isEn = lang === 'en';
+    const productName = isEn ? `Transfer ${selectedVehicle.name}` : `Transfert ${selectedVehicle.name}`;
+    const productDesc = isEn 
+      ? `From ${pickup} to ${dropoff}${time ? ` - ${time}` : ""}`
+      : `De ${pickup} à ${dropoff}${time ? ` - ${time}` : ""}`;
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
@@ -96,8 +105,8 @@ export default async function handler(req: Request, res: Response) {
           price_data: {
             currency: "eur",
             product_data: {
-              name: `Transfert ${selectedVehicle.name}`,
-              description: `De ${pickup} à ${dropoff}${time ? ` - ${time}` : ""}`,
+              name: productName,
+              description: productDesc,
             },
             unit_amount: finalAmount * 100, // Stripe expects cents
           },

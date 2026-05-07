@@ -42,6 +42,31 @@ const cities = [
   { name: 'Berlin', icon: 'circle-flags:de' }
 ];
 
+// Helper to get current time slot
+const getCurrentTimeSlot = () => {
+  const now = new Date();
+  let hour = now.getHours();
+  let min = now.getMinutes();
+  
+  // Round to nearest 15 mins
+  if (min < 15) min = 0;
+  else if (min < 30) min = 15;
+  else if (min < 45) min = 30;
+  else {
+    min = 45;
+  }
+
+  const start = `${hour.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}`;
+  let endHour = hour;
+  let endMin = min + 15;
+  if (endMin === 60) {
+    endMin = 0;
+    endHour++;
+  }
+  const end = `${(endHour % 24).toString().padStart(2, '0')}:${endMin.toString().padStart(2, '0')}`;
+  return `${start} - ${end}`;
+};
+
 export default function App() {
   const [step, setStep] = useState(1);
   const [lang, setLang] = useState('en');
@@ -57,6 +82,16 @@ export default function App() {
   const [selectedTransfer, setSelectedTransfer] = useState<number | null>(null);
   const [isChatTooltipVisible, setIsChatTooltipVisible] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const bookingRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to top of form when step changes
+  useEffect(() => {
+    if (bookingRef.current) {
+      const yOffset = -20; // Reduced offset for tighter scroll
+      const y = bookingRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  }, [step]);
 
   // Handle Stripe Redirection Status
   useEffect(() => {
@@ -149,7 +184,8 @@ export default function App() {
     dropoff: '',
     pickupCoords: null as [number, number] | null,
     dropoffCoords: null as [number, number] | null,
-    time: '12:00 - 12:15',
+    date: new Date().toISOString().split('T')[0],
+    time: getCurrentTimeSlot(),
     vehicle: 'business',
     passengers: 1,
     luggage: 1,
@@ -157,18 +193,24 @@ export default function App() {
     firstName: '',
     lastName: '',
     email: '',
+    countryCode: '+33',
     phone: '',
     flightNumber: '',
     paymentMethod: 'card',
     isReturnTrip: false,
-    returnTime: '12:00 - 12:15',
+    returnPickup: '',
+    returnDropoff: '',
+    returnPickupCoords: null as [number, number] | null,
+    returnDropoffCoords: null as [number, number] | null,
+    returnDate: new Date().toISOString().split('T')[0],
+    returnTime: getCurrentTimeSlot(),
     distance: 0,
     duration: 0
   });
 
   const timeSlots = useMemo(() => {
     const slots = [];
-    for (let hour = 6; hour <= 23; hour++) {
+    for (let hour = 0; hour <= 23; hour++) {
       for (let min = 0; min < 60; min += 15) {
         const start = `${hour.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}`;
         let endHour = hour;
@@ -177,7 +219,7 @@ export default function App() {
           endMin = 0;
           endHour++;
         }
-        const end = `${endHour.toString().padStart(2, '0')}:${endMin.toString().padStart(2, '0')}`;
+        const end = `${(endHour % 24).toString().padStart(2, '0')}:${endMin.toString().padStart(2, '0')}`;
         slots.push(`${start} - ${end}`);
       }
     }
@@ -187,7 +229,9 @@ export default function App() {
   const [suggestions, setSuggestions] = useState<{
     pickup: any[];
     dropoff: any[];
-  }>({ pickup: [], dropoff: [] });
+    returnPickup: any[];
+    returnDropoff: any[];
+  }>({ pickup: [], dropoff: [], returnPickup: [], returnDropoff: [] });
 
   const pickupInputRef = useRef<HTMLInputElement>(null);
   const dropoffInputRef = useRef<HTMLInputElement>(null);
@@ -307,14 +351,21 @@ export default function App() {
       dropoff: 'Lieu d\'arrivée',
       date: 'Date',
       time: 'Heure',
+      field_time: 'Créneau Horaire',
+      view_prices: 'Voir les tarifs',
       next: 'Suivant',
       back: 'Retour',
       confirm: 'Confirmer la réservation',
       summary: 'Récapitulatif',
       total: 'Total estimé',
       passengers: 'Passagers',
+      passenger_singular: 'Passager',
+      passenger_plural: 'Passagers',
       luggage: 'Bagages',
+      luggage_label: 'Bagages',
+      extras_label: 'Options Supplémentaires',
       payment: 'Mode de paiement',
+      payment_mode: 'Mode de paiement',
       card: 'Paiement en ligne (Stripe)',
       cash: 'Espèces (à bord)',
       transfer: 'Virement (avance)',
@@ -324,11 +375,19 @@ export default function App() {
       phone: 'Téléphone',
       flight: 'N° de vol / train (optionnel)',
       returnTrip: 'Trajet Retour',
+      add_return: 'Ajouter un trajet retour',
+      itinerary_return: 'Itinéraire Retour',
       returnDate: 'Date Retour',
+      field_returnTime: 'Créneau Retour',
       returnTime: 'Heure Retour',
+      vehicle_business: 'Business Class',
+      vehicle_van: 'Business Van',
+      vehicle_first: 'First Class',
+      extra_child_seat: 'Siège Bébé / Rehausseur',
+      extra_greeter: 'Accueil Pancarte',
+      extra_extra_luggage: 'Bagages Supplémentaires',
       success: 'Demande envoyée !',
       successMsg: 'Votre demande de réservation a été transmise. Un conseiller vous contactera par SMS ou Email pour confirmer la disponibilité.',
-      depositNotice: 'Un acompte de 20 € est requis pour valider la réservation. Le reste sera à régler à bord',
       newReservation: 'Nouvelle réservation',
       orderSummary: 'Récapitulatif de commande',
       departure: 'Départ',
@@ -339,7 +398,12 @@ export default function App() {
       pickup_label: 'Lieu de prise en charge',
       pickup_placeholder: 'Adresse, Aéroport, Gare...',
       dropoff_label: 'Destination',
-      dropoff_placeholder: 'Où allez-vous ?',
+      dropoff_placeholder: 'Adresse, Aéroport, Gare...',
+      placeholder_firstName: 'Votre prénom',
+      placeholder_lastName: 'Votre nom',
+      placeholder_email: 'jean@entreprise.com',
+      placeholder_phone: 'Votre téléphone',
+      swap_addresses: 'Inverser les adresses',
       nav_services: 'Services',
       nav_fleet: 'La Flotte',
       nav_gallery: 'Galerie',
@@ -398,12 +462,12 @@ export default function App() {
       corp_cta: 'Ouvrir un compte professionnel',
       contact_pro: 'Contact Pro',
       field_name: 'Nom Complet',
+      field_date: 'Date',
       field_company: 'Société (facultatif)',
       phone_contact: 'Téléphone',
       field_message: 'Message',
       placeholder_name: 'Jean Dupont',
       placeholder_company: 'Entreprise S.A.',
-      placeholder_email: 'jean@entreprise.com',
       placeholder_message: 'Décrivez votre besoin...',
       contact_btn: 'Demander une Ouverture de Compte',
       fleet_tag: 'Fleet',
@@ -484,14 +548,21 @@ export default function App() {
       dropoff: 'Drop-off Location',
       date: 'Date',
       time: 'Time',
+      field_time: 'Time Slot',
+      view_prices: 'View Prices',
       next: 'Next',
       back: 'Back',
       confirm: 'Confirm Booking',
       summary: 'Summary',
       total: 'Estimated Total',
       passengers: 'Passengers',
+      passenger_singular: 'Passenger',
+      passenger_plural: 'Passengers',
       luggage: 'Luggage',
+      luggage_label: 'Luggage',
+      extras_label: 'Additional Options',
       payment: 'Payment Method',
+      payment_mode: 'Payment Method',
       card: 'Online Payment (Stripe)',
       cash: 'Cash (on board)',
       transfer: 'Bank Transfer (advance)',
@@ -501,11 +572,19 @@ export default function App() {
       phone: 'Phone',
       flight: 'Flight / Train No. (optional)',
       returnTrip: 'Return Trip',
+      add_return: 'Add return trip',
+      itinerary_return: 'Return Itinerary',
       returnDate: 'Return Date',
+      field_returnTime: 'Return Time Slot',
       returnTime: 'Return Time',
+      vehicle_business: 'Business Class',
+      vehicle_van: 'Business Van',
+      vehicle_first: 'First Class',
+      extra_child_seat: 'Child Seat / Booster',
+      extra_greeter: 'Meet & Greet (Sign)',
+      extra_extra_luggage: 'Extra Luggage',
       success: 'Request Sent!',
       successMsg: 'Your booking request has been transmitted. A consultant will contact you via SMS or Email to confirm availability.',
-      depositNotice: 'A deposit of €20 is required to validate the booking. The balance will be paid on board',
       newReservation: 'New booking',
       orderSummary: 'Order Summary',
       departure: 'Departure',
@@ -516,7 +595,12 @@ export default function App() {
       pickup_label: 'Pickup location',
       pickup_placeholder: 'Address, Airport, Station...',
       dropoff_label: 'Destination',
-      dropoff_placeholder: 'Where are you going?',
+      dropoff_placeholder: 'Address, Airport, Station...',
+      placeholder_firstName: 'Your first name',
+      placeholder_lastName: 'Your last name',
+      placeholder_email: 'john@example.com',
+      placeholder_phone: 'Your phone number',
+      swap_addresses: 'Swap addresses',
       nav_services: 'Services',
       nav_fleet: 'Fleet',
       nav_gallery: 'Gallery',
@@ -575,12 +659,12 @@ export default function App() {
       corp_cta: 'Open a business account',
       contact_pro: 'Contact Pro',
       field_name: 'Full Name',
+      field_date: 'Date',
       field_company: 'Company (optional)',
       phone_contact: 'Phone Number',
       field_message: 'Message',
       placeholder_name: 'John Doe',
       placeholder_company: 'Company Inc.',
-      placeholder_email: 'john@company.com',
       placeholder_message: 'Describe your need...',
       contact_btn: 'Request an Account Opening',
       fleet_tag: 'Fleet',
@@ -753,7 +837,7 @@ export default function App() {
     }
   }, [step]);
 
-  const searchAddress = async (query: string, type: 'pickup' | 'dropoff') => {
+  const searchAddress = async (query: string, type: 'pickup' | 'dropoff' | 'returnPickup' | 'returnDropoff') => {
     if (query.length < 3) {
       setSuggestions(prev => ({ ...prev, [type]: [] }));
       return;
@@ -767,7 +851,7 @@ export default function App() {
     }
   };
 
-  const selectAddress = (item: any, type: 'pickup' | 'dropoff') => {
+  const selectAddress = (item: any, type: 'pickup' | 'dropoff' | 'returnPickup' | 'returnDropoff') => {
     const coords: [number, number] = [parseFloat(item.lat), parseFloat(item.lon)];
     setBookingData(prev => ({
       ...prev,
@@ -776,7 +860,7 @@ export default function App() {
     }));
     setSuggestions(prev => ({ ...prev, [type]: [] }));
 
-    if (mapRef.current) {
+    if (mapRef.current && (type === 'pickup' || type === 'dropoff')) {
       if (markersRef.current[type]) {
         markersRef.current[type]?.remove();
       }
@@ -880,10 +964,11 @@ export default function App() {
             firstName: bookingData.firstName,
             lastName: bookingData.lastName,
             email: bookingData.email,
-            phone: bookingData.phone,
+            phone: `${bookingData.countryCode} ${bookingData.phone}`,
             passengers: bookingData.passengers,
             luggage: bookingData.luggage,
             flightNumber: bookingData.flightNumber,
+            lang: lang,
           }),
         });
 
@@ -1905,12 +1990,12 @@ export default function App() {
             <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
           </div>
           
-          <div className="w-full max-w-6xl mx-auto px-6 relative z-10">
+          <div ref={bookingRef} className="w-full max-w-6xl mx-auto px-6 relative z-10">
             {/* Mobile-only Step Indicators Block */}
             <div className="md:hidden w-full mb-8">
-              <div className="w-full flex items-center justify-center gap-1 p-3 rounded-xl bg-white border border-stone-100 shadow-xl">
+              <div className="w-full flex items-center justify-between p-3 px-6 rounded-xl bg-white border border-stone-100 shadow-xl">
                 {[1, 2, 3, 4].map((s) => (
-                  <div key={s} className="flex items-center">
+                  <Fragment key={s}>
                     <button
                       onClick={() => {
                           if (s < step || (s === 2 && bookingData.pickup && bookingData.dropoff) || (s >= 3 && step >= s - 1)) {
@@ -1924,12 +2009,12 @@ export default function App() {
                       </div>
                     </button>
                     {s < 4 && (
-                      <div className="w-5 h-px mx-1 relative">
+                      <div className="flex-1 h-px mx-2 relative">
                         <div className="absolute inset-0 bg-stone-100"></div>
                         <div className={`absolute inset-0 bg-stone-900 transition-all duration-700 ${step > s ? 'w-full' : 'w-0'}`}></div>
                       </div>
                     )}
-                  </div>
+                  </Fragment>
                 ))}
               </div>
             </div>
@@ -2007,7 +2092,7 @@ export default function App() {
                                 }));
                               }}
                               className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white border border-stone-200 rounded-full flex items-center justify-center text-stone-400 hover:text-stone-900 shadow-md hover:shadow-lg transition-all z-30"
-                              title="Inverser les adresses"
+                              title={t('swap_addresses')}
                             >
                               <iconify-icon icon="solar:transfer-vertical-linear" width="16"></iconify-icon>
                             </button>
@@ -2049,9 +2134,19 @@ export default function App() {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">Créneau Horaire</label>
+                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('field_date')}</label>
+                          <input 
+                            type="date"
+                            value={bookingData.date || ''}
+                            onChange={(e) => setBookingData(prev => ({ ...prev, date: e.target.value }))}
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            required
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('field_time')}</label>
                           <select 
                             value={bookingData.time}
                             onChange={(e) => setBookingData(prev => ({ ...prev, time: e.target.value }))}
@@ -2066,7 +2161,12 @@ export default function App() {
 
                       <div className="space-y-4">
                         <button 
-                          onClick={() => setBookingData(prev => ({ ...prev, isReturnTrip: !prev.isReturnTrip }))}
+                          onClick={() => setBookingData(prev => ({ 
+                            ...prev, 
+                            isReturnTrip: !prev.isReturnTrip,
+                            returnPickup: !prev.isReturnTrip ? prev.dropoff : prev.returnPickup,
+                            returnDropoff: !prev.isReturnTrip ? prev.pickup : prev.returnDropoff
+                          }))}
                           className={`w-full flex items-center justify-between p-2.5 md:p-3.5 rounded-xl border-2 transition-all ${bookingData.isReturnTrip ? 'border-stone-900 bg-stone-50' : 'border-stone-100 bg-white hover:border-stone-200'}`}
                         >
                           <div className="flex items-center gap-3">
@@ -2075,7 +2175,7 @@ export default function App() {
                             </div>
                             <div className="text-left">
                               <div className="text-sm font-bold text-stone-900">{t('returnTrip')}</div>
-                              <div className="text-[10px] text-stone-400 uppercase tracking-wider font-medium">Ajouter un trajet retour</div>
+                              <div className="text-[10px] text-stone-400 uppercase tracking-wider font-medium">{t('add_return')}</div>
                             </div>
                           </div>
                           <div className={`w-12 h-6 rounded-full relative transition-all ${bookingData.isReturnTrip ? 'bg-stone-900' : 'bg-stone-200'}`}>
@@ -2084,18 +2184,119 @@ export default function App() {
                         </button>
 
                         {bookingData.isReturnTrip && (
-                          <div className="grid grid-cols-1 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                            <div className="space-y-2">
-                              <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">Créneau Horaire Retour</label>
-                              <select 
-                                value={bookingData.returnTime}
-                                onChange={(e) => setBookingData(prev => ({ ...prev, returnTime: e.target.value }))}
-                                className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
-                              >
-                                {timeSlots.map(slot => (
-                                  <option key={slot} value={slot}>{slot}</option>
-                                ))}
-                              </select>
+                          <div className="space-y-2 relative flex flex-col animate-in fade-in slide-in-from-top-2 duration-300">
+                            <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('itinerary_return')}</label>
+                            
+                            <div className="relative border border-stone-200 rounded-xl bg-white overflow-visible">
+                              {/* Return Pickup Field */}
+                              <motion.div layout className={`relative ${suggestions.returnPickup.length > 0 ? 'z-40' : 'z-20'}`}>
+                                <div className="relative">
+                                  <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />
+                                  <input 
+                                    type="text" 
+                                    required={bookingData.isReturnTrip}
+                                    value={bookingData.returnPickup}
+                                    onChange={(e) => {
+                                      setBookingData(prev => ({ ...prev, returnPickup: e.target.value, returnPickupCoords: null }));
+                                      searchAddress(e.target.value, 'returnPickup');
+                                    }}
+                                    placeholder={t('pickup_placeholder')} 
+                                    className="w-full bg-transparent border-none py-3 md:py-4 pl-12 pr-4 text-stone-900 placeholder:text-stone-300 focus:ring-0 outline-none transition-all"
+                                  />
+                                </div>
+                                {suggestions.returnPickup.length > 0 && (
+                                  <div className="absolute z-50 w-full mt-1 bg-white border border-stone-200 rounded-xl overflow-hidden shadow-xl top-full">
+                                    {suggestions.returnPickup.map((item, i) => (
+                                      <button 
+                                        key={i}
+                                        type="button"
+                                        onClick={() => selectAddress(item, 'returnPickup')}
+                                        className="w-full text-left px-4 py-3 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors border-b border-stone-50 last:border-0"
+                                      >
+                                        {item.display_name}
+                                      </button>
+                                    ))}
+                                  </div>
+                                )}
+                              </motion.div>
+    
+                              {/* Separator Line with Swap Button */}
+                              <div className="h-px bg-stone-100 mx-12 relative">
+                                <button 
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    setBookingData(prev => ({
+                                      ...prev,
+                                      returnPickup: prev.returnDropoff,
+                                      returnDropoff: prev.returnPickup,
+                                      returnPickupCoords: prev.returnDropoffCoords,
+                                      returnDropoffCoords: prev.returnPickupCoords
+                                    }));
+                                  }}
+                                  className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white border border-stone-200 rounded-full flex items-center justify-center text-stone-400 hover:text-stone-900 shadow-md hover:shadow-lg transition-all z-30"
+                                  title={t('swap_addresses')}
+                                >
+                                  <iconify-icon icon="solar:transfer-vertical-linear" width="16"></iconify-icon>
+                                </button>
+                              </div>
+    
+                              {/* Return Dropoff Field */}
+                              <motion.div layout className={`relative ${suggestions.returnDropoff.length > 0 ? 'z-40' : 'z-10'}`}>
+                                <div className="relative">
+                                  <Navigation className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />
+                                  <input 
+                                    type="text" 
+                                    required={bookingData.isReturnTrip}
+                                    value={bookingData.returnDropoff}
+                                    onChange={(e) => {
+                                      setBookingData(prev => ({ ...prev, returnDropoff: e.target.value, returnDropoffCoords: null }));
+                                      searchAddress(e.target.value, 'returnDropoff');
+                                    }}
+                                    placeholder={t('dropoff_placeholder')} 
+                                    className="w-full bg-transparent border-none py-3 md:py-4 pl-12 pr-4 text-stone-900 placeholder:text-stone-300 focus:ring-0 outline-none transition-all"
+                                  />
+                                </div>
+                                {suggestions.returnDropoff.length > 0 && (
+                                  <div className="absolute z-50 w-full mt-1 bg-white border border-stone-200 rounded-xl overflow-hidden shadow-xl top-full">
+                                    {suggestions.returnDropoff.map((item, i) => (
+                                      <button 
+                                        key={i}
+                                        type="button"
+                                        onClick={() => selectAddress(item, 'returnDropoff')}
+                                        className="w-full text-left px-4 py-3 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors border-b border-stone-50 last:border-0"
+                                      >
+                                        {item.display_name}
+                                      </button>
+                                    ))}
+                                  </div>
+                                )}
+                              </motion.div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                              <div className="space-y-2">
+                                <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('field_returnDate') || t('returnDate')}</label>
+                                <input 
+                                  type="date"
+                                  value={bookingData.returnDate || ''}
+                                  onChange={(e) => setBookingData(prev => ({ ...prev, returnDate: e.target.value }))}
+                                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                                  required={bookingData.isReturnTrip}
+                                />
+                              </div>
+                              <div className="space-y-2">
+                                <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('field_returnTime')}</label>
+                                <select 
+                                  value={bookingData.returnTime}
+                                  onChange={(e) => setBookingData(prev => ({ ...prev, returnTime: e.target.value }))}
+                                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
+                                >
+                                  {timeSlots.map(slot => (
+                                    <option key={slot} value={slot}>{slot}</option>
+                                  ))}
+                                </select>
+                              </div>
                             </div>
                           </div>
                         )}
@@ -2107,7 +2308,7 @@ export default function App() {
                           disabled={loading}
                           className="w-full bg-stone-900 text-white py-3 md:py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 disabled:opacity-50"
                         >
-                          {loading ? <Loader2 className="animate-spin" size={20} /> : t('next')}
+                          {loading ? <Loader2 className="animate-spin" size={20} /> : t('view_prices')}
                         </button>
                       </div>
                     </div>
@@ -2145,15 +2346,17 @@ export default function App() {
                       <div className="flex gap-4">
                         <button 
                           onClick={() => setStep(1)}
-                          className="flex-1 bg-stone-100 text-stone-600 py-3 md:py-4 rounded-xl font-bold hover:bg-stone-200 transition-all"
+                          className="w-14 h-12 md:h-14 bg-stone-100 text-stone-600 rounded-xl flex items-center justify-center hover:bg-stone-200 transition-all shrink-0"
+                          title={t('back')}
                         >
-                          {t('back')}
+                          <ChevronLeft size={20} />
                         </button>
                         <button 
                           onClick={() => setStep(3)}
-                          className="flex-[2] bg-stone-900 text-white py-3 md:py-4 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200"
+                          className="flex-1 bg-stone-900 text-white py-3 md:py-4 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 flex items-center justify-center gap-2"
                         >
                           {t('next')}
+                          <ArrowRight size={18} />
                         </button>
                       </div>
                     </div>
@@ -2173,7 +2376,7 @@ export default function App() {
                               <img src={vehicle.img} alt={vehicle.name} className="w-full object-contain mix-blend-multiply" />
                             </div>
                             <div className="flex-1 text-left min-w-0">
-                              <div className="text-sm md:text-base font-bold text-stone-900 truncate">{vehicle.name}</div>
+                              <div className="text-sm md:text-base font-bold text-stone-900 truncate">{t(`vehicle_${key}`)}</div>
                               <div className="text-[10px] md:text-xs text-stone-400 uppercase tracking-wider font-medium truncate">{vehicle.model}</div>
                               <div className="flex items-center gap-3 md:gap-4 mt-1 md:mt-2">
                                 <span className="flex items-center gap-1 text-[10px] md:text-xs text-stone-500 font-medium whitespace-nowrap"><Users size={12} /> {vehicle.pax}</span>
@@ -2189,18 +2392,48 @@ export default function App() {
                         ))}
                       </div>
 
+                      <div className="space-y-4 pt-6 border-t border-stone-100">
+                        <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('extras_label')}</label>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                          {Object.entries(extras).map(([key, extra]) => (
+                            <button 
+                              key={key}
+                              onClick={() => {
+                                setBookingData(prev => ({
+                                  ...prev,
+                                  extras: prev.extras.includes(key) 
+                                    ? prev.extras.filter(e => e !== key)
+                                    : [...prev.extras, key]
+                                }));
+                              }}
+                              className={`flex items-center gap-3 p-3 rounded-xl border-2 transition-all ${bookingData.extras.includes(key) ? 'border-stone-900 bg-stone-50' : 'border-stone-100 bg-white hover:border-stone-200'}`}
+                            >
+                              <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${bookingData.extras.includes(key) ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-400'}`}>
+                                {bookingData.extras.includes(key) ? <Check size={14} /> : <Plus size={14} />}
+                              </div>
+                              <div className="flex-1 text-left">
+                                <div className={`text-[10px] font-bold uppercase tracking-wider ${bookingData.extras.includes(key) ? 'text-stone-900' : 'text-stone-400'}`}>{t(`extra_${key}`)}</div>
+                                <div className="text-[10px] text-stone-400 font-medium">+{extra.price}€</div>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
                       <div className="flex gap-4">
                         <button 
                           onClick={() => setStep(2)}
-                          className="flex-1 bg-stone-100 text-stone-600 py-3 md:py-4 rounded-xl font-bold hover:bg-stone-200 transition-all"
+                          className="w-14 h-12 md:h-14 bg-stone-100 text-stone-600 rounded-xl flex items-center justify-center hover:bg-stone-200 transition-all shrink-0"
+                          title={t('back')}
                         >
-                          {t('back')}
+                          <ChevronLeft size={20} />
                         </button>
                         <button 
                           onClick={() => setStep(4)}
-                          className="flex-[2] bg-stone-900 text-white py-3 md:py-4 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200"
+                          className="flex-1 bg-stone-900 text-white py-3 md:py-4 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 flex items-center justify-center gap-2"
                         >
                           {t('next')}
+                          <ArrowRight size={18} />
                         </button>
                       </div>
                     </div>
@@ -2218,7 +2451,7 @@ export default function App() {
                             className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
                           >
                             {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
-                              <option key={n} value={n}>{n} {lang === 'fr' ? (n > 1 ? 'Passagers' : 'Passager') : (n > 1 ? 'Passengers' : 'Passenger')}</option>
+                              <option key={n} value={n}>{n} {n > 1 ? t('passenger_plural') : t('passenger_singular')}</option>
                             ))}
                           </select>
                         </div>
@@ -2230,7 +2463,7 @@ export default function App() {
                             className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
                           >
                             {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
-                              <option key={n} value={n}>{n} {lang === 'fr' ? (n > 1 ? 'Bagages' : 'Bagage') : (n > 1 ? 'Luggage' : 'Luggage')}</option>
+                              <option key={n} value={n}>{n} {t('luggage_label')}</option>
                             ))}
                           </select>
                         </div>
@@ -2245,6 +2478,7 @@ export default function App() {
                             required
                             value={bookingData.firstName}
                             onChange={(e) => setBookingData(prev => ({ ...prev, firstName: e.target.value }))}
+                            placeholder={t('placeholder_firstName')}
                             className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
@@ -2256,11 +2490,12 @@ export default function App() {
                             required
                             value={bookingData.lastName}
                             onChange={(e) => setBookingData(prev => ({ ...prev, lastName: e.target.value }))}
+                            placeholder={t('placeholder_lastName')}
                             className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                       </div>
-
+ 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                         <div className="space-y-2">
                           <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('email')}</label>
@@ -2270,24 +2505,55 @@ export default function App() {
                             required
                             value={bookingData.email}
                             onChange={(e) => setBookingData(prev => ({ ...prev, email: e.target.value }))}
+                            placeholder={t('placeholder_email')}
                             className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                         <div className="space-y-2">
                           <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('phone')}</label>
-                          <input 
-                            ref={phoneRef}
-                            type="tel" 
-                            required
-                            value={bookingData.phone}
-                            onChange={(e) => setBookingData(prev => ({ ...prev, phone: e.target.value }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
-                          />
+                          <div className="flex bg-stone-50 border border-stone-200 rounded-xl focus-within:border-stone-900 focus-within:bg-white transition-all overflow-hidden">
+                            <select
+                              value={bookingData.countryCode}
+                              onChange={(e) => setBookingData(prev => ({ ...prev, countryCode: e.target.value }))}
+                              className="bg-transparent border-r border-stone-200 py-3 md:py-4 px-3 text-stone-900 outline-none text-sm font-medium w-auto cursor-pointer flex-shrink-0"
+                            >
+                              <option value="+33">+33</option>
+                              <option value="+44">+44</option>
+                              <option value="+39">+39</option>
+                              <option value="+49">+49</option>
+                              <option value="+34">+34</option>
+                              <option value="+41">+41</option>
+                              <option value="+32">+32</option>
+                              <option value="+31">+31</option>
+                              <option value="+1">+1</option>
+                              <option value="+971">+971</option>
+                            </select>
+                            <input 
+                              ref={phoneRef}
+                              type="tel" 
+                              required
+                              value={bookingData.phone}
+                              onChange={(e) => setBookingData(prev => ({ ...prev, phone: e.target.value }))}
+                              placeholder={t('placeholder_phone')}
+                              className="w-full bg-transparent py-3 md:py-4 px-4 text-stone-900 outline-none"
+                            />
+                          </div>
                         </div>
                       </div>
 
+                      <div className="space-y-2">
+                        <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('flight')}</label>
+                        <input 
+                          type="text" 
+                          value={bookingData.flightNumber}
+                          onChange={(e) => setBookingData(prev => ({ ...prev, flightNumber: e.target.value }))}
+                          placeholder={t('flight')}
+                          className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                        />
+                      </div>
+
                       <div className="space-y-4 pt-6 border-t border-stone-100">
-                        <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">Mode de paiement</label>
+                        <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('payment_mode')}</label>
                         <div className="grid grid-cols-2 gap-3">
                           {[
                             { id: 'card', name: t('card'), icon: CreditCard },
@@ -2308,16 +2574,17 @@ export default function App() {
                       <div className="flex gap-4">
                         <button 
                           onClick={() => setStep(3)}
-                          className="flex-1 bg-stone-100 text-stone-600 py-3 md:py-4 rounded-xl font-bold hover:bg-stone-200 transition-all"
+                          className="w-14 h-11 md:h-12 bg-stone-100 text-stone-600 rounded-xl flex items-center justify-center hover:bg-stone-200 transition-all shrink-0"
+                          title={t('back')}
                         >
-                          {t('back')}
+                          <ChevronLeft size={20} />
                         </button>
                         <button 
                           onClick={handleBooking}
                           disabled={loading}
-                          className="flex-[2] bg-stone-900 text-white py-3 md:py-4 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200"
+                          className="flex-1 bg-stone-900 text-white py-3 md:py-3.5 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >
-                          {loading ? <Loader2 className="animate-spin" size={20} /> : <Check size={20} />}
+                          {loading ? <Loader2 className="animate-spin" size={18} /> : <Check size={18} />}
                           {t('confirm')}
                         </button>
                       </div>
@@ -2344,7 +2611,8 @@ export default function App() {
                             dropoff: '',
                             pickupCoords: null,
                             dropoffCoords: null,
-                            time: '12:00 - 12:15',
+                            date: new Date().toISOString().split('T')[0],
+                            time: getCurrentTimeSlot(),
                             vehicle: 'business',
                             passengers: 1,
                             luggage: 1,
@@ -2352,11 +2620,17 @@ export default function App() {
                             firstName: '',
                             lastName: '',
                             email: '',
+                            countryCode: '+33',
                             phone: '',
                             flightNumber: '',
                             paymentMethod: 'card',
                             isReturnTrip: false,
-                            returnTime: '12:00 - 12:15',
+                            returnPickup: '',
+                            returnDropoff: '',
+                            returnPickupCoords: null,
+                            returnDropoffCoords: null,
+                            returnDate: new Date().toISOString().split('T')[0],
+                            returnTime: getCurrentTimeSlot(),
                             distance: 0,
                             duration: 0
                           });
@@ -2373,7 +2647,8 @@ export default function App() {
                 </div>
 
                 {/* Right Side: Map & Dynamic Summary */}
-                <div className={`col-span-full lg:col-span-5 bg-stone-50 p-6 md:p-10 flex flex-col transition-all duration-500 ${step === 5 ? 'hidden lg:flex' : 'flex'}`}>
+                <div className={`col-span-full lg:col-span-5 bg-stone-50 p-6 md:p-10 flex flex-col transition-all duration-500 ${step === 1 || step === 5 ? 'hidden lg:flex' : 'flex'}`}>
+                  
                   {/* Map Container - Consistent height across all steps */}
                   {step === 2 && (
                     <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm relative h-[180px] md:h-[250px] mb-4 md:mb-6 animate-in fade-in duration-500 block">
@@ -2411,21 +2686,39 @@ export default function App() {
 
                       <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5">
                         <div className="space-y-0.5">
-                          <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">Créneau</div>
+                          <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('date') || 'Date'}</div>
+                          <div className="text-xs text-white/80 font-medium">{bookingData.date || '—'}</div>
+                        </div>
+                        <div className="space-y-0.5">
+                          <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('field_time')}</div>
                           <div className="text-xs text-white/80 font-medium">{bookingData.time || '—'}</div>
                         </div>
                         {bookingData.isReturnTrip && (
-                          <div className="space-y-0.5">
-                            <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('returnTrip')}</div>
-                            <div className="text-xs text-white/80 font-medium">{bookingData.returnTime || '—'}</div>
-                          </div>
+                          <>
+                            <div className="space-y-0.5">
+                              <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('returnDate')}</div>
+                              <div className="text-xs text-white/80 font-medium">{bookingData.returnDate || '—'}</div>
+                            </div>
+                            <div className="space-y-0.5">
+                              <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('field_returnTime')}</div>
+                              <div className="text-xs text-white/80 font-medium">{bookingData.returnTime || '—'}</div>
+                            </div>
+                          </>
                         )}
                         <div className="space-y-0.5">
                           <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{step < 3 ? 'Distance' : t('step3')}</div>
                           <div className="text-xs text-white/80 font-medium">
-                            {step < 3 ? `${Math.round(bookingData.distance)} KM` : (vehicles as any)[bookingData.vehicle].name}
+                            {step < 3 ? `${Math.round(bookingData.distance)} KM` : t(`vehicle_${bookingData.vehicle}`)}
                           </div>
                         </div>
+                        {step >= 3 && bookingData.extras.length > 0 && (
+                          <div className="col-span-2 space-y-0.5">
+                            <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('extras_label')}</div>
+                            <div className="text-xs text-white/80 font-medium">
+                              {bookingData.extras.map(e => t(`extra_${e}`)).join(', ')}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
 
@@ -2437,11 +2730,6 @@ export default function App() {
                         </div>
                         <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider mb-1">{t('vatIncluded')}</div>
                       </div>
-                      {step >= 3 && (
-                        <p className="text-[10px] text-white/40 mt-4 leading-relaxed font-light italic">
-                          {t('depositNotice')}
-                        </p>
-                      )}
                     </div>
                   </div>
                 </div>

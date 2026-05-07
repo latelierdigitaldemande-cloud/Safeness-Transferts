@@ -349,9 +349,9 @@ export default function App() {
       step4: 'Contact',
       pickup: 'Lieu de départ',
       dropoff: 'Lieu d\'arrivée',
-      date: 'Date',
+      date: 'Date de départ',
       time: 'Heure',
-      field_time: 'Créneau Horaire',
+      field_time: 'Heure de départ',
       view_prices: 'Voir les tarifs',
       next: 'Suivant',
       back: 'Retour',
@@ -377,8 +377,9 @@ export default function App() {
       returnTrip: 'Trajet Retour',
       add_return: 'Ajouter un trajet retour',
       itinerary_return: 'Itinéraire Retour',
-      returnDate: 'Date Retour',
-      field_returnTime: 'Créneau Retour',
+      returnDate: 'Date de retour',
+      field_returnDate: 'Date de retour',
+      field_returnTime: 'Heure de retour',
       returnTime: 'Heure Retour',
       vehicle_business: 'Business Class',
       vehicle_van: 'Business Van',
@@ -462,7 +463,7 @@ export default function App() {
       corp_cta: 'Ouvrir un compte professionnel',
       contact_pro: 'Contact Pro',
       field_name: 'Nom Complet',
-      field_date: 'Date',
+      field_date: 'Date de départ',
       field_company: 'Société (facultatif)',
       phone_contact: 'Téléphone',
       field_message: 'Message',
@@ -546,9 +547,9 @@ export default function App() {
       step4: 'Contact',
       pickup: 'Pickup Location',
       dropoff: 'Drop-off Location',
-      date: 'Date',
+      date: 'Pick-up date',
       time: 'Time',
-      field_time: 'Time Slot',
+      field_time: 'Pick-up Time',
       view_prices: 'View Prices',
       next: 'Next',
       back: 'Back',
@@ -574,8 +575,9 @@ export default function App() {
       returnTrip: 'Return Trip',
       add_return: 'Add return trip',
       itinerary_return: 'Return Itinerary',
-      returnDate: 'Return Date',
-      field_returnTime: 'Return Time Slot',
+      returnDate: 'Return trip date',
+      field_returnDate: 'Return trip date',
+      field_returnTime: 'Return time',
       returnTime: 'Return Time',
       vehicle_business: 'Business Class',
       vehicle_van: 'Business Van',
@@ -659,7 +661,7 @@ export default function App() {
       corp_cta: 'Open a business account',
       contact_pro: 'Contact Pro',
       field_name: 'Full Name',
-      field_date: 'Date',
+      field_date: 'Pick-up date',
       field_company: 'Company (optional)',
       phone_contact: 'Phone Number',
       field_message: 'Message',
@@ -2340,6 +2342,28 @@ export default function App() {
                                </div>
                              </div>
                           </div>
+
+                          {bookingData.isReturnTrip && (
+                            <div className="space-y-3 pt-4 border-t border-stone-100">
+                               <div className="flex gap-3">
+                                 <div className="w-0.5 h-full bg-stone-200 rounded-full shrink-0"></div>
+                                 <div className="space-y-2">
+                                    <div className="text-[10px] font-bold text-stone-400 uppercase tracking-wider">{t('itinerary_return')}</div>
+                                    <div className="text-sm text-stone-900 font-medium">{bookingData.returnPickup} → {bookingData.returnDropoff}</div>
+                                    <div className="flex gap-4">
+                                      <div>
+                                        <div className="text-[10px] font-bold text-stone-400 uppercase tracking-wider">{t('date')}</div>
+                                        <div className="text-sm text-stone-900 font-medium">{bookingData.returnDate}</div>
+                                      </div>
+                                      <div>
+                                        <div className="text-[10px] font-bold text-stone-400 uppercase tracking-wider">{t('field_returnTime')}</div>
+                                        <div className="text-sm text-stone-900 font-medium">{bookingData.returnTime}</div>
+                                      </div>
+                                    </div>
+                                 </div>
+                               </div>
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -2370,9 +2394,9 @@ export default function App() {
                           <button 
                             key={key}
                             onClick={() => setBookingData(prev => ({ ...prev, vehicle: key }))}
-                            className={`w-full flex items-center justify-between gap-3 md:gap-6 p-3 md:p-5 rounded-2xl border-2 transition-all ${bookingData.vehicle === key ? 'border-stone-900 bg-stone-50' : 'border-stone-100 bg-white hover:border-stone-200'}`}
+                            className={`w-full flex items-center justify-between gap-4 md:gap-8 p-4 md:p-6 rounded-2xl border-2 transition-all ${bookingData.vehicle === key ? 'border-stone-900 bg-stone-50' : 'border-stone-100 bg-white hover:border-stone-200'}`}
                           >
-                            <div className="w-20 md:w-24 h-14 md:h-16 bg-stone-100 rounded-xl flex items-center justify-center p-2 shrink-0">
+                            <div className="w-24 md:w-32 h-16 md:h-20 bg-stone-100 rounded-xl flex items-center justify-center p-2 shrink-0">
                               <img src={vehicle.img} alt={vehicle.name} className="w-full object-contain mix-blend-multiply" />
                             </div>
                             <div className="flex-1 text-left min-w-0">
@@ -2392,9 +2416,9 @@ export default function App() {
                         ))}
                       </div>
 
-                      <div className="space-y-4 pt-6 border-t border-stone-100">
+                      <div className="space-y-3 pt-6 border-t border-stone-100">
                         <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('extras_label')}</label>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div className="flex flex-wrap gap-2">
                           {Object.entries(extras).map(([key, extra]) => (
                             <button 
                               key={key}
@@ -2406,15 +2430,13 @@ export default function App() {
                                     : [...prev.extras, key]
                                 }));
                               }}
-                              className={`flex items-center gap-3 p-3 rounded-xl border-2 transition-all ${bookingData.extras.includes(key) ? 'border-stone-900 bg-stone-50' : 'border-stone-100 bg-white hover:border-stone-200'}`}
+                              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full border transition-all ${bookingData.extras.includes(key) ? 'border-stone-900 bg-stone-900 text-white shadow-sm' : 'border-stone-200 bg-white text-stone-600 hover:border-stone-400'}`}
                             >
-                              <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${bookingData.extras.includes(key) ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-400'}`}>
-                                {bookingData.extras.includes(key) ? <Check size={14} /> : <Plus size={14} />}
+                              <div className={`flex items-center justify-center ${bookingData.extras.includes(key) ? 'text-white' : 'text-stone-400'}`}>
+                                {bookingData.extras.includes(key) ? <Check size={10} strokeWidth={3} /> : <Plus size={10} />}
                               </div>
-                              <div className="flex-1 text-left">
-                                <div className={`text-[10px] font-bold uppercase tracking-wider ${bookingData.extras.includes(key) ? 'text-stone-900' : 'text-stone-400'}`}>{t(`extra_${key}`)}</div>
-                                <div className="text-[10px] text-stone-400 font-medium">+{extra.price}€</div>
-                              </div>
+                              <span className="text-[9px] font-bold uppercase tracking-wider">{t(`extra_${key}`)}</span>
+                              <span className={`text-[9px] font-medium ${bookingData.extras.includes(key) ? 'text-white/70' : 'text-stone-400'}`}>+{extra.price}€</span>
                             </button>
                           ))}
                         </div>
@@ -2666,7 +2688,7 @@ export default function App() {
                   )}
 
                   {/* Summary - Visible from Step 1 with Dark Design */}
-                  <div className={`flex-1 flex-col transition-all duration-500 overflow-hidden bg-stone-900 rounded-2xl p-4 md:p-6 border border-white/5 ${step >= 1 && step < 5 && step !== 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none h-0'} ${step === 2 ? 'hidden' : (step === 1 ? 'hidden md:flex' : 'flex')}`}>
+                  <div className={`flex-1 flex-col transition-all duration-500 overflow-hidden bg-stone-900 rounded-2xl p-4 md:p-6 border border-white/5 ${step >= 1 && step < 5 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none h-0'} ${step === 1 ? 'hidden md:flex' : 'flex'}`}>
                     <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] mb-4">{t('orderSummary')}</h3>
                     
                     <div className="space-y-4 flex-1">

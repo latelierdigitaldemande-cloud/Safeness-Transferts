@@ -14,6 +14,11 @@ import {
   Phone, Mail, MessageSquare, Globe, Search, Loader2,
   Instagram, Linkedin
 } from 'lucide-react';
+import DatePicker, { registerLocale } from "react-datepicker";
+import { fr } from 'date-fns/locale/fr';
+import "react-datepicker/dist/react-datepicker.css";
+
+registerLocale('fr', fr);
 
 // Initialize Stripe with the public key from environment
 const STRIPE_PUBLIC_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '';
@@ -65,6 +70,22 @@ const getCurrentTimeSlot = () => {
   }
   const end = `${(endHour % 24).toString().padStart(2, '0')}:${endMin.toString().padStart(2, '0')}`;
   return `${start} - ${end}`;
+};
+
+// Helper to parse date string back to Date
+const parseDateString = (dateStr: string) => {
+  if (!dateStr) return null;
+  const [year, month, day] = dateStr.split('-').map(Number);
+  return new Date(year, month - 1, day);
+};
+
+// Helper to format Date back to string
+const formatDateToString = (date: Date | null) => {
+  if (!date) return '';
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 };
 
 export default function App() {
@@ -2139,11 +2160,14 @@ export default function App() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('field_date')}</label>
-                          <input 
-                            type="date"
-                            value={bookingData.date || ''}
-                            onChange={(e) => setBookingData(prev => ({ ...prev, date: e.target.value }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                          <DatePicker
+                            selected={parseDateString(bookingData.date)}
+                            onChange={(date: Date | null) => setBookingData(prev => ({ ...prev, date: formatDateToString(date) }))}
+                            dateFormat="dd/MM/yyyy"
+                            minDate={new Date()}
+                            locale={lang === 'fr' ? 'fr' : undefined}
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all cursor-pointer"
+                            wrapperClassName="w-full"
                             required
                           />
                         </div>
@@ -2276,30 +2300,6 @@ export default function App() {
                               </motion.div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                              <div className="space-y-2">
-                                <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('field_returnDate') || t('returnDate')}</label>
-                                <input 
-                                  type="date"
-                                  value={bookingData.returnDate || ''}
-                                  onChange={(e) => setBookingData(prev => ({ ...prev, returnDate: e.target.value }))}
-                                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
-                                  required={bookingData.isReturnTrip}
-                                />
-                              </div>
-                              <div className="space-y-2">
-                                <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('field_returnTime')}</label>
-                                <select 
-                                  value={bookingData.returnTime}
-                                  onChange={(e) => setBookingData(prev => ({ ...prev, returnTime: e.target.value }))}
-                                  className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
-                                >
-                                  {timeSlots.map(slot => (
-                                    <option key={slot} value={slot}>{slot}</option>
-                                  ))}
-                                </select>
-                              </div>
-                            </div>
                           </div>
                         )}
                       </div>
@@ -2308,7 +2308,7 @@ export default function App() {
                         <button 
                           onClick={handleNextStep1}
                           disabled={loading}
-                          className="w-full bg-stone-900 text-white py-3 md:py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 disabled:opacity-50"
+                          className="w-full bg-stone-900 text-white py-4 md:py-5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 disabled:opacity-50"
                         >
                           {loading ? <Loader2 className="animate-spin" size={20} /> : t('view_prices')}
                         </button>
@@ -2350,16 +2350,6 @@ export default function App() {
                                  <div className="space-y-2">
                                     <div className="text-[10px] font-bold text-stone-400 uppercase tracking-wider">{t('itinerary_return')}</div>
                                     <div className="text-sm text-stone-900 font-medium">{bookingData.returnPickup} → {bookingData.returnDropoff}</div>
-                                    <div className="flex gap-4">
-                                      <div>
-                                        <div className="text-[10px] font-bold text-stone-400 uppercase tracking-wider">{t('date')}</div>
-                                        <div className="text-sm text-stone-900 font-medium">{bookingData.returnDate}</div>
-                                      </div>
-                                      <div>
-                                        <div className="text-[10px] font-bold text-stone-400 uppercase tracking-wider">{t('field_returnTime')}</div>
-                                        <div className="text-sm text-stone-900 font-medium">{bookingData.returnTime}</div>
-                                      </div>
-                                    </div>
                                  </div>
                                </div>
                             </div>
@@ -2715,18 +2705,6 @@ export default function App() {
                           <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('field_time')}</div>
                           <div className="text-xs text-white/80 font-medium">{bookingData.time || '—'}</div>
                         </div>
-                        {bookingData.isReturnTrip && (
-                          <>
-                            <div className="space-y-0.5">
-                              <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('returnDate')}</div>
-                              <div className="text-xs text-white/80 font-medium">{bookingData.returnDate || '—'}</div>
-                            </div>
-                            <div className="space-y-0.5">
-                              <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('field_returnTime')}</div>
-                              <div className="text-xs text-white/80 font-medium">{bookingData.returnTime || '—'}</div>
-                            </div>
-                          </>
-                        )}
                         <div className="space-y-0.5">
                           <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{step < 3 ? 'Distance' : t('step3')}</div>
                           <div className="text-xs text-white/80 font-medium">

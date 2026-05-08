@@ -1491,13 +1491,13 @@ export default function App() {
               ].map((service, i) => (
                 <motion.div 
                   key={`card-${i}`} 
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={i === 0 ? { opacity: 0, x: 50 } : { opacity: 1, x: 0 }}
+                  whileInView={i === 0 ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-10%" }}
                   transition={{ duration: 0.6, delay: i * 0.1 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setActiveServiceCard(activeServiceCard === i ? null : i)}
-                  className={`w-[79.5vw] md:w-[calc(50%-12px)] lg:w-[420px] h-[556px] md:h-[550px] border border-white/10 rounded-[2.5rem] bg-stone-950 shadow-2xl flex flex-col shrink-0 group overflow-hidden snap-center relative cursor-pointer transition-colors ${activeServiceCard === i ? 'border-white/30' : ''}`}
+                  className={`w-[79.5vw] md:w-[calc(50%-12px)] lg:w-[420px] h-[500px] md:h-[495px] border border-white/10 rounded-[2.5rem] bg-stone-950 shadow-2xl flex flex-col shrink-0 group overflow-hidden snap-center relative cursor-pointer transition-colors ${activeServiceCard === i ? 'border-white/30' : ''}`}
                 >
                   {/* Full Card Background Image */}
                   <img 
@@ -1625,12 +1625,8 @@ export default function App() {
                 { key: 'route_beauvais', price: '140€', time: '80 min', icon: <Plane size={20} />, image: 'https://images.unsplash.com/photo-1768420281710-0887af16eded?auto=format&fit=crop&q=80&w=800' },
               ].map((item, i) => {
                 return (
-                  <motion.div 
+                  <div 
                     key={i}
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: i * 0.1 }}
                     className={`group relative border rounded-[2.5rem] transition-all duration-500 overflow-hidden h-[320px] flex flex-col bg-stone-900 border-white/10 hover:border-white/20 shadow-2xl ${item.mobileHidden ? 'hidden md:flex' : 'flex'}`}
                   >
                     {/* Background Image with Overlay */}
@@ -1686,7 +1682,7 @@ export default function App() {
                         </div>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>

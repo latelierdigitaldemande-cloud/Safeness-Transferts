@@ -1547,10 +1547,11 @@ export default function App() {
                         <div className="pt-2">
                           <a 
                             href="#booking"
-                            className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 text-white text-[10px] font-bold uppercase tracking-widest rounded-xl hover:bg-white/20 transition-all group/btn backdrop-blur-sm"
+                            className="inline-flex items-center gap-2 text-white/70 hover:text-white text-[10px] font-bold uppercase tracking-[0.2em] transition-all group/btn"
                             onClick={(e) => e.stopPropagation()}
                           >
-                            {t('service_book')}
+                            VOIR PLUS DE SERVICES
+                            <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
                           </a>
                         </div>
                       </motion.div>
@@ -2558,33 +2559,6 @@ export default function App() {
                   {/* Step 4: Contact & Recap */}
                   {step === 4 && (
                     <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                      <div className="grid grid-cols-2 md:grid-cols-2 gap-4 mb-4">
-                        <div className="space-y-2">
-                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('passengers')}</label>
-                          <select 
-                            value={bookingData.passengers}
-                            onChange={(e) => setBookingData(prev => ({ ...prev, passengers: parseInt(e.target.value) }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
-                          >
-                            {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
-                              <option key={n} value={n}>{n} {n > 1 ? t('passenger_plural') : t('passenger_singular')}</option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="space-y-2 relative">
-                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('luggage')}</label>
-                          <select 
-                            value={bookingData.luggage}
-                            onChange={(e) => setBookingData(prev => ({ ...prev, luggage: parseInt(e.target.value) }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
-                          >
-                            {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
-                              <option key={n} value={n}>{n} {t('luggage_label')}</option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-
                       <div className="grid grid-cols-2 gap-3 md:gap-4">
                         <div className="space-y-2">
                           <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('firstName')}</label>
@@ -2654,6 +2628,33 @@ export default function App() {
                               className="w-full bg-transparent py-3 md:py-4 px-4 text-stone-900 outline-none"
                             />
                           </div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('passengers')}</label>
+                          <select 
+                            value={bookingData.passengers}
+                            onChange={(e) => setBookingData(prev => ({ ...prev, passengers: parseInt(e.target.value) }))}
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
+                          >
+                            {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
+                              <option key={n} value={n}>{n} {n > 1 ? t('passenger_plural') : t('passenger_singular')}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="space-y-2 relative">
+                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('luggage')}</label>
+                          <select 
+                            value={bookingData.luggage}
+                            onChange={(e) => setBookingData(prev => ({ ...prev, luggage: parseInt(e.target.value) }))}
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
+                          >
+                            {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
+                              <option key={n} value={n}>{n} {t('luggage_label')}</option>
+                            ))}
+                          </select>
                         </div>
                       </div>
 
@@ -2782,7 +2783,7 @@ export default function App() {
                   )}
 
                   {/* Summary - Visible from Step 1 with Dark Design */}
-                  <div className={`flex-1 flex-col transition-all duration-500 overflow-hidden bg-stone-900 rounded-2xl p-4 md:p-6 border border-white/5 ${step >= 1 && step < 5 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none h-0'} ${step === 1 ? 'hidden md:flex' : 'flex'}`}>
+                  <div className={`flex-1 flex-col transition-all duration-500 overflow-hidden bg-stone-900 rounded-2xl p-4 md:p-6 border border-white/5 ${step >= 1 && step !== 2 && step < 5 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none h-0'} ${step === 1 ? 'hidden md:flex' : 'flex'}`}>
                     <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] mb-4">{t('orderSummary')}</h3>
                     
                     <div className="space-y-4 flex-1">
@@ -2942,7 +2943,7 @@ export default function App() {
                 </a>
               </div>
             </div>
-            <div className="flex flex-col md:flex-row items-center justify-between w-full text-[10px] md:text-[12px] text-white/30 uppercase tracking-[0.2em] mt-8 gap-4 text-center font-normal">
+            <div className="flex flex-col md:flex-row items-center justify-between w-full text-[11px] md:text-[13px] text-white/30 uppercase tracking-[0.2em] mt-8 gap-4 text-center font-normal">
               <p>Safeness & Transferts © 2026. All Rights Reserved.</p>
               <div className="flex gap-8">
                 <a href="#" className="hover:text-white/60 transition-colors">{t('legal')}</a>
@@ -2968,7 +2969,7 @@ export default function App() {
         <div className="flex items-center gap-3">
           <button 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className={`w-14 h-14 bg-stone-900 border border-white/10 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-stone-800 transition-all shadow-2xl ${showScrollTop ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-90 pointer-events-none'}`}
+            className={`w-14 h-14 border border-white/10 rounded-full flex items-center justify-center text-white/50 hover:text-white transition-all ${showScrollTop ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-90 pointer-events-none'}`}
             title="Scroll to Top"
           >
             <iconify-icon icon="solar:alt-arrow-up-linear" width="22" style={{ strokeWidth: 1.5 }}></iconify-icon>

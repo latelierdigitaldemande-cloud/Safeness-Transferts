@@ -1442,7 +1442,7 @@ export default function App() {
                 <div className="h-1 w-12 bg-white/20 rounded-full mt-10"></div>
               </div>
               <div className="lg:col-span-6 lg:border-l lg:border-white/10 lg:pl-12 flex flex-col items-start gap-8">
-                <p className="text-stone-400 text-lg md:text-[17px] font-light leading-relaxed mb-0 italic">
+                <p className="text-stone-400 text-sm md:text-base font-light leading-relaxed mb-0 italic">
                   {t('services_desc')}
                 </p>
                 <a 

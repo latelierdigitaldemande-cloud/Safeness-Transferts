@@ -112,7 +112,9 @@ export default function App() {
       isFirstRender.current = false;
       return;
     }
-    if (bookingRef.current) {
+    // Only scroll to form if we are moving to a configuration/payment step (step > 1)
+    // This solves the bug where it jumped to the form on initial site load
+    if (bookingRef.current && step > 1) {
       const yOffset = -20; // Reduced offset for tighter scroll
       const y = bookingRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
@@ -1106,7 +1108,7 @@ export default function App() {
             <div className="w-1 h-4 md:h-5 bg-white rounded-t-sm"></div>
           </div>
           <h1 className="text-[15px] md:text-lg font-normal tracking-[0.18em] md:tracking-[0.25em] uppercase text-white/90 whitespace-nowrap">Safeness & Transferts</h1>
-          <p className="text-[9px] md:text-xs tracking-[0.1em] md:tracking-[0.15em] text-white/50 uppercase mt-0.5 whitespace-nowrap">Global Chauffeur Network</p>
+          <p className="text-[11px] md:text-xs tracking-[0.1em] md:tracking-[0.15em] text-white/50 uppercase mt-0.5 whitespace-nowrap">Global Chauffeur Network</p>
         </div>
 
         <div className="w-10 flex justify-end relative group/lang">
@@ -1144,26 +1146,43 @@ export default function App() {
 
       {/* HERO */}
       <main className="relative z-10 flex flex-col items-center pt-20 pb-32 px-4 text-center min-h-screen">
-        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-5 py-2 text-xs font-normal tracking-wide text-white/80 mb-10 max-w-2xl shadow-xl uppercase">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-5 py-2 text-xs font-normal tracking-wide text-white/80 mb-10 max-w-2xl shadow-xl uppercase"
+        >
           {t('hero_badge')}
-        </div>
-        <div className="flex flex-col items-center mb-12">
+        </motion.div>
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.4 }}
+          className="flex flex-col items-center mb-12"
+        >
           <div className="relative inline-block pb-1 mb-[2px] md:mb-1">
             <h2 className="text-[50px] md:text-7xl lg:text-8xl font-semibold tracking-tight uppercase text-white drop-shadow-sm">{t('hero_luxura')}</h2>
             <div className="absolute bottom-0 left-[15%] right-[15%] h-px bg-zinc-300 rounded-full opacity-80"></div>
           </div>
           <h2 className="text-[50px] md:text-7xl lg:text-8xl font-semibold tracking-tight uppercase text-white drop-shadow-sm mt-[2px] md:mt-1">{t('hero_worldwide')}</h2>
-        </div>
-        <a 
-          href="#booking"
-          className="bg-white text-stone-950 px-10 py-4 rounded-full font-normal text-base hover:bg-stone-200 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.1)]"
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="flex flex-col items-center"
         >
-          {t('hero_book')}
-        </a>
-        <a href="#booking" className="mt-8 flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors uppercase font-normal tracking-wider group">
-          {t('hero_estimate')}
-          <iconify-icon icon="solar:arrow-right-linear" width="20" style={{ strokeWidth: 1.5 }} class="group-hover:translate-x-1 transition-transform"></iconify-icon>
-        </a>
+          <a 
+            href="#booking"
+            className="bg-white text-stone-950 px-10 py-4 rounded-full font-normal text-base hover:bg-stone-200 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.1)]"
+          >
+            {t('hero_book')}
+          </a>
+          <a href="#booking" className="mt-8 flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors uppercase font-normal tracking-wider group">
+            {t('hero_estimate')}
+            <iconify-icon icon="solar:arrow-right-linear" width="20" style={{ strokeWidth: 1.5 }} class="group-hover:translate-x-1 transition-transform"></iconify-icon>
+          </a>
+        </motion.div>
         
         <div className="mt-20 relative w-full max-w-md">
           <div className="border border-white/10 rounded-[2.5rem] p-8 pb-10 flex flex-col items-center justify-center bg-stone-950/30 backdrop-blur-sm shadow-2xl h-[180px] overflow-hidden relative">
@@ -1253,7 +1272,13 @@ export default function App() {
             ref={el => { if (el) revealRefs.current[0] = el; }}
             className="max-w-7xl mx-auto reveal relative z-10"
           >
-            <div className="grid lg:grid-cols-12 gap-12 mb-12 items-end">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="grid lg:grid-cols-12 gap-12 mb-12 items-end"
+            >
               <div className="lg:col-span-6">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
                   <Globe size={12} className="text-white/60" />
@@ -1269,12 +1294,18 @@ export default function App() {
                   {t('europe_desc')}
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-2 gap-4 h-auto lg:h-[550px]">
               
               {/* PARIS: Main Hub - Large Bento Item */}
-              <div className="lg:col-span-2 lg:row-span-2 group relative border border-white/10 rounded-[2.4rem] overflow-hidden">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="lg:col-span-2 lg:row-span-2 group relative border border-white/10 rounded-[2.4rem] overflow-hidden"
+              >
                 <img 
                   src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073&auto=format&fit=crop" 
                   alt="Paris" 
@@ -1294,10 +1325,16 @@ export default function App() {
                     {t('europe_hub_desc')}
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* MUNICH */}
-              <div className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full"
+              >
                 <img 
                   src="https://images.unsplash.com/photo-1595867818082-083862f3d630?q=80&w=2070&auto=format&fit=crop" 
                   alt="Munich" 
@@ -1309,10 +1346,16 @@ export default function App() {
                   <h3 className="text-xl font-semibold text-white uppercase tracking-wider">Munich</h3>
                   <span className="text-white/40 text-[10px] uppercase font-bold tracking-[0.1em]">{t('europe_munich_tag')}</span>
                 </div>
-              </div>
+              </motion.div>
 
               {/* MILAN */}
-              <div className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full"
+              >
                 <img 
                   src="https://images.unsplash.com/photo-1610016302534-6f67f1c968d8?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&dl=ouael-ben-salah-0xe2FGo7Vc0-unsplash.jpg" 
                   alt="Milan" 
@@ -1324,10 +1367,16 @@ export default function App() {
                   <h3 className="text-xl font-semibold text-white uppercase tracking-wider">Milan</h3>
                   <span className="text-white/40 text-[10px] uppercase font-bold tracking-[0.1em]">{t('europe_milan_tag')}</span>
                 </div>
-              </div>
+              </motion.div>
 
               {/* BERLIN */}
-              <div className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full"
+              >
                 <img 
                   src="https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070&auto=format&fit=crop" 
                   alt="Berlin" 
@@ -1339,10 +1388,16 @@ export default function App() {
                   <h3 className="text-xl font-semibold text-white uppercase tracking-wider">Berlin</h3>
                   <span className="text-white/40 text-[10px] uppercase font-bold tracking-[0.1em]">{t('europe_berlin_tag')}</span>
                 </div>
-              </div>
+              </motion.div>
 
               {/* FRANCE / AMSTERDAM Hybrid Duo */}
-              <div className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full bg-stone-800/40">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full bg-stone-800/40"
+              >
                 <div className="absolute inset-0 p-8 flex flex-col justify-between">
                   <div>
                     <h3 className="text-xl font-semibold text-white uppercase mb-2 tracking-tight">{t('europe_connect_title')}</h3>
@@ -1359,7 +1414,7 @@ export default function App() {
                     <div className="w-10 h-10 rounded-full border-2 border-stone-900 bg-white/10 flex items-center justify-center backdrop-blur-sm text-[10px] font-bold text-white">+ Hubs</div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
             </div>
           </div>
@@ -1369,8 +1424,11 @@ export default function App() {
         <section id="services" className="bg-stone-925 w-full py-20 border-t border-white/5 relative overflow-hidden">
           <div className="max-w-7xl mx-auto relative z-10 px-6">
             {/* Header with standard project SPEC - Split Layout */}
-            <div 
-              ref={el => { if (el) revealRefs.current[5] = el; }}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
               className="grid lg:grid-cols-12 gap-12 items-end reveal"
             >
               <div className="lg:col-span-6">
@@ -1394,7 +1452,7 @@ export default function App() {
                   {t('section_book_btn')}
                 </a>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Horizontal Scroll Layout - Version Full-Width "Hors Cadre" */}
@@ -1433,6 +1491,10 @@ export default function App() {
               ].map((service, i) => (
                 <motion.div 
                   key={`card-${i}`} 
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-10%" }}
+                  transition={{ duration: 0.6, delay: i * 0.1 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setActiveServiceCard(activeServiceCard === i ? null : i)}
                   className={`w-[79.5vw] md:w-[calc(50%-12px)] lg:w-[420px] h-[556px] md:h-[550px] border border-white/10 rounded-[2.5rem] bg-stone-950 shadow-2xl flex flex-col shrink-0 group overflow-hidden snap-center relative cursor-pointer transition-colors ${activeServiceCard === i ? 'border-white/30' : ''}`}
@@ -1504,20 +1566,20 @@ export default function App() {
             <div className="max-w-7xl mx-auto px-6 mt-8 flex justify-between items-center">
               <div className="flex gap-4">
                 <motion.button 
-                  whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-                  whileTap={{ scale: 0.9 }}
+                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => scrollServices('prev')}
-                  className="w-10 h-10 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
+                  className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
                   aria-label="Previous service"
                 >
                   <ArrowLeft size={18} strokeWidth={1.5} />
                 </motion.button>
 
                 <motion.button 
-                  whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-                  whileTap={{ scale: 0.9 }}
+                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => scrollServices('next')}
-                  className="w-10 h-10 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
+                  className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
                   aria-label="Next service"
                 >
                   <ArrowRight size={18} strokeWidth={1.5} />
@@ -1532,8 +1594,11 @@ export default function App() {
         <section id="transfers" className="bg-stone-900 w-full py-20 border-t border-white/5 relative overflow-hidden">
           <div className="max-w-7xl mx-auto relative z-10 px-6">
              {/* Header with standard project SPEC */}
-             <div 
-              ref={el => { if (el) revealRefs.current[10] = el; }}
+             <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
               className="flex flex-col items-center mb-16 text-center reveal"
             >
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
@@ -1547,7 +1612,7 @@ export default function App() {
               <p className="text-stone-400 text-lg font-light leading-relaxed max-w-3xl mt-12 text-center italic">
                 {t('transfers_desc')}
               </p>
-            </div>
+            </motion.div>
 
             {/* Transfers Grid - Static Tall Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -1560,8 +1625,12 @@ export default function App() {
                 { key: 'route_beauvais', price: '140€', time: '80 min', icon: <Plane size={20} />, image: 'https://images.unsplash.com/photo-1768420281710-0887af16eded?auto=format&fit=crop&q=80&w=800' },
               ].map((item, i) => {
                 return (
-                  <div 
+                  <motion.div 
                     key={i}
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: i * 0.1 }}
                     className={`group relative border rounded-[2.5rem] transition-all duration-500 overflow-hidden h-[320px] flex flex-col bg-stone-900 border-white/10 hover:border-white/20 shadow-2xl ${item.mobileHidden ? 'hidden md:flex' : 'flex'}`}
                   >
                     {/* Background Image with Overlay */}
@@ -1592,14 +1661,10 @@ export default function App() {
                       {/* Content always visible */}
                       <div className="mt-auto space-y-5">
                         <div className="border-t border-white/10 pt-5">
-                          <div className="flex items-center justify-between text-white/60 text-[9px] font-bold uppercase tracking-[0.2em] mb-5">
+                          <div className="flex items-center text-white/60 text-[9px] font-bold uppercase tracking-[0.2em] mb-5">
                             <div className="flex items-center gap-2">
                               <Clock size={14} className="text-white/40" />
                               <span>{item.time}</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <ShieldCheck size={14} className="text-white/40" />
-                              <span>Fixé</span>
                             </div>
                           </div>
                           
@@ -1621,7 +1686,7 @@ export default function App() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
@@ -1640,9 +1705,12 @@ export default function App() {
           {/* Subtle background lift */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none hidden md:block"></div>
           
-          <div 
-            ref={el => { if (el) revealRefs.current[1] = el; }}
-            className="max-w-7xl mx-auto reveal relative z-10"
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="max-w-7xl mx-auto relative z-10"
           >
 
 
@@ -1742,7 +1810,7 @@ export default function App() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
         {/* Flotte */}
@@ -1754,21 +1822,34 @@ export default function App() {
             ref={el => { if (el) revealRefs.current[7] = el; }}
             className="max-w-7xl mx-auto px-6 w-full reveal relative z-10"
           >
-            <div className="flex flex-col items-center mb-24 text-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="flex flex-col items-center mb-24 text-center"
+            >
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
                 <Navigation size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('fleet_tag')}</span>
               </div>
               <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('fleet_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
-            </div>
+            </motion.div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 text-base font-light text-stone-400 tracking-wide">
               {[
                 { type: 'Business', model: 'Classe E', img: 'https://mcslimo.fr/wp-content/uploads/2023/04/eclass.png', pax: `3 ${t('passengers')}`, bag: `3 ${t('luggage')}` },
                 { type: 'Premium', model: 'Classe V', img: 'https://mcslimo.fr/wp-content/uploads/2023/04/vclass.png', pax: `7 ${t('passengers')}`, bag: `7 ${t('luggage')}`, isPremium: true },
                 { type: 'Luxe', model: 'Classe S', img: 'https://mcslimo.fr/wp-content/uploads/2023/04/sclass.png', pax: `3 ${t('passengers')}`, bag: `3 ${t('luggage')}` }
               ].map((car, i) => (
-                <div key={i} className={`border ${car.isPremium ? 'border-white/20 bg-stone-800/40' : 'border-white/10 bg-stone-900/30'} rounded-[2.5rem] p-8 flex flex-col items-center backdrop-blur-sm shadow-2xl relative overflow-hidden group`}>
+                <motion.div 
+                  key={i} 
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: i * 0.2 }}
+                  className={`border ${car.isPremium ? 'border-white/20 bg-stone-800/40' : 'border-white/10 bg-stone-900/30'} rounded-[2.5rem] p-8 flex flex-col items-center backdrop-blur-sm shadow-2xl relative overflow-hidden group`}
+                >
                   {car.isPremium && <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>}
                   <span className={`${car.isPremium ? 'bg-white text-stone-950' : 'bg-white/5 border border-white/10 text-white/80'} rounded-full px-5 py-2 text-xs font-normal tracking-[0.2em] uppercase mb-8 shadow-lg`}>
                     {car.type}
@@ -1795,7 +1876,7 @@ export default function App() {
                       <span className={`text-xs font-light tracking-[0.15em] uppercase ${car.isPremium ? 'text-white/80' : 'text-white/60'}`}>Boissons</span>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -1813,7 +1894,13 @@ export default function App() {
             ref={el => { if (el) revealRefs.current[4] = el; }}
             className="w-full reveal relative z-10"
           >
-            <div className="max-w-6xl mx-auto px-6 flex flex-col items-center mb-16 text-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="max-w-6xl mx-auto px-6 flex flex-col items-center mb-16 text-center"
+            >
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
                 <Star size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('vision_tag')}</span>
@@ -1823,7 +1910,7 @@ export default function App() {
               <p className="mt-8 text-stone-400 font-light tracking-wide max-w-xl mx-auto text-sm">
                 {t('vision_desc')}
               </p>
-            </div>
+            </motion.div>
             
             <div className="relative overflow-hidden py-4 w-full">
               {/* Gradients pour l'effet de disparition */}
@@ -1888,7 +1975,13 @@ export default function App() {
             ref={el => { if (el) revealRefs.current[2] = el; }}
             className="max-w-7xl mx-auto reveal relative z-10"
           >
-            <div className="flex flex-col items-center mb-20 text-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="flex flex-col items-center mb-20 text-center"
+            >
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
                 <MessageSquare size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('reviews_tag')}</span>
@@ -1915,7 +2008,7 @@ export default function App() {
                   <span className="text-white font-medium text-sm">Google</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             <div 
               className="relative py-12"
@@ -1957,8 +2050,12 @@ export default function App() {
                   }}
                 >
                   {reviews.map((review, i) => (
-                    <div 
+                    <motion.div 
                       key={`rev-${i}`} 
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: i * 0.1 }}
                       className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-3 flex flex-col transform-gpu"
                       style={{ backfaceVisibility: 'hidden' }}
                     >
@@ -1984,7 +2081,7 @@ export default function App() {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </motion.div>
               </div>
@@ -2009,14 +2106,20 @@ export default function App() {
           {/* Subtle background lift */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none hidden md:block"></div>
           
-          <div className="flex flex-col items-center mb-16 text-center px-6 relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col items-center mb-16 text-center px-6 relative z-10"
+          >
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
               <Calendar size={12} className="text-white/60" />
               <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">Booking</span>
             </div>
             <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('title')}</h2>
             <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
-          </div>
+          </motion.div>
           
           <div ref={bookingRef} className="w-full max-w-6xl mx-auto px-6 relative z-10">
             {/* Mobile-only Step Indicators Block */}
@@ -2313,7 +2416,7 @@ export default function App() {
                         <button 
                           onClick={handleNextStep1}
                           disabled={loading}
-                          className="w-full bg-stone-900 text-white py-4 md:py-5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 disabled:opacity-50"
+                          className="w-full bg-stone-900 text-white py-5 md:py-6 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 disabled:opacity-50"
                         >
                           {loading ? <Loader2 className="animate-spin" size={20} /> : t('view_prices')}
                         </button>
@@ -2599,7 +2702,7 @@ export default function App() {
                         <button 
                           onClick={handleBooking}
                           disabled={loading}
-                          className="flex-1 bg-stone-900 text-white py-3 md:py-3.5 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                          className="flex-1 bg-stone-900 text-white py-4 md:py-5 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >
                           {loading ? <Loader2 className="animate-spin" size={18} /> : <Check size={18} />}
                           {t('confirm')}
@@ -2755,14 +2858,20 @@ export default function App() {
             ref={el => { if (el) revealRefs.current[3] = el; }}
             className="max-w-3xl mx-auto reveal relative z-10"
           >
-            <div className="flex flex-col items-center mb-20 text-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="flex flex-col items-center mb-20 text-center"
+            >
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
                 <Info size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">FAQ</span>
               </div>
               <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('faq_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
-            </div>
+            </motion.div>
             <div className="flex flex-col">
               {[
                 { q: t('q1'), a: t('a1') },
@@ -2772,7 +2881,14 @@ export default function App() {
                 { q: t('q5'), a: t('a5') },
                 { q: t('q6'), a: t('a6') }
               ].map((faq, i) => (
-                <div key={i} className={`faq-item w-full border-b border-white/15 last:border-b-0 group ${openFaqIndex === i ? 'open' : ''}`}>
+                <motion.div 
+                  key={i} 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className={`faq-item w-full border-b border-white/15 last:border-b-0 group ${openFaqIndex === i ? 'open' : ''}`}
+                >
                   <button 
                     onClick={() => toggleFaq(i)}
                     className="w-full py-6 flex justify-between items-center text-base md:text-lg font-normal text-white hover:text-stone-300 transition-colors text-left" 
@@ -2786,7 +2902,7 @@ export default function App() {
                       {faq.a}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>

@@ -105,8 +105,13 @@ export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const bookingRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to top of form when step changes
+  // Auto-scroll to top of form when step changes (except on first load)
+  const isFirstRender = useRef(true);
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     if (bookingRef.current) {
       const yOffset = -20; // Reduced offset for tighter scroll
       const y = bookingRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;

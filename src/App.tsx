@@ -1569,20 +1569,20 @@ export default function App() {
                   whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => scrollServices('prev')}
-                  className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
+                  className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
                   aria-label="Previous service"
                 >
-                  <ArrowLeft size={18} strokeWidth={1.5} />
+                  <ArrowLeft size={20} strokeWidth={1.5} />
                 </motion.button>
 
                 <motion.button 
                   whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => scrollServices('next')}
-                  className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
+                  className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
                   aria-label="Next service"
                 >
-                  <ArrowRight size={18} strokeWidth={1.5} />
+                  <ArrowRight size={20} strokeWidth={1.5} />
                 </motion.button>
               </div>
               

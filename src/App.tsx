@@ -447,7 +447,7 @@ export default function App() {
       europe_tag: 'Europe',
       europe_title: 'Une présence',
       europe_subtitle: 'Européenne',
-      europe_desc: '"Bien que notre centre d\'opérations soit situé à Paris, nous assurons vos liaisons longue distance vers les principales métropoles européennes."',
+      europe_desc: 'Bien que notre centre d\'opérations soit situé à Paris, nous assurons vos liaisons longue distance vers les principales métropoles européennes.',
       europe_hub_tag: 'Hub Principal',
       europe_hub_title: 'Paris Centre',
       europe_hub_desc: 'Le cœur de notre réseau. Chauffeurs d\'élite disponibles 24/7 pour vos besoins locaux et transferts internationaux.',
@@ -459,16 +459,32 @@ export default function App() {
       services_tag: 'Prestations',
       services_title: 'Nos Services',
       services_desc: 'Solutions de transport haut de gamme conçues pour répondre parfaitement à vos besoins professionnels et personnels les plus complexes.',
-      service1_title: 'Intercity Rides',
+      service1_title: 'Liaisons Intervilles',
       service1_desc: 'Liaisons nationales et trajets ville à ville avec un confort absolu.',
-      service2_title: 'Airport Transfers',
+      service2_title: 'Gares & Aéroports',
       service2_desc: 'Liaisons aéroports et gares avec une ponctualité garantie.',
-      service3_title: 'Travel Transfer',
+      service3_title: 'Accueil & Service VIP',
       service3_desc: 'Accueil personnalisé et accompagnement pour une transition fluide.',
-      service4_title: 'Chauffeur Hailing',
+      service4_title: 'Mise à Disposition',
       service4_desc: 'Un chauffeur dédié à votre entière disposition pour vos besoins.',
-      service5_title: 'Wedding Class',
+      service5_title: 'Prestige & Événementiel',
       service5_desc: 'Service de prestige pour vos mariages, galas et événements spéciaux.',
+      service1_feat1: 'Liaisons nationales',
+      service1_feat2: 'Confort longue distance',
+      service1_feat3: 'Trajets ville à ville',
+      service2_feat1: 'Aéroports & Gares',
+      service2_feat2: 'Ponctualité garantie',
+      service2_feat3: 'Wi-Fi & Rafraîchissements',
+      service3_feat1: 'Accueil pancarte',
+      service3_feat2: 'Gestion des bagages',
+      service3_feat3: 'Sortie prioritaire',
+      service4_feat1: 'Chauffeur dédié',
+      service4_feat2: 'Flexibilité totale',
+      service4_feat3: 'Discrétion absolue',
+      service5_feat1: 'Mariages & Galas',
+      service5_feat2: 'Logistique complète',
+      service5_feat3: 'Véhicules décorés',
+      service_more: 'Voir plus de services',
       service_book: 'Réserver ce service',
       section_book_btn: 'Réserver un service',
       engagement_tag: 'Engagement',
@@ -645,7 +661,7 @@ export default function App() {
       europe_tag: 'Europe',
       europe_title: 'European',
       europe_subtitle: 'Presence',
-      europe_desc: '"While our operations center is in Paris, we provide long-distance connections to major European metropolises."',
+      europe_desc: 'While our operations center is in Paris, we provide long-distance connections to major European metropolises.',
       europe_hub_tag: 'Main Hub',
       europe_hub_title: 'Central Paris',
       europe_hub_desc: 'The heart of our network. Elite chauffeurs available 24/7 for local needs and international transfers.',
@@ -667,6 +683,22 @@ export default function App() {
       service4_desc: 'A dedicated chauffeur at your full disposal for your needs.',
       service5_title: 'Wedding Class',
       service5_desc: 'Prestige service for your weddings, galas and special events.',
+      service1_feat1: 'National links',
+      service1_feat2: 'Long distance comfort',
+      service1_feat3: 'City-to-city trips',
+      service2_feat1: 'Airports & Stations',
+      service2_feat2: 'Guaranteed punctuality',
+      service2_feat3: 'Wi-Fi & Refreshments',
+      service3_feat1: 'Meet & Greet',
+      service3_feat2: 'Luggage management',
+      service3_feat3: 'Priority exit',
+      service4_feat1: 'Dedicated chauffeur',
+      service4_feat2: 'Full flexibility',
+      service4_feat3: 'Absolute discretion',
+      service5_feat1: 'Weddings & Galas',
+      service5_feat2: 'Full logistics',
+      service5_feat3: 'Decorated vehicles',
+      service_more: 'View more services',
       service_book: 'Book this service',
       section_book_btn: 'Book a service',
       engagement_tag: 'Engagement',
@@ -1466,27 +1498,27 @@ export default function App() {
                 { 
                   icon: <Building2 size={22} />, 
                   img: "https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_6_tf7z1r",
-                  features: ["Liaisons nationales", "Confort longue distance", "Trajets ville à ville"]
+                  features: [t('service1_feat1'), t('service1_feat2'), t('service1_feat3')]
                 },
                 { 
                   icon: <Navigation size={22} />, 
                   img: "https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_1_vuxvex",
-                  features: ["Aéroports & Gares", "Ponctualité garantie", "Wi-Fi & Rafraîchissements"]
+                  features: [t('service2_feat1'), t('service2_feat2'), t('service2_feat3')]
                 },
                 { 
                   icon: <MapPin size={22} />, 
                   img: "https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_2_ktc2ce",
-                  features: ["Accueil pancarte", "Gestion des bagages", "Sortie prioritaire"]
+                  features: [t('service3_feat1'), t('service3_feat2'), t('service3_feat3')]
                 },
                 { 
                   icon: <Briefcase size={22} />, 
                   img: "https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_3_s2urdg",
-                  features: ["Chauffeur dédié", "Flexibilité totale", "Discrétion absolue"]
+                  features: [t('service4_feat1'), t('service4_feat2'), t('service4_feat3')]
                 },
                 { 
                   icon: <Calendar size={22} />, 
                   img: "https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_4_djvs21",
-                  features: ["Mariages & Galas", "Logistique complète", "Véhicules décorés"]
+                  features: [t('service5_feat1'), t('service5_feat2'), t('service5_feat3')]
                 }
               ].map((service, i) => (
                 <motion.div 
@@ -1550,7 +1582,7 @@ export default function App() {
                             className="inline-flex items-center gap-2 text-white/70 hover:text-white text-[10px] font-bold uppercase tracking-[0.2em] transition-all group/btn"
                             onClick={(e) => e.stopPropagation()}
                           >
-                            VOIR PLUS DE SERVICES
+                            {t('service_more')}
                             <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
                           </a>
                         </div>
@@ -2151,7 +2183,7 @@ export default function App() {
               <div className="grid grid-cols-1 lg:grid-cols-12">
                 
                 {/* Left Side: Form */}
-                <div className="col-span-full lg:col-span-7 p-6 md:p-12 border-b lg:border-b-0 lg:border-r border-stone-100">
+                <div className="col-span-full lg:col-span-7 p-5 md:p-12 border-b lg:border-b-0 lg:border-r border-stone-100">
                   {/* Progress - Desktop Only */}
                   <div className="hidden md:flex items-center gap-4 mb-8 md:mb-12">
                     {[1, 2, 3, 4].map((s) => (
@@ -2423,7 +2455,7 @@ export default function App() {
 
                   {/* Step 2: Itinerary Preview */}
                   {step === 2 && (
-                    <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="space-y-4 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                       <div className="space-y-4">
                         <div className="bg-stone-50 border border-stone-100 rounded-2xl p-4 md:p-6 space-y-4">
                           <div className="flex items-center gap-3 pb-4 border-b border-stone-100">
@@ -2764,11 +2796,11 @@ export default function App() {
                 </div>
 
                 {/* Right Side: Map & Dynamic Summary */}
-                <div className={`col-span-full lg:col-span-5 bg-stone-50 p-6 md:p-10 flex flex-col transition-all duration-500 ${step === 1 || step === 5 ? 'hidden lg:flex' : 'flex'}`}>
+                <div className={`col-span-full lg:col-span-5 bg-stone-50 ${step === 2 ? 'p-4 pb-4 md:p-10' : 'p-6 md:p-10'} flex flex-col transition-all duration-500 ${step === 1 || step === 5 ? 'hidden lg:flex' : 'flex'}`}>
                   
                   {/* Map Container - Consistent height across all steps */}
                   {step === 2 && (
-                    <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm relative h-[180px] md:h-[250px] mb-4 md:mb-6 animate-in fade-in duration-500 block">
+                    <div className={`bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm relative h-[180px] md:h-[250px] ${step === 2 ? 'mb-0' : 'mb-4 md:mb-6'} animate-in fade-in duration-500 block`}>
                       <div ref={mapContainerRef} className="w-full h-full z-0" />
                       {bookingData.distance > 0 && (
                         <div className="absolute bottom-4 right-4 z-10">
@@ -2783,7 +2815,7 @@ export default function App() {
                   )}
 
                   {/* Summary - Visible from Step 1 with Dark Design */}
-                  <div className={`flex-1 flex-col transition-all duration-500 overflow-hidden bg-stone-900 rounded-2xl p-4 md:p-6 border border-white/5 ${step >= 1 && step !== 2 && step < 5 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none h-0'} ${step === 1 ? 'hidden md:flex' : 'flex'}`}>
+                  <div className={`flex-1 flex-col transition-all duration-500 overflow-hidden bg-stone-900 rounded-2xl p-4 md:p-6 border border-white/5 ${step >= 1 && step !== 2 && step < 5 ? 'opacity-100 translate-y-0 flex' : 'opacity-0 translate-y-10 pointer-events-none h-0 hidden'} ${step === 1 ? 'hidden md:flex' : ''}`}>
                     <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] mb-4">{t('orderSummary')}</h3>
                     
                     <div className="space-y-4 flex-1">

@@ -459,16 +459,16 @@ export default function App() {
       services_tag: 'Prestations',
       services_title: 'Nos Services',
       services_desc: 'Solutions de transport haut de gamme conçues pour répondre parfaitement à vos besoins professionnels et personnels les plus complexes.',
-      service1_title: 'Transferts Privés',
-      service1_desc: 'Liaisons aéroports, gares et trajets urbains avec une ponctualité absolue.',
-      service2_title: 'Mise à Disposition',
-      service2_desc: 'Un chauffeur dédié pour vos rendez-vous d\'affaires ou événements privés.',
-      service3_title: 'Accueil VIP',
-      service3_desc: 'Accompagnement personnalisé dès la sortie de l\'avion pour une transition fluide.',
-      service4_title: 'Événementiel',
-      service4_desc: 'Logistique de transport pour vos mariages, galas et lancements de produits.',
-      service5_title: 'Roadshow Business',
-      service5_desc: 'Optimisation de vos déplacements professionnels complexes sur plusieurs jours.',
+      service1_title: 'Intercity Rides',
+      service1_desc: 'Liaisons nationales et trajets ville à ville avec un confort absolu.',
+      service2_title: 'Airport Transfers',
+      service2_desc: 'Liaisons aéroports et gares avec une ponctualité garantie.',
+      service3_title: 'Travel Transfer',
+      service3_desc: 'Accueil personnalisé et accompagnement pour une transition fluide.',
+      service4_title: 'Chauffeur Hailing',
+      service4_desc: 'Un chauffeur dédié à votre entière disposition pour vos besoins.',
+      service5_title: 'Wedding Class',
+      service5_desc: 'Service de prestige pour vos mariages, galas et événements spéciaux.',
       service_book: 'Réserver ce service',
       section_book_btn: 'Réserver un service',
       engagement_tag: 'Engagement',
@@ -498,7 +498,7 @@ export default function App() {
       placeholder_name: 'Jean Dupont',
       placeholder_company: 'Entreprise S.A.',
       placeholder_message: 'Décrivez votre besoin...',
-      contact_btn: 'Demander une Ouverture de Compte',
+      contact_btn: 'Envoyer ma demande',
       fleet_tag: 'Fleet',
       fleet_title: 'Notre Flotte',
       fleet_wifi: 'Wi-Fi Inclus',
@@ -514,12 +514,12 @@ export default function App() {
       transfers_tag: 'Tarifs',
       transfers_title: 'Transferts Populaires',
       transfers_desc: 'Nos itinéraires les plus demandés avec des tarifs fixes et transparents.',
-      route_cdg: 'Paris ↔ Aéroport CDG',
-      route_orly: 'Paris ↔ Aéroport Orly',
-      route_beauvais: 'Paris ↔ Aéroport Beauvais',
-      route_disney: 'Paris ↔ Disneyland Paris',
-      route_versailles: 'Paris ↔ Château de Versailles',
-      route_giverny: 'Paris ↔ Giverny (Jardins de Monet)',
+      route_cdg: 'Aéroport CDG ↔ Paris',
+      route_orly: 'Aéroport Orly ↔ Paris',
+      route_beauvais: 'Aéroport Beauvais ↔ Paris',
+      route_disney: 'Disneyland Paris ↔ Paris',
+      route_versailles: 'Chateau de Versailles ↔ Paris',
+      route_giverny: 'Giverny (Jardins de Monet) ↔ Paris',
       from_price: 'Dès',
       excellent: 'Excellent',
       verified_count: '48 avis vérifiés',
@@ -657,16 +657,16 @@ export default function App() {
       services_tag: 'Expertise',
       services_title: 'Our Services',
       services_desc: 'Premium tailored transportation solutions specifically designed to meet all of your most demanding professional and personal travel requirements efficiently.',
-      service1_title: 'Private Transfers',
-      service1_desc: 'Airport, station and city trips with absolute punctuality.',
-      service2_title: 'Chauffeur Service',
-      service2_desc: 'A dedicated chauffeur for your business meetings or private events.',
-      service3_title: 'VIP Welcome',
-      service3_desc: 'Personalized support from the moment you leave the plane for a fluid transition.',
-      service4_title: 'Event Services',
-      service4_desc: 'Transport logistics for your weddings, galas and product launches.',
-      service5_title: 'Business Roadshow',
-      service5_desc: 'Optimization of your complex professional travels over several days.',
+      service1_title: 'Intercity Rides',
+      service1_desc: 'National links and city-to-city trips with absolute comfort.',
+      service2_title: 'Airport Transfers',
+      service2_desc: 'Airport and station links with guaranteed punctuality.',
+      service3_title: 'Travel Transfer',
+      service3_desc: 'Personalized welcome and support for a seamless transition.',
+      service4_title: 'Chauffeur Hailing',
+      service4_desc: 'A dedicated chauffeur at your full disposal for your needs.',
+      service5_title: 'Wedding Class',
+      service5_desc: 'Prestige service for your weddings, galas and special events.',
       service_book: 'Book this service',
       section_book_btn: 'Book a service',
       engagement_tag: 'Engagement',
@@ -696,7 +696,7 @@ export default function App() {
       placeholder_name: 'John Doe',
       placeholder_company: 'Company Inc.',
       placeholder_message: 'Describe your need...',
-      contact_btn: 'Request an Account Opening',
+      contact_btn: 'Send Request',
       fleet_tag: 'Fleet',
       fleet_title: 'Our Fleet',
       fleet_wifi: 'In-car Wi-Fi',
@@ -712,12 +712,12 @@ export default function App() {
       transfers_tag: 'Rates',
       transfers_title: 'Popular Transfers',
       transfers_desc: 'Our most requested routes with fixed and transparent pricing.',
-      route_cdg: 'Paris ↔ CDG Airport',
-      route_orly: 'Paris ↔ Orly Airport',
-      route_beauvais: 'Paris ↔ Beauvais Airport',
-      route_disney: 'Paris ↔ Disneyland Paris',
-      route_versailles: 'Paris ↔ Palace of Versailles',
-      route_giverny: 'Paris ↔ Giverny (Monet\'s Garden)',
+      route_cdg: 'CDG Airport ↔ Paris',
+      route_orly: 'Orly Airport ↔ Paris',
+      route_beauvais: 'Beauvais Airport ↔ Paris',
+      route_disney: 'Disneyland Paris ↔ Paris',
+      route_versailles: 'Palace of Versailles ↔ Paris',
+      route_giverny: 'Giverny (Monet\'s Garden) ↔ Paris',
       from_price: 'From',
       excellent: 'Excellent',
       verified_count: '48 verified reviews',
@@ -1309,10 +1309,10 @@ export default function App() {
                 <img 
                   src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073&auto=format&fit=crop" 
                   alt="Paris" 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-95"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-90 md:opacity-80 group-hover:opacity-95"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 md:from-stone-950/95 via-stone-950/20 to-transparent"></div>
                 <div className="absolute bottom-8 left-8 right-8 lg:bottom-12 lg:left-12 lg:right-12">
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center bg-white/5 backdrop-blur-md">
@@ -1338,10 +1338,10 @@ export default function App() {
                 <img 
                   src="https://images.unsplash.com/photo-1595867818082-083862f3d630?q=80&w=2070&auto=format&fit=crop" 
                   alt="Munich" 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-95"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-90 md:opacity-80 group-hover:opacity-95"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 md:from-stone-950/95 via-stone-950/20 to-transparent"></div>
                 <div className="absolute bottom-8 left-8">
                   <h3 className="text-xl font-semibold text-white uppercase tracking-wider">Munich</h3>
                   <span className="text-white/40 text-[10px] uppercase font-bold tracking-[0.1em]">{t('europe_munich_tag')}</span>
@@ -1359,10 +1359,10 @@ export default function App() {
                 <img 
                   src="https://images.unsplash.com/photo-1610016302534-6f67f1c968d8?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&dl=ouael-ben-salah-0xe2FGo7Vc0-unsplash.jpg" 
                   alt="Milan" 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-95"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-90 md:opacity-80 group-hover:opacity-95"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 md:from-stone-950/95 via-stone-950/20 to-transparent"></div>
                 <div className="absolute bottom-8 left-8">
                   <h3 className="text-xl font-semibold text-white uppercase tracking-wider">Milan</h3>
                   <span className="text-white/40 text-[10px] uppercase font-bold tracking-[0.1em]">{t('europe_milan_tag')}</span>
@@ -1380,10 +1380,10 @@ export default function App() {
                 <img 
                   src="https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070&auto=format&fit=crop" 
                   alt="Berlin" 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-95"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-90 md:opacity-80 group-hover:opacity-95"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 md:from-stone-950/95 via-stone-950/20 to-transparent"></div>
                 <div className="absolute bottom-8 left-8">
                   <h3 className="text-xl font-semibold text-white uppercase tracking-wider">Berlin</h3>
                   <span className="text-white/40 text-[10px] uppercase font-bold tracking-[0.1em]">{t('europe_berlin_tag')}</span>
@@ -1464,29 +1464,29 @@ export default function App() {
             >
               {[
                 { 
+                  icon: <Building2 size={22} />, 
+                  img: "https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_6_tf7z1r",
+                  features: ["Liaisons nationales", "Confort longue distance", "Trajets ville à ville"]
+                },
+                { 
                   icon: <Navigation size={22} />, 
-                  img: "https://mcslimo.fr/wp-content/uploads/2025/01/MCS-Services-5.jpg",
+                  img: "https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_1_vuxvex",
                   features: ["Aéroports & Gares", "Ponctualité garantie", "Wi-Fi & Rafraîchissements"]
                 },
                 { 
-                  icon: <Briefcase size={22} />, 
-                  img: "https://mcslimo.fr/wp-content/uploads/2025/01/MCS-Services-4.jpg",
-                  features: ["Chauffeur dédié", "Flexibilité totale", "Discrétion absolue"]
-                },
-                { 
                   icon: <MapPin size={22} />, 
-                  img: "https://mcslimo.fr/wp-content/uploads/2025/01/MCS-Services-8.jpg",
+                  img: "https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_2_ktc2ce",
                   features: ["Accueil pancarte", "Gestion des bagages", "Sortie prioritaire"]
                 },
                 { 
-                  icon: <Calendar size={22} />, 
-                  img: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069",
-                  features: ["Mariages & Galas", "Logistique complète", "Véhicules décorés"]
+                  icon: <Briefcase size={22} />, 
+                  img: "https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_3_s2urdg",
+                  features: ["Chauffeur dédié", "Flexibilité totale", "Discrétion absolue"]
                 },
                 { 
-                  icon: <Building2 size={22} />, 
-                  img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070",
-                  features: ["Multi-arrêts", "Support logistique", "Optimisation de trajet"]
+                  icon: <Calendar size={22} />, 
+                  img: "https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_4_djvs21",
+                  features: ["Mariages & Galas", "Logistique complète", "Véhicules décorés"]
                 }
               ].map((service, i) => (
                 <motion.div 
@@ -1503,10 +1503,10 @@ export default function App() {
                   <img 
                     src={service.img}
                     alt={t(`service${i + 1}_title`)}
-                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${activeServiceCard === i ? 'opacity-90 scale-105' : 'opacity-70 group-hover:opacity-90'}`}
+                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${activeServiceCard === i ? 'opacity-90 scale-105' : 'opacity-85 md:opacity-70 group-hover:opacity-90'}`}
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/20 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 md:from-stone-950 via-stone-950/20 to-transparent"></div>
 
                   {/* Overlay Content */}
                   <div className="relative z-10 h-full p-8 md:p-10 flex flex-col justify-between">
@@ -1618,12 +1618,12 @@ export default function App() {
             {/* Transfers Grid - Static Tall Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                { key: 'route_cdg', price: '120€', time: '45 min', icon: <Navigation size={20} />, image: 'https://images.unsplash.com/photo-1594431795323-9267a492ad46?auto=format&fit=crop&q=80&w=800' },
-                { key: 'route_orly', price: '120€', time: '35 min', icon: <MapPin size={20} />, image: 'https://images.unsplash.com/photo-1672310708154-771583101dbb?auto=format&fit=crop&q=80&w=800' },
-                { key: 'route_disney', price: '120€', time: '50 min', icon: <Sparkles size={20} />, image: 'https://hubertraguet.com/wp-content/uploads/2021/05/laeroport-de-roissy-charles-de-gaulle-11.jpg' },
-                { key: 'route_versailles', price: '90€', time: '40 min', icon: <Building2 size={20} />, image: 'https://media.istockphoto.com/id/978664034/fr/photo/a%C3%A9roport-de-paris-charles-de-gaulle-terminal.jpg?s=612x612&w=0&k=20&c=3HoBuKqPiTOXgOctNh35qZuzEUWM691p8WUcjAX4YRQ=', mobileHidden: true },
-                { key: 'route_giverny', price: '250€', time: '75 min', icon: <Palette size={20} />, image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?fm=jpg&q=60&w=3000&auto=format&fit=crop', mobileHidden: true },
-                { key: 'route_beauvais', price: '140€', time: '80 min', icon: <Plane size={20} />, image: 'https://images.unsplash.com/photo-1768420281710-0887af16eded?auto=format&fit=crop&q=80&w=800' },
+                { key: 'route_cdg', price: '120€', time: '45 min', icon: <Navigation size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/603b4374-0730-4377-a001-ab58e60cb33d_l6ue2k' },
+                { key: 'route_orly', price: '120€', time: '35 min', icon: <MapPin size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp', mobileHidden: true },
+                { key: 'route_disney', price: '120€', time: '50 min', icon: <Sparkles size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/b04fc1f4-3d8d-4e87-89a5-7d9dd8d174ae_jw5xtm' },
+                { key: 'route_versailles', price: '90€', time: '40 min', icon: <Building2 size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp' },
+                { key: 'route_giverny', price: '250€', time: '75 min', icon: <Palette size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp', mobileHidden: true },
+                { key: 'route_beauvais', price: '140€', time: '80 min', icon: <Plane size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp', mobileHidden: true },
               ].map((item, i) => {
                 return (
                   <div 
@@ -1635,10 +1635,10 @@ export default function App() {
                       <img 
                         src={item.image} 
                         alt={t(item.key)}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-95"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 md:opacity-80 group-hover:opacity-95"
                         referrerPolicy="no-referrer"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/20 to-transparent"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 md:from-stone-950/95 via-stone-950/20 to-transparent"></div>
                     </div>
 
                     <div className="p-8 relative z-10 flex flex-col h-full">

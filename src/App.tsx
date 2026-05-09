@@ -2196,9 +2196,17 @@ export default function App() {
                     ))}
                   </div>
 
-                  {/* Step 1: Ride Details */}
-                  {step === 1 && (
-                    <div className="space-y-5 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                  <AnimatePresence mode="wait">
+                    {/* Step 1: Ride Details */}
+                    {step === 1 && (
+                      <motion.div 
+                        key="step1"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3 }}
+                        className="space-y-5 md:space-y-8"
+                      >
                       <div className="space-y-2 relative flex flex-col">
                         <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('itinerary_label')}</label>
                         
@@ -2450,12 +2458,19 @@ export default function App() {
                           {loading ? <Loader2 className="animate-spin" size={20} /> : t('view_prices')}
                         </button>
                       </div>
-                    </div>
+                    </motion.div>
                   )}
 
                   {/* Step 2: Itinerary Preview */}
                   {step === 2 && (
-                    <div className="space-y-4 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <motion.div 
+                      key="step2"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="space-y-4 md:space-y-8"
+                    >
                       <div className="space-y-4">
                         <div className="bg-stone-50 border border-stone-100 rounded-2xl p-4 md:p-6 space-y-4">
                           <div className="flex items-center gap-3 pb-4 border-b border-stone-100">
@@ -2510,12 +2525,19 @@ export default function App() {
                           <ArrowRight size={18} />
                         </button>
                       </div>
-                    </div>
+                    </motion.div>
                   )}
 
                   {/* Step 3: Vehicle */}
                    {step === 3 && (
-                    <div className="w-full space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <motion.div 
+                      key="step3"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="w-full space-y-6 md:space-y-8"
+                    >
                       <div className="w-full space-y-3 md:space-y-4">
                         {Object.entries(vehicles).map(([key, vehicle]) => (
                           <button 
@@ -2585,12 +2607,19 @@ export default function App() {
                           <ArrowRight size={18} />
                         </button>
                       </div>
-                    </div>
+                    </motion.div>
                   )}
 
                   {/* Step 4: Contact & Recap */}
                   {step === 4 && (
-                    <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <motion.div 
+                      key="step4"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="space-y-6 md:space-y-8"
+                    >
                       <div className="grid grid-cols-2 gap-3 md:gap-4">
                         <div className="space-y-2">
                           <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('firstName')}</label>
@@ -2737,12 +2766,19 @@ export default function App() {
                           {t('confirm')}
                         </button>
                       </div>
-                    </div>
+                    </motion.div>
                   )}
 
                   {/* Step 5: Success */}
                   {step === 5 && (
-                    <div className="py-8 md:py-12 text-center space-y-6 md:space-y-8 animate-in zoom-in duration-500">
+                    <motion.div 
+                      key="step5"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.3 }}
+                      className="py-8 md:py-12 text-center space-y-6 md:space-y-8"
+                    >
                       <div className="w-20 h-20 md:w-24 md:h-24 bg-stone-900 rounded-full flex items-center justify-center mx-auto shadow-2xl">
                         <Check size={40} className="text-white" strokeWidth={3} />
                       </div>
@@ -2791,9 +2827,10 @@ export default function App() {
                       >
                         {t('newReservation')}
                       </button>
-                    </div>
+                    </motion.div>
                   )}
-                </div>
+                </AnimatePresence>
+              </div>
 
                 {/* Right Side: Map & Dynamic Summary */}
                 <div className={`col-span-full lg:col-span-5 bg-stone-50 ${step === 2 ? 'p-4 pb-4 md:p-10' : 'p-6 md:p-10'} flex flex-col transition-all duration-500 ${step === 1 || step === 5 ? 'hidden lg:flex' : 'flex'}`}>

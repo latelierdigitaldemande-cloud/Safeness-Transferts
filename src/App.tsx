@@ -17,6 +17,7 @@ import {
 import DatePicker, { registerLocale } from "react-datepicker";
 import { fr } from 'date-fns/locale/fr';
 import "react-datepicker/dist/react-datepicker.css";
+import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
 
 registerLocale('fr', fr);
 
@@ -98,6 +99,30 @@ export default function App() {
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   const [activeServiceCard, setActiveServiceCard] = useState<number | null>(null);
+
+  // Google Maps Services
+  const [googleServices, setGoogleServices] = useState<{
+    autocomplete: google.maps.places.AutocompleteService | null;
+    places: google.maps.places.PlacesService | null;
+  }>({ autocomplete: null, places: null });
+
+  useEffect(() => {
+    setOptions({
+      key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '',
+      v: 'weekly',
+    });
+
+    importLibrary('places').then((library) => {
+      const placesLibrary = library as google.maps.PlacesLibrary;
+      const autocomplete = new placesLibrary.AutocompleteService();
+      const dummyDiv = document.createElement('div');
+      const places = new placesLibrary.PlacesService(dummyDiv);
+      setGoogleServices({ autocomplete, places });
+    }).catch(e => {
+      console.error('Google Maps Load Error:', e);
+    });
+  }, []);
+
   const [currentCityIndex, setCurrentCityIndex] = useState(0);
   const [isCityTransitioning, setIsCityTransitioning] = useState(false);
   const [selectedTransfer, setSelectedTransfer] = useState<number | null>(null);
@@ -440,7 +465,7 @@ export default function App() {
       nav_contact: 'Contact',
       nav_booking: 'Réservation',
       hero_badge: 'Transport Exécutif, Flotte d\'Élite & Itinéraires Sur Mesure',
-      hero_luxura: 'Safeness',
+      hero_brand: 'Safeness',
       hero_worldwide: 'Worldwide',
       hero_book: 'RÉSERVER UN VÉHICULE',
       hero_estimate: 'DEMANDER UN DEVIS PERSONNALISÉ',
@@ -654,7 +679,7 @@ export default function App() {
       nav_contact: 'Contact',
       nav_booking: 'Booking',
       hero_badge: 'Executive Transport, Elite Fleet & Bespoke Itineraries',
-      hero_luxura: 'Safeness',
+      hero_brand: 'Safeness',
       hero_worldwide: 'Worldwide',
       hero_book: 'BOOK A VEHICLE',
       hero_estimate: 'REQUEST CUSTOM ESTIMATE',
@@ -900,47 +925,62 @@ export default function App() {
   }, [step]);
 
   const searchAddress = async (query: string, type: 'pickup' | 'dropoff' | 'returnPickup' | 'returnDropoff') => {
-    if (query.length < 3) {
+    if (query.length < 3 || !googleServices.autocomplete) {
       setSuggestions(prev => ({ ...prev, [type]: [] }));
       return;
     }
-    try {
-      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=fr,de,it,es,be,ch,lu,nl,gb&limit=5`);
-      const data = await response.json();
-      setSuggestions(prev => ({ ...prev, [type]: data }));
-    } catch (error) {
-      console.error('Search error:', error);
-    }
+    
+    googleServices.autocomplete.getPlacePredictions({
+      input: query,
+      componentRestrictions: { country: ['fr', 'be', 'ch', 'lu', 'it', 'es', 'de', 'nl', 'gb'] },
+      types: ['address', 'establishment']
+    }, (predictions, status) => {
+      if (status === google.maps.places.PlacesServiceStatus.OK && predictions) {
+        setSuggestions(prev => ({ ...prev, [type]: predictions }));
+      } else {
+        setSuggestions(prev => ({ ...prev, [type]: [] }));
+      }
+    });
   };
 
-  const selectAddress = (item: any, type: 'pickup' | 'dropoff' | 'returnPickup' | 'returnDropoff') => {
-    const coords: [number, number] = [parseFloat(item.lat), parseFloat(item.lon)];
-    setBookingData(prev => ({
-      ...prev,
-      [type]: item.display_name,
-      [`${type}Coords`]: coords
-    }));
-    setSuggestions(prev => ({ ...prev, [type]: [] }));
+  const selectAddress = (item: google.maps.places.AutocompletePrediction, type: 'pickup' | 'dropoff' | 'returnPickup' | 'returnDropoff') => {
+    if (!googleServices.places) return;
 
-    if (mapRef.current && (type === 'pickup' || type === 'dropoff')) {
-      if (markersRef.current[type]) {
-        markersRef.current[type]?.remove();
+    googleServices.places.getDetails({
+      placeId: item.place_id,
+      fields: ['formatted_address', 'geometry']
+    }, (place, status) => {
+      if (status === google.maps.places.PlacesServiceStatus.OK && place?.geometry?.location) {
+        const coords: [number, number] = [place.geometry.location.lat(), place.geometry.location.lng()];
+        
+        setBookingData(prev => ({
+          ...prev,
+          [type]: place.formatted_address || item.description,
+          [`${type}Coords`]: coords
+        }));
+        setSuggestions(prev => ({ ...prev, [type]: [] }));
+
+        if (mapRef.current && (type === 'pickup' || type === 'dropoff')) {
+          if (markersRef.current[type]) {
+            markersRef.current[type]?.remove();
+          }
+          const icon = L.divIcon({
+            className: 'custom-div-icon',
+            html: `<div class="w-8 h-8 ${type === 'pickup' ? 'bg-stone-900' : 'bg-stone-600'} rounded-full border-2 border-white flex items-center justify-center shadow-lg"><div class="w-2 h-2 bg-white rounded-full"></div></div>`,
+            iconSize: [32, 32],
+            iconAnchor: [16, 16]
+          });
+          markersRef.current[type] = L.marker(coords, { icon }).addTo(mapRef.current);
+          
+          const otherType = type === 'pickup' ? 'dropoff' : 'pickup';
+          if (bookingData[`${otherType}Coords`]) {
+            calculateRoute(coords, bookingData[`${otherType}Coords`] as [number, number]);
+          } else {
+            mapRef.current.setView(coords, 14);
+          }
+        }
       }
-      const icon = L.divIcon({
-        className: 'custom-div-icon',
-        html: `<div class="w-8 h-8 ${type === 'pickup' ? 'bg-stone-900' : 'bg-stone-600'} rounded-full border-2 border-white flex items-center justify-center shadow-lg"><div class="w-2 h-2 bg-white rounded-full"></div></div>`,
-        iconSize: [32, 32],
-        iconAnchor: [16, 16]
-      });
-      markersRef.current[type] = L.marker(coords, { icon }).addTo(mapRef.current);
-      
-      const otherType = type === 'pickup' ? 'dropoff' : 'pickup';
-      if (bookingData[`${otherType}Coords`]) {
-        calculateRoute(coords, bookingData[`${otherType}Coords`] as [number, number]);
-      } else {
-        mapRef.current.setView(coords, 14);
-      }
-    }
+    });
   };
 
   const calculateRoute = async (p1: [number, number], p2: [number, number]) => {
@@ -1193,7 +1233,7 @@ export default function App() {
           className="flex flex-col items-center mb-12"
         >
           <div className="relative inline-block pb-1 mb-[2px] md:mb-1">
-            <h2 className="text-[50px] md:text-7xl lg:text-8xl font-semibold tracking-tight uppercase text-white drop-shadow-sm">{t('hero_luxura')}</h2>
+            <h2 className="text-[50px] md:text-7xl lg:text-8xl font-semibold tracking-tight uppercase text-white drop-shadow-sm">{t('hero_brand')}</h2>
             <div className="absolute bottom-0 left-[15%] right-[15%] h-px bg-zinc-300 rounded-full opacity-80"></div>
           </div>
           <h2 className="text-[50px] md:text-7xl lg:text-8xl font-semibold tracking-tight uppercase text-white drop-shadow-sm mt-[2px] md:mt-1">{t('hero_worldwide')}</h2>
@@ -2230,7 +2270,7 @@ export default function App() {
                                     onClick={() => selectAddress(item, 'pickup')}
                                     className="w-full text-left px-4 py-3 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors border-b border-stone-50 last:border-0"
                                   >
-                                    {item.display_name}
+                                    {item.description}
                                   </button>
                                 ))}
                               </div>
@@ -2285,7 +2325,7 @@ export default function App() {
                                     onClick={() => selectAddress(item, 'dropoff')}
                                     className="w-full text-left px-4 py-3 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors border-b border-stone-50 last:border-0"
                                   >
-                                    {item.display_name}
+                                    {item.description}
                                   </button>
                                 ))}
                               </div>
@@ -2376,7 +2416,7 @@ export default function App() {
                                         onClick={() => selectAddress(item, 'returnPickup')}
                                         className="w-full text-left px-4 py-3 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors border-b border-stone-50 last:border-0"
                                       >
-                                        {item.display_name}
+                                        {item.description}
                                       </button>
                                     ))}
                                   </div>
@@ -2429,7 +2469,7 @@ export default function App() {
                                         onClick={() => selectAddress(item, 'returnDropoff')}
                                         className="w-full text-left px-4 py-3 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors border-b border-stone-50 last:border-0"
                                       >
-                                        {item.display_name}
+                                        {item.description}
                                       </button>
                                     ))}
                                   </div>

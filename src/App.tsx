@@ -14,12 +14,6 @@ import {
   Phone, Mail, MessageSquare, Globe, Search, Loader2,
   Instagram, Linkedin
 } from 'lucide-react';
-import DatePicker, { registerLocale } from "react-datepicker";
-import { fr } from 'date-fns/locale/fr';
-import "react-datepicker/dist/react-datepicker.css";
-import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
-
-registerLocale('fr', fr);
 
 // Initialize Stripe with the public key from environment
 const STRIPE_PUBLIC_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '';
@@ -40,6 +34,75 @@ declare global {
     }
   }
 }
+
+const SolarUsersGroup = ({ className, size = 20, strokeWidth = 1.5 }: { className?: string; size?: number; strokeWidth?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} xmlns="http://www.w3.org/2000/svg">
+    <g stroke="currentColor" strokeWidth={strokeWidth}>
+      <circle cx="9" cy="6" r="4" />
+      <path strokeLinecap="round" d="M15 9a3 3 0 1 0 0-6" />
+      <ellipse cx="9" cy="17" rx="7" ry="4" />
+      <path strokeLinecap="round" d="M18 14c1.754.385 3 1.359 3 2.5c0 1.03-1.014 1.923-2.5 2.37" />
+    </g>
+  </svg>
+);
+
+const SolarCaseMinimalistic = ({ className, size = 20, strokeWidth = 1.5 }: { className?: string; size?: number; strokeWidth?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} xmlns="http://www.w3.org/2000/svg">
+    <g stroke="currentColor" strokeWidth={strokeWidth}>
+      <path d="M14 6h-4c-1.356 0-2.468 0-3.39.054c-1.645.097-2.688.367-3.438 1.118C2 8.343 2 10.229 2 14s0 5.657 1.172 6.828S6.229 22 10 22h4c3.771 0 5.657 0 6.828-1.172S22 17.771 22 14s0-5.657-1.172-6.828c-.75-.75-1.793-1.02-3.437-1.118C16.468 6 15.356 6 14 6Z" />
+      <path d="M6.61 6.054c.823-.02 1.55-.6 1.83-1.374l.035-.103L8.5 4.5c.042-.127.064-.19.086-.246a2 2 0 0 1 1.735-1.25C10.38 3 10.448 3 10.58 3h2.838c.133 0 .2 0 .26.004a2 2 0 0 1 1.735 1.25c.023.056.044.12.086.246l.026.077c.018.053.026.08.035.103c.28.775 1.007 1.354 1.83 1.374" />
+      <path strokeLinecap="round" d="M21.662 8.72c-3.01 1.956-4.515 2.934-6.101 3.427a12 12 0 0 1-7.121 0c-1.587-.493-3.092-1.47-6.102-3.427M8 11v2m8-2v2" />
+    </g>
+  </svg>
+);
+
+const SolarWifiRouter = ({ className, size = 20, strokeWidth = 1.5 }: { className?: string; size?: number; strokeWidth?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <path fill="currentColor" d="M7 15a1 1 0 1 1-2 0a1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0" />
+      <path stroke="currentColor" strokeWidth={strokeWidth} d="M2 15c0-1.886 0-2.828.586-3.414S4.114 11 6 11h12c1.886 0 2.828 0 3.414.586S22 13.114 22 15s0 2.828-.586 3.414S19.886 19 18 19H6c-1.886 0-2.828 0-3.414-.586S2 16.886 2 15Z" />
+      <path stroke="currentColor" strokeLinecap="round" strokeWidth={strokeWidth} d="M7 11L3 4m14 7l4-7m-7 11h4m-.833-9.603A5.502 5.502 0 0 0 7 5.397" />
+      <path stroke="currentColor" strokeLinecap="round" strokeWidth={strokeWidth} d="M14.965 6.658a3.001 3.001 0 0 0-5.76 0" />
+      <path fill="currentColor" d="M13.084 7a1 1 0 1 1-2 0a1 1 0 0 1 2 0" />
+    </g>
+  </svg>
+);
+
+const SolarBottle = ({ className, size = 20 }: { className?: string; size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <path fill="currentColor" d="m18.45 8.279l.748-.06zm.015.187l.749-.047zM16.614 12.9l.495.563zm.137-.122l.505.554zm-6.68-3.82l.738.127zm.032-.185l.737.139zm2.884-3.786l.331.673zm-.162.081l.342.667zm-5.093 8.398l-.526-.535zm.128-.127l.532.529zm2.179-4.2l.737.135zm4.002 8.128l.732.165zm.041-.18l-.73-.174zm2.397-4.068l.502.557zM7.65 20.413l.387-.643zM5.462 18.81l-.621.42zm1.486-4.573l.525.535zm-1.77 2.08l-.7-.268zm3.138 4.496l-.387.642zm2.424 1.176l-.07.747zm3.053-3.628l-.731-.166zm-.84 2.638l.597.453zM18.34 2.9l.387-.643zm.41.308l.633-.404zm-.123.764l.656.363zm.202-.472l-.75-.034zm-2.383-.773l-.656-.363zm.313-.447l.413.626zm.8.15l-.387.642zm-.495-.232l.045-.749zM15.633 4.14l2.152 1.296l.774-1.285l-2.152-1.296zm-6.93 16.03l-.665-.4l-.774 1.285l.665.4zm4.607-3.07l-.248 1.095l1.463.332l.248-1.095zm-5.837-2.328l.785-.771l-1.052-1.07l-.784.772zm5.845-9.112l3.032-1.49l-.661-1.346l-3.032 1.49zm4.106-.807l.28 3.485l1.494-.12l-.279-3.484zm-.748-.993l.426-.77l-1.312-.727l-.427.771zm.496-.79l.78.471l.774-1.285l-.78-.47zm.798.538l-.455.822l1.313.727l.455-.823zm-.267 4.73l.014.176l1.497-.095l-.016-.2zm-.594 5.125c.068-.06.109-.095.147-.13l-1.01-1.11l-.128.114zm.608-4.95c.09 1.419-.46 2.789-1.471 3.71l1.01 1.11c1.358-1.238 2.076-3.055 1.958-4.914zm-6.908.572l.03-.173l-1.473-.278c-.01.052-.02.106-.035.197zm1.848-4.77c-.08.039-.129.062-.175.086l.685 1.334l.151-.075zM10.84 8.911c.262-1.391 1.128-2.561 2.327-3.177L12.482 4.4c-1.626.835-2.772 2.404-3.116 4.233zM8.258 14l.134-.133l-1.064-1.058l-.122.121zM9.33 8.83l-.03.174l1.475.27c.01-.05.018-.1.033-.19zm-.939 5.037a8.74 8.74 0 0 0 2.384-4.594L9.3 9.003a7.24 7.24 0 0 1-1.973 3.806zm6.38 3.564l.04-.171l-1.46-.348l-.042.188zm1.346-5.095l-.141.125l1.004 1.114l.128-.113zm-1.306 4.924a7.2 7.2 0 0 1 2.169-3.685l-1.004-1.114a8.7 8.7 0 0 0-2.624 4.451zm-6.774 2.51c-.631-.381-1.07-.646-1.395-.875c-.322-.226-.472-.377-.559-.506l-1.243.84c.236.35.558.625.939.893c.378.266.872.563 1.484.932zm-1.616-6.068c-.513.504-.927.91-1.234 1.258c-.31.35-.56.694-.71 1.088l1.401.534c.056-.148.17-.332.433-.629c.264-.3.633-.662 1.161-1.182zm-.338 4.688a1.99 1.99 0 0 1-.205-1.808l-1.402-.534a3.49 3.49 0 0 0 .364 3.18zm1.845 3.064c.612.37 1.105.667 1.516.876c.412.21.807.366 1.225.405l.14-1.493c-.14-.013-.335-.07-.685-.249s-.79-.443-1.422-.824zm5.133-3.26c-.167.737-.285 1.253-.401 1.644c-.117.389-.213.585-.306.707l1.195.906c.254-.335.413-.731.548-1.184c.134-.45.264-1.025.427-1.741zm-2.392 4.541a3.23 3.23 0 0 0 2.88-1.284l-1.196-.906a1.73 1.73 0 0 1-1.543.697zM17.952 3.54l.143.087q.055.035.075.05c.029.02-.012-.003-.052-.067l1.264-.808a1.3 1.3 0 0 0-.337-.344c-.096-.07-.214-.14-.32-.203zm1.33.793c.06-.108.126-.227.175-.335c.053-.116.111-.274.12-.466l-1.499-.068c.004-.076.027-.116.013-.084l-.041.08l-.08.147zm-1.165-.723a.25.25 0 0 1-.039-.146l1.499.068a1.25 1.25 0 0 0-.195-.73zm-1.016-.522l.088-.156c.024-.043.04-.068.05-.084c.022-.033 0 .011-.068.056l-.826-1.252c-.17.112-.28.253-.354.364c-.069.103-.138.23-.202.346zm.844-1.303c-.113-.068-.237-.144-.349-.199a1.3 1.3 0 0 0-.488-.139l-.09 1.498c-.08-.005-.122-.032-.087-.014q.024.01.085.047c.043.024.091.054.155.092zm-.774 1.119a.25.25 0 0 1-.153.04l.09-1.497a1.25 1.25 0 0 0-.763.205z" />
+      <path stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" d="m10 9.5l1.452-.726a2.7 2.7 0 0 1 2.9.307a2.7 2.7 0 0 0 2.544.454L18.5 9" />
+    </g>
+  </svg>
+);
+
+const SolarStarBold = ({ className, size = 18 }: { className?: string; size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+    <path d="M9.153 5.408C10.42 3.136 11.053 2 12 2s1.58 1.136 2.847 3.408l.328.588c.36.646.54.969.82 1.182s.63.292 1.33.45l.636.144c2.46.557 3.689.835 3.982 1.776c.292.94-.546 1.921-2.223 3.882l-.434.507c-.476.557-.715.836-.822 1.18c-.107.345-.071.717.001 1.46l.066.677c.253 2.617.38 3.925-.386 4.506s-1.918.051-4.22-1.009l-.597-.274c-.654-.302-.981-.452-1.328-.452s-.674.15-1.328.452l-.596.274c-2.303 1.06-3.455 1.59-4.22 1.01c-.767-.582-.64-1.89-.387-4.507l.066-.676c.072-.744.108-1.116 0-1.46c-.106-.345-.345-.624-.821-1.18l-.434-.508c-1.677-1.96-2.515-2.941-2.223-3.882S3.58 8.328 6.04 7.772l.636-.144c.699-.158 1.048-.237 1.329-.45s.46-.536.82-1.182z" />
+  </svg>
+);
+
+const SolarCheckCircleBold = ({ className, size = 12 }: { className?: string; size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10m-5.97-3.03a.75.75 0 0 1 0 1.06l-5 5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47l2.235-2.235L14.97 8.97a.75.75 0 0 1 1.06 0" clipRule="evenodd" />
+  </svg>
+);
+
+const SolarCheckCircleLinear = ({ className, size = 20, strokeWidth = 1.5 }: { className?: string; size?: number; strokeWidth?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} xmlns="http://www.w3.org/2000/svg">
+    <g stroke="currentColor" strokeWidth={strokeWidth}>
+      <circle cx="12" cy="12" r="10"/>
+      <path strokeLinecap="round" strokeLinejoin="round" d="m8.5 12.5l2 2l5-5"/>
+    </g>
+  </svg>
+);
+
+const SolarArrowRightUpLinear = ({ className, size = 16 }: { className?: string; size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} xmlns="http://www.w3.org/2000/svg">
+    <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6m0 0H9m9 0v9"/>
+  </svg>
+);
 
 const cities = [
   { name: 'London', icon: 'circle-flags:gb' },
@@ -73,22 +136,6 @@ const getCurrentTimeSlot = () => {
   return `${start} - ${end}`;
 };
 
-// Helper to parse date string back to Date
-const parseDateString = (dateStr: string) => {
-  if (!dateStr) return null;
-  const [year, month, day] = dateStr.split('-').map(Number);
-  return new Date(year, month - 1, day);
-};
-
-// Helper to format Date back to string
-const formatDateToString = (date: Date | null) => {
-  if (!date) return '';
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-};
-
 export default function App() {
   const [step, setStep] = useState(1);
   const [lang, setLang] = useState('en');
@@ -99,29 +146,6 @@ export default function App() {
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   const [activeServiceCard, setActiveServiceCard] = useState<number | null>(null);
-
-  // Google Maps Services
-  const [googleServices, setGoogleServices] = useState<{
-    autocomplete: google.maps.places.AutocompleteService | null;
-    places: google.maps.places.PlacesService | null;
-  }>({ autocomplete: null, places: null });
-
-  useEffect(() => {
-    setOptions({
-      key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '',
-      v: 'weekly',
-    });
-
-    importLibrary('places').then((library) => {
-      const placesLibrary = library as google.maps.PlacesLibrary;
-      const autocomplete = new placesLibrary.AutocompleteService();
-      const dummyDiv = document.createElement('div');
-      const places = new placesLibrary.PlacesService(dummyDiv);
-      setGoogleServices({ autocomplete, places });
-    }).catch(e => {
-      console.error('Google Maps Load Error:', e);
-    });
-  }, []);
 
   const [currentCityIndex, setCurrentCityIndex] = useState(0);
   const [isCityTransitioning, setIsCityTransitioning] = useState(false);
@@ -223,7 +247,7 @@ export default function App() {
   }, [isCityTransitioning]);
 
   useEffect(() => {
-    const timer = setInterval(nextCity, 2500);
+    const timer = setInterval(nextCity, 2000);
     return () => clearInterval(timer);
   }, [nextCity]);
 
@@ -233,6 +257,9 @@ export default function App() {
 
   // Booking Form State
   const [bookingData, setBookingData] = useState({
+    serviceType: 'transfer' as 'transfer' | 'hourly',
+    serviceCategory: '',
+    durationHours: 2,
     pickup: '',
     dropoff: '',
     pickupCoords: null as [number, number] | null,
@@ -288,6 +315,7 @@ export default function App() {
 
   const pickupInputRef = useRef<HTMLInputElement>(null);
   const dropoffInputRef = useRef<HTMLInputElement>(null);
+  const serviceCategoryRef = useRef<HTMLSelectElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -361,16 +389,21 @@ export default function App() {
   // --- Booking Form Logic ---
 
   const handleNextStep1 = async () => {
-    if (pickupInputRef.current && !pickupInputRef.current.reportValidity()) return;
-    if (dropoffInputRef.current && !dropoffInputRef.current.reportValidity()) return;
+    if (serviceCategoryRef.current && !serviceCategoryRef.current.reportValidity()) return;
 
-    const { pickupCoords, dropoffCoords } = bookingData;
+    if (pickupInputRef.current && !pickupInputRef.current.reportValidity()) return;
+    if (bookingData.serviceType === 'transfer' && dropoffInputRef.current && !dropoffInputRef.current.reportValidity()) return;
+
+    const { pickupCoords, dropoffCoords, serviceType } = bookingData;
     
     setLoading(true);
     setBookingError(null);
     try {
-      if (pickupCoords && dropoffCoords) {
+      if (serviceType === 'transfer' && pickupCoords && dropoffCoords) {
         await calculateRoute(pickupCoords, dropoffCoords);
+      } else if (serviceType === 'hourly' && pickupCoords) {
+        // Just center map on pickup if hourly
+        mapRef.current?.setView(pickupCoords, 14);
       }
       setStep(2);
     } catch (error) {
@@ -382,9 +415,9 @@ export default function App() {
   };
 
   const vehicles = {
-    business: { name: 'Business Class', model: 'Mercedes Classe E', basePrice: 80, pax: 3, bag: 3, img: 'https://mcslimo.fr/wp-content/uploads/2023/04/eclass.png' },
-    van: { name: 'Business Van', model: 'Mercedes Classe V', basePrice: 120, pax: 7, bag: 7, img: 'https://mcslimo.fr/wp-content/uploads/2023/04/vclass.png' },
-    first: { name: 'First Class', model: 'Mercedes Classe S', basePrice: 160, pax: 3, bag: 3, img: 'https://mcslimo.fr/wp-content/uploads/2023/04/sclass.png' }
+    business: { name: 'Business Class', model: 'Mercedes Classe E', basePrice: 80, hourlyPrice: 60, pax: 3, bag: 3, img: 'https://mcslimo.fr/wp-content/uploads/2023/04/eclass.png' },
+    van: { name: 'Business Van', model: 'Mercedes Classe V', basePrice: 120, hourlyPrice: 90, pax: 7, bag: 7, img: 'https://mcslimo.fr/wp-content/uploads/2023/04/vclass.png' },
+    first: { name: 'First Class', model: 'Mercedes Classe S', basePrice: 160, hourlyPrice: 120, pax: 3, bag: 3, img: 'https://mcslimo.fr/wp-content/uploads/2023/04/sclass.png' }
   };
 
   const extras = {
@@ -405,6 +438,17 @@ export default function App() {
       date: 'Date de départ',
       time: 'Heure',
       field_time: 'Heure de départ',
+      service_transfer: 'Transfert',
+      service_hourly: 'Mise à Disposition',
+      field_service_category: 'Type de prestation',
+      placeholder_service_category: 'Sélectionner un service...',
+      service_cat_intercity: 'Liaisons Intervilles',
+      service_cat_airport: 'Gares & Aéroports',
+      service_cat_vip: 'Accueil & Service VIP',
+      service_cat_hourly: 'Mise à Disposition',
+      service_cat_prestige: 'Prestige & Événementiel',
+      duration_label: 'Durée souhaitée',
+      hours_count: 'heures',
       view_prices: 'Voir les tarifs',
       next: 'Suivant',
       back: 'Retour',
@@ -465,7 +509,7 @@ export default function App() {
       nav_contact: 'Contact',
       nav_booking: 'Réservation',
       hero_badge: 'Transport Exécutif, Flotte d\'Élite & Itinéraires Sur Mesure',
-      hero_brand: 'Safeness',
+      hero_brand: 'SAFENESS',
       hero_worldwide: 'Worldwide',
       hero_book: 'RÉSERVER UN VÉHICULE',
       hero_estimate: 'DEMANDER UN DEVIS PERSONNALISÉ',
@@ -525,7 +569,7 @@ export default function App() {
       corp_tag: 'Corporate',
       corp_title: 'Solutions Business',
       corp_subtitle: 'Solutions pour professionnels',
-      corp_desc: 'Safeness & Transferts propose des comptes corporate sur-mesure pour les entreprises, les hôtels de luxe et les agences événementielles. Optimisez la gestion des déplacements de vos collaborateurs et de vos clients VIP avec un partenaire fiable.',
+      corp_desc: 'Safeness Transport propose des comptes corporate sur-mesure pour les entreprises, les hôtels de luxe et les agences événementielles. Optimisez la gestion des déplacements de vos collaborateurs et de vos clients VIP avec un partenaire fiable.',
       corp_li1: 'Facturation simplifiée et relevés mensuels détaillés.',
       corp_li2: 'Priorité sur les réservations et support client dédié 24/7.',
       corp_li3: 'Coordination complète pour vos roadshows et grands événements.',
@@ -585,16 +629,16 @@ export default function App() {
       whatsapp_tooltip: 'Réserver par WhatsApp',
       lang_fr: 'Français',
       lang_en: 'Anglais',
-      rev1_text: '"Service impeccable pour mon transfert vers Orly. Le chauffeur était en avance, le véhicule (Classe S) d\'une propreté absolue. Conduite très douce. Je recommande vivement Safeness & Transferts."',
+      rev1_text: '"Service impeccable pour mon transfert vers Orly. Le chauffeur était en avance, le véhicule (Classe S) d\'une propreté absolue. Conduite très douce. Je recommande vivement Safeness transport."',
       rev2_text: '"Nous avons réservé un Van pour nous rendre à Disneyland depuis Paris intra-muros avec les enfants. Voyage spacieux, bouteilles d\'eau à disposition, service très courtois."',
       rev3_text: '"Utilisé pour un déplacement professionnel de Paris vers Milan. Un trajet longue distance qui s\'est déroulé dans un confort parfait. Mon bureau mobile le temps d\'une journée."',
       rev4_text: '"Une expérience de luxe du début à la fin. L\'accueil VIP à l\'aéroport CDG a rendu mon arrivée à Paris totalement sans stress. Je ne voyagerai plus autrement."',
       rev5_text: '"Chauffeur extrêmement professionnel et discret. La Classe E était parfaite pour mes rendez-vous d\'affaires toute la journée. Un service 5 étoiles."',
-      rev6_text: '"Ponctualité et discrétion. Le service de conciergerie à bord est un vrai plus. Je recommande Safeness & Transferts pour tous vos déplacements d\'affaires à Paris."',
+      rev6_text: '"Ponctualité et discrétion. Le service de conciergerie à bord est un vrai plus. Je recommande Safeness transport pour tous vos déplacements d\'affaires à Paris."',
       why_tag: 'About Us',
       why_title: 'Pourquoi nous choisir',
       why_item1_title: '10+ ans d\'Expertise',
-      why_item1_desc: 'Fort de plus d\'une décennie d\'excellence dans le transport de luxe international, Safeness & Transferts a perfectionné l\'art du voyage sur mesure. Nous maîtrisons chaque aspect logistique et chaque itinéraire européen pour vous garantir une ponctualité absolue, une sécurité rigoureuse et une sérénité totale lors de tous vos déplacements.',
+      why_item1_desc: 'Fort de plus d\'une décennie d\'excellence dans le transport de luxe international, Safeness transport a perfectionné l\'art du voyage sur mesure. Nous maîtrisons chaque aspect logistique et chaque itinéraire européen pour vous garantir une ponctualité absolue, une sécurité rigoureuse et une sérénité totale lors de tous vos déplacements.',
       why_item2_title: 'Réseau International',
       why_item2_desc: 'Notre réseau s\'étend sur les pôles économiques les plus dynamiques d\'Europe, incluant Paris, Milan, Berlin et Londres. Cette présence stratégique nous permet d\'assurer des transferts transfrontaliers fluides et une continuité de service irréprochable. Vous bénéficiez ainsi d\'une expertise locale combinée à un standard de qualité international constant partout.',
       why_item3_title: 'Conciergerie Dédiée',
@@ -619,6 +663,17 @@ export default function App() {
       date: 'Pick-up date',
       time: 'Time',
       field_time: 'Pick-up Time',
+      service_transfer: 'Transfer',
+      service_hourly: 'Chauffeur at disposal',
+      field_service_category: 'Type of Service',
+      placeholder_service_category: 'Select a service...',
+      service_cat_intercity: 'Intercity Rides',
+      service_cat_airport: 'Airport Transfers',
+      service_cat_vip: 'Travel Transfer / VIP Welcome',
+      service_cat_hourly: 'Chauffeur at disposal',
+      service_cat_prestige: 'Wedding & Event Class',
+      duration_label: 'Desired duration',
+      hours_count: 'hours',
       view_prices: 'View Prices',
       next: 'Next',
       back: 'Back',
@@ -679,7 +734,7 @@ export default function App() {
       nav_contact: 'Contact',
       nav_booking: 'Booking',
       hero_badge: 'Executive Transport, Elite Fleet & Bespoke Itineraries',
-      hero_brand: 'Safeness',
+      hero_brand: 'SAFENESS',
       hero_worldwide: 'Worldwide',
       hero_book: 'BOOK A VEHICLE',
       hero_estimate: 'REQUEST CUSTOM ESTIMATE',
@@ -739,7 +794,7 @@ export default function App() {
       corp_tag: 'Corporate',
       corp_title: 'Business Solutions',
       corp_subtitle: 'Solutions for professionals',
-      corp_desc: 'Safeness & Transferts offers bespoke corporate accounts for companies, luxury hotels and event agencies. Optimize the management of your employees and VIP clients travels with a reliable partner.',
+      corp_desc: 'Safeness Transport offers bespoke corporate accounts for companies, luxury hotels and event agencies. Optimize the management of your employees and VIP clients travels with a reliable partner.',
       corp_li1: 'Simplified billing and detailed monthly statements.',
       corp_li2: 'Priority on bookings and dedicated 24/7 client support.',
       corp_li3: 'Complete coordination for your roadshows and major events.',
@@ -799,16 +854,16 @@ export default function App() {
       whatsapp_tooltip: 'Book on WhatsApp',
       lang_fr: 'French',
       lang_en: 'English',
-      rev1_text: '"Impeccable service for my transfer to Orly. The driver was early, the vehicle (S-Class) was absolutely clean. Very smooth driving. I highly recommend Safeness & Transferts."',
+      rev1_text: '"Impeccable service for my transfer to Orly. The driver was early, the vehicle (S-Class) was absolutely clean. Very smooth driving. I highly recommend Safeness transport."',
       rev2_text: '"We booked a Van to go to Disneyland from central Paris with the children. Spacious journey, water bottles available, very courteous service."',
       rev3_text: '"Used for a business trip from Paris to Milan. A long-distance journey that took place in perfect comfort. My mobile office for a day."',
       rev4_text: '"A luxury experience from start to finish. The VIP welcome at CDG airport made my arrival in Paris totally stress-free. I won\'t travel any other way."',
       rev5_text: '"Extremely professional and discreet driver. The E-Class was perfect for my business meetings all day. A 5-star service."',
-      rev6_text: '"Punctuality and discretion. The on-board concierge service is a real plus. I recommend Safeness & Transferts for all your business travels in Paris."',
+      rev6_text: '"Punctuality and discretion. The on-board concierge service is a real plus. I recommend Safeness transport for all your business travels in Paris."',
       why_tag: 'About Us',
       why_title: 'Why Choose Us',
       why_item1_title: '10+ Years of Expertise',
-      why_item1_desc: 'With over a decade of excellence in international luxury transport, Safeness & Transferts has perfected the art of tailor-made travel. We master every logistical aspect and every European route to guarantee you absolute punctuality, rigorous security, and total serenity during all your journeys, regardless of their complexity.',
+      why_item1_desc: 'With over a decade of excellence in international luxury transport, Safeness transport has perfected the art of tailor-made travel. We master every logistical aspect and every European route to guarantee you absolute punctuality, rigorous security, and total serenity during all your journeys, regardless of their complexity.',
       why_item2_title: 'Global Network',
       why_item2_desc: 'Our network spans Europe\'s most dynamic economic hubs, including Paris, Milan, Berlin, and London. This strategic presence allows us to ensure smooth cross-border transfers and irreproachable service continuity. You thus benefit from local expertise combined with a constant international quality standard, ensuring a premium experience wherever you go.',
       why_item3_title: 'Bespoke Concierge',
@@ -925,62 +980,66 @@ export default function App() {
   }, [step]);
 
   const searchAddress = async (query: string, type: 'pickup' | 'dropoff' | 'returnPickup' | 'returnDropoff') => {
-    if (query.length < 3 || !googleServices.autocomplete) {
+    if (query.length < 3) {
       setSuggestions(prev => ({ ...prev, [type]: [] }));
       return;
     }
     
-    googleServices.autocomplete.getPlacePredictions({
-      input: query,
-      componentRestrictions: { country: ['fr', 'be', 'ch', 'lu', 'it', 'es', 'de', 'nl', 'gb'] },
-      types: ['address', 'establishment']
-    }, (predictions, status) => {
-      if (status === google.maps.places.PlacesServiceStatus.OK && predictions) {
-        setSuggestions(prev => ({ ...prev, [type]: predictions }));
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=5&countrycodes=fr,be,ch,lu,it,es,de,nl,gb`
+      );
+      if (!response.ok) {
+        throw new Error('Nominatim request failed');
+      }
+      const data = await response.json();
+      if (Array.isArray(data)) {
+        const results = data.map((item: any) => ({
+          description: item.display_name,
+          lat: item.lat,
+          lon: item.lon,
+        }));
+        setSuggestions(prev => ({ ...prev, [type]: results }));
       } else {
         setSuggestions(prev => ({ ...prev, [type]: [] }));
       }
-    });
+    } catch (e) {
+      console.error('Nominatim Search Error:', e);
+      setSuggestions(prev => ({ ...prev, [type]: [] }));
+    }
   };
 
-  const selectAddress = (item: google.maps.places.AutocompletePrediction, type: 'pickup' | 'dropoff' | 'returnPickup' | 'returnDropoff') => {
-    if (!googleServices.places) return;
+  const selectAddress = (item: any, type: 'pickup' | 'dropoff' | 'returnPickup' | 'returnDropoff') => {
+    const lat = typeof item.lat === 'string' ? parseFloat(item.lat) : item.lat;
+    const lon = typeof item.lon === 'string' ? parseFloat(item.lon) : item.lon;
+    const coords: [number, number] = [lat, lon];
+    
+    setBookingData(prev => ({
+      ...prev,
+      [type]: item.description,
+      [`${type}Coords`]: coords
+    }));
+    setSuggestions(prev => ({ ...prev, [type]: [] }));
 
-    googleServices.places.getDetails({
-      placeId: item.place_id,
-      fields: ['formatted_address', 'geometry']
-    }, (place, status) => {
-      if (status === google.maps.places.PlacesServiceStatus.OK && place?.geometry?.location) {
-        const coords: [number, number] = [place.geometry.location.lat(), place.geometry.location.lng()];
-        
-        setBookingData(prev => ({
-          ...prev,
-          [type]: place.formatted_address || item.description,
-          [`${type}Coords`]: coords
-        }));
-        setSuggestions(prev => ({ ...prev, [type]: [] }));
-
-        if (mapRef.current && (type === 'pickup' || type === 'dropoff')) {
-          if (markersRef.current[type]) {
-            markersRef.current[type]?.remove();
-          }
-          const icon = L.divIcon({
-            className: 'custom-div-icon',
-            html: `<div class="w-8 h-8 ${type === 'pickup' ? 'bg-stone-900' : 'bg-stone-600'} rounded-full border-2 border-white flex items-center justify-center shadow-lg"><div class="w-2 h-2 bg-white rounded-full"></div></div>`,
-            iconSize: [32, 32],
-            iconAnchor: [16, 16]
-          });
-          markersRef.current[type] = L.marker(coords, { icon }).addTo(mapRef.current);
-          
-          const otherType = type === 'pickup' ? 'dropoff' : 'pickup';
-          if (bookingData[`${otherType}Coords`]) {
-            calculateRoute(coords, bookingData[`${otherType}Coords`] as [number, number]);
-          } else {
-            mapRef.current.setView(coords, 14);
-          }
-        }
+    if (mapRef.current && (type === 'pickup' || type === 'dropoff')) {
+      if (markersRef.current[type]) {
+        markersRef.current[type]?.remove();
       }
-    });
+      const icon = L.divIcon({
+        className: 'custom-div-icon',
+        html: `<div class="w-8 h-8 ${type === 'pickup' ? 'bg-stone-900' : 'bg-stone-600'} rounded-full border-2 border-white flex items-center justify-center shadow-lg"><div class="w-2 h-2 bg-white rounded-full"></div></div>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+      markersRef.current[type] = L.marker(coords, { icon }).addTo(mapRef.current);
+      
+      const otherType = type === 'pickup' ? 'dropoff' : 'pickup';
+      if (bookingData[`${otherType}Coords`]) {
+        calculateRoute(coords, bookingData[`${otherType}Coords`] as [number, number]);
+      } else {
+        mapRef.current.setView(coords, 14);
+      }
+    }
   };
 
   const calculateRoute = async (p1: [number, number], p2: [number, number]) => {
@@ -1015,11 +1074,19 @@ export default function App() {
 
   const totalPrice = useMemo(() => {
     const vehicle = (vehicles as any)[bookingData.vehicle];
-    let price = vehicle.basePrice;
+    let price = 0;
     
-    // Distance pricing (simplified: base + 2€/km after 10km)
-    if (bookingData.distance > 10) {
-      price += (bookingData.distance - 10) * 2;
+    if (bookingData.serviceType === 'hourly') {
+      price = vehicle.hourlyPrice * bookingData.durationHours;
+    } else {
+      price = vehicle.basePrice;
+      // Distance pricing (simplified: base + 2€/km after 10km)
+      if (bookingData.distance > 10) {
+        price += (bookingData.distance - 10) * 2;
+      }
+      
+      // Return trip multiplier (only for transfer)
+      if (bookingData.isReturnTrip) price *= 2;
     }
 
     // Extras
@@ -1031,11 +1098,8 @@ export default function App() {
     const hour = parseInt(bookingData.time.split(':')[0]);
     if (hour >= 21 || hour <= 6) price *= 1.2;
 
-    // Return trip multiplier
-    if (bookingData.isReturnTrip) price *= 2;
-
     return Math.round(price);
-  }, [bookingData.vehicle, bookingData.distance, bookingData.extras, bookingData.time]);
+  }, [bookingData.vehicle, bookingData.distance, bookingData.durationHours, bookingData.serviceType, bookingData.extras, bookingData.time, bookingData.isReturnTrip]);
 
   const handleBooking = async () => {
     // Check contact form validity
@@ -1056,13 +1120,16 @@ export default function App() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            serviceType: bookingData.serviceType,
+            serviceCategory: bookingData.serviceCategory,
+            durationHours: bookingData.durationHours,
             vehicle: bookingData.vehicle,
             distance: bookingData.distance,
             extras: bookingData.extras,
             time: bookingData.time,
             isReturnTrip: bookingData.isReturnTrip,
             pickup: bookingData.pickup,
-            dropoff: bookingData.dropoff,
+            dropoff: bookingData.serviceType === 'transfer' ? bookingData.dropoff : 'Mise à disposition',
             firstName: bookingData.firstName,
             lastName: bookingData.lastName,
             email: bookingData.email,
@@ -1179,7 +1246,7 @@ export default function App() {
             <div className="w-1 h-3 md:h-4 bg-white/60 rounded-t-sm"></div>
             <div className="w-1 h-4 md:h-5 bg-white rounded-t-sm"></div>
           </div>
-          <h1 className="text-[15px] md:text-lg font-normal tracking-[0.18em] md:tracking-[0.25em] uppercase text-white/90 whitespace-nowrap">Safeness & Transferts</h1>
+          <h1 className="text-[15px] md:text-lg font-normal tracking-[0.18em] md:tracking-[0.25em] uppercase text-white/90 whitespace-nowrap">Safeness transport</h1>
           <p className="text-[11px] md:text-xs tracking-[0.1em] md:tracking-[0.15em] text-white/50 uppercase mt-0.5 whitespace-nowrap">Global Chauffeur Network</p>
         </div>
 
@@ -1279,10 +1346,10 @@ export default function App() {
           </div>
           <button 
             onClick={nextCity}
-            className="absolute -right-5 top-1/2 -translate-y-1/2 w-12 h-12 bg-white text-stone-950 rounded-full flex items-center justify-center shadow-xl hover:bg-stone-200 transition-colors z-20" 
+            className="absolute -right-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-white text-stone-950 rounded-full flex items-center justify-center shadow-xl hover:bg-stone-200 transition-colors z-20" 
             aria-label="Next Location"
           >
-            <iconify-icon icon="solar:alt-arrow-right-linear" width="24" style={{ strokeWidth: 1.5 }}></iconify-icon>
+            <iconify-icon icon="solar:alt-arrow-right-linear" width="20" style={{ strokeWidth: 1.5 }}></iconify-icon>
           </button>
         </div>
       </main>
@@ -1642,7 +1709,7 @@ export default function App() {
                   whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => scrollServices('prev')}
-                  className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
+                  className="w-16 h-16 md:w-16 md:h-16 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
                   aria-label="Previous service"
                 >
                   <ArrowLeft size={20} strokeWidth={1.5} />
@@ -1652,7 +1719,7 @@ export default function App() {
                   whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => scrollServices('next')}
-                  className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
+                  className="w-16 h-16 md:w-16 md:h-16 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
                   aria-label="Next service"
                 >
                   <ArrowRight size={20} strokeWidth={1.5} />
@@ -1691,16 +1758,16 @@ export default function App() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 { key: 'route_cdg', price: '120€', time: '45 min', icon: <Navigation size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/603b4374-0730-4377-a001-ab58e60cb33d_l6ue2k' },
-                { key: 'route_orly', price: '120€', time: '35 min', icon: <MapPin size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp', mobileHidden: true },
+                { key: 'route_orly', price: '120€', time: '35 min', icon: <MapPin size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp' },
                 { key: 'route_disney', price: '120€', time: '50 min', icon: <Sparkles size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/b04fc1f4-3d8d-4e87-89a5-7d9dd8d174ae_jw5xtm' },
                 { key: 'route_versailles', price: '90€', time: '40 min', icon: <Building2 size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp' },
-                { key: 'route_giverny', price: '250€', time: '75 min', icon: <Palette size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp', mobileHidden: true },
-                { key: 'route_beauvais', price: '140€', time: '80 min', icon: <Plane size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp', mobileHidden: true },
-              ].map((item, i) => {
+                { key: 'route_giverny', price: '250€', time: '75 min', icon: <Palette size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp', lgOnly: true },
+                { key: 'route_beauvais', price: '140€', time: '80 min', icon: <Plane size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp', lgOnly: true },
+              ].map((item: any, i) => {
                 return (
                   <div 
                     key={i}
-                    className={`group relative border rounded-[2.5rem] transition-all duration-500 overflow-hidden h-[320px] flex flex-col bg-stone-900 border-white/10 hover:border-white/20 shadow-2xl ${item.mobileHidden ? 'hidden md:flex' : 'flex'}`}
+                    className={`group relative border rounded-[2.5rem] transition-all duration-500 overflow-hidden h-[320px] bg-stone-900 border-white/10 hover:border-white/20 shadow-2xl ${item.lgOnly ? 'hidden lg:flex' : 'flex'} flex-col`}
                   >
                     {/* Background Image with Overlay */}
                     <div className="absolute inset-0 z-0">
@@ -1797,21 +1864,21 @@ export default function App() {
               </p>
               <ul className="flex flex-col gap-4 mb-8">
                 <li className="flex items-start gap-3">
-                  <iconify-icon icon="solar:check-circle-linear" width="20" className="text-white mt-0.5" style={{ strokeWidth: 1.5 }}></iconify-icon>
+                  <SolarCheckCircleLinear size={20} className="text-white mt-0.5" strokeWidth={1.5} />
                   <span>{t('corp_li1')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <iconify-icon icon="solar:check-circle-linear" width="20" className="text-white mt-0.5" style={{ strokeWidth: 1.5 }}></iconify-icon>
+                  <SolarCheckCircleLinear size={20} className="text-white mt-0.5" strokeWidth={1.5} />
                   <span>{t('corp_li2')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <iconify-icon icon="solar:check-circle-linear" width="20" className="text-white mt-0.5" style={{ strokeWidth: 1.5 }}></iconify-icon>
+                  <SolarCheckCircleLinear size={20} className="text-white mt-0.5" strokeWidth={1.5} />
                   <span>{t('corp_li3')}</span>
                 </li>
               </ul>
               <a href="#contact" className="text-base text-white font-normal border-b border-white/20 pb-1 w-fit hover:border-white transition-colors flex items-center gap-2">
                 {t('corp_cta')}
-                <iconify-icon icon="solar:arrow-right-up-linear" width="16" style={{ strokeWidth: 1.5 }}></iconify-icon>
+                <SolarArrowRightUpLinear size={16} />
               </a>
             </div>
             <div className="relative w-full rounded-3xl flex items-center justify-center py-12 md:py-20 lg:py-24">
@@ -1913,8 +1980,8 @@ export default function App() {
               ].map((car, i) => (
                 <motion.div 
                   key={i} 
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: i * 0.2 }}
                   className={`border ${car.isPremium ? 'border-white/20 bg-stone-800/40' : 'border-white/10 bg-stone-900/30'} rounded-[2.5rem] p-8 flex flex-col items-center backdrop-blur-sm shadow-2xl relative overflow-hidden group`}
@@ -1929,19 +1996,19 @@ export default function App() {
                   </div>
                   <div className={`w-full grid grid-cols-2 gap-y-6 pt-8 border-t ${car.isPremium ? 'border-white/20' : 'border-white/10'}`}>
                     <div className="flex items-center gap-3 justify-center">
-                      <iconify-icon icon="solar:users-group-rounded-linear" width="20" className={car.isPremium ? 'text-white/60' : 'text-white/40'} style={{ strokeWidth: 1.5 }}></iconify-icon>
+                      <SolarUsersGroup size={20} className={car.isPremium ? 'text-white/60' : 'text-white/40'} strokeWidth={1.5} />
                       <span className={`text-xs font-light tracking-[0.15em] uppercase ${car.isPremium ? 'text-white/80' : 'text-white/60'}`}>{car.pax}</span>
                     </div>
                     <div className="flex items-center gap-3 justify-center">
-                      <iconify-icon icon="solar:case-minimalistic-linear" width="20" className={car.isPremium ? 'text-white/60' : 'text-white/40'} style={{ strokeWidth: 1.5 }}></iconify-icon>
+                      <SolarCaseMinimalistic size={20} className={car.isPremium ? 'text-white/60' : 'text-white/40'} strokeWidth={1.5} />
                       <span className={`text-xs font-light tracking-[0.15em] uppercase ${car.isPremium ? 'text-white/80' : 'text-white/60'}`}>{car.bag}</span>
                     </div>
                     <div className="flex items-center gap-3 justify-center">
-                      <iconify-icon icon="solar:wi-fi-router-linear" width="20" className={car.isPremium ? 'text-white/60' : 'text-white/40'} style={{ strokeWidth: 1.5 }}></iconify-icon>
+                      <SolarWifiRouter size={20} className={car.isPremium ? 'text-white/60' : 'text-white/40'} strokeWidth={1.5} />
                       <span className={`text-xs font-light tracking-[0.15em] uppercase ${car.isPremium ? 'text-white/80' : 'text-white/60'}`}>Wi-Fi Inclus</span>
                     </div>
                     <div className="flex items-center gap-3 justify-center">
-                      <iconify-icon icon="solar:bottle-linear" width="20" className={car.isPremium ? 'text-white/60' : 'text-white/40'} style={{ strokeWidth: 1.5 }}></iconify-icon>
+                      <SolarBottle size={20} className={car.isPremium ? 'text-white/60' : 'text-white/40'} />
                       <span className={`text-xs font-light tracking-[0.15em] uppercase ${car.isPremium ? 'text-white/80' : 'text-white/60'}`}>Boissons</span>
                     </div>
                   </div>
@@ -2065,11 +2132,11 @@ export default function App() {
                 </div>
                 
                 <div className="flex text-[#FBBC05] gap-0.5">
-                  <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
-                  <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
-                  <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
-                  <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
-                  <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
+                  <SolarStarBold size={18} />
+                  <SolarStarBold size={18} />
+                  <SolarStarBold size={18} />
+                  <SolarStarBold size={18} />
+                  <SolarStarBold size={18} />
                 </div>
 
                 <div className="flex items-center gap-2.5 bg-white/5 px-5 py-2 rounded-full border border-white/10 mt-2">
@@ -2121,8 +2188,8 @@ export default function App() {
                   {reviews.map((review, i) => (
                     <motion.div 
                       key={`rev-${i}`} 
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.6, delay: i * 0.1 }}
                       className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-3 flex flex-col transform-gpu"
@@ -2131,7 +2198,7 @@ export default function App() {
                       <div className="h-full border border-white/5 rounded-3xl p-8 bg-white/[0.03] backdrop-blur-md shadow-2xl flex flex-col hover:bg-white/[0.05] hover:border-white/10 transition-colors duration-500">
                         <div className="flex gap-1 text-[#FBBC05] mb-8">
                           {[...Array(5)].map((_, idx) => (
-                            <iconify-icon key={idx} icon="solar:star-bold" width="18"></iconify-icon>
+                            <SolarStarBold key={idx} size={18} />
                           ))}
                         </div>
                         <p className="leading-relaxed mb-8 text-stone-200/90 font-light text-[15px] italic flex-grow">
@@ -2144,7 +2211,7 @@ export default function App() {
                           <div className="flex flex-col">
                             <span className="text-sm font-medium text-white/95">{review.name}</span>
                             <div className="flex items-center gap-1.5 mt-0.5">
-                              <iconify-icon icon="solar:check-circle-bold" width="12" className="text-emerald-500"></iconify-icon>
+                              <SolarCheckCircleBold size={12} className="text-emerald-500" />
                               <span className="text-[10px] text-stone-500 uppercase tracking-[0.1em] font-bold">{t('verified_label')}</span>
                             </div>
                           </div>
@@ -2239,6 +2306,61 @@ export default function App() {
                   {/* Step 1: Ride Details */}
                   {step === 1 && (
                     <div className="space-y-5 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                      {bookingError && (
+                        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3.5 rounded-xl text-xs md:text-sm font-medium animate-in fade-in duration-300">
+                          {bookingError}
+                        </div>
+                      )}
+
+                      {/* Service Type Toggle */}
+                      <div className="bg-stone-100 p-1 rounded-xl flex">
+                        <button
+                          onClick={() => setBookingData(prev => ({ ...prev, serviceType: 'transfer', serviceCategory: prev.serviceCategory === 'hourly' ? '' : prev.serviceCategory }))}
+                          className={`flex-1 flex items-center justify-center gap-1.5 md:gap-2 py-2.5 md:py-3 rounded-lg text-[11px] md:text-sm font-bold transition-all ${bookingData.serviceType === 'transfer' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-400 hover:text-stone-600'}`}
+                        >
+                          <iconify-icon icon="solar:route-linear" width="16" height="16" className="md:w-[18px] md:h-[18px]"></iconify-icon>
+                          {t('service_transfer')}
+                        </button>
+                        <button
+                          onClick={() => setBookingData(prev => ({ ...prev, serviceType: 'hourly', serviceCategory: prev.serviceCategory === 'hourly' ? '' : prev.serviceCategory }))}
+                          className={`flex-1 flex items-center justify-center gap-1.5 md:gap-2 py-2.5 md:py-3 rounded-lg text-[11px] md:text-sm font-bold transition-all ${bookingData.serviceType === 'hourly' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-400 hover:text-stone-600'}`}
+                        >
+                          <iconify-icon icon="solar:clock-circle-linear" width="16" height="16" className="md:w-[18px] md:h-[18px]"></iconify-icon>
+                          {t('service_hourly')}
+                        </button>
+                      </div>
+                      
+                      {/* Service Category Selection */}
+                      <div className="space-y-2 relative flex flex-col animate-in fade-in slide-in-from-top-2 duration-300">
+                        <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('field_service_category')}</label>
+                        <div className="relative border border-stone-200 rounded-xl bg-white overflow-hidden">
+                          {bookingData.serviceCategory === 'intercity' && <Navigation className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
+                          {bookingData.serviceCategory === 'airport' && <Plane className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
+                          {bookingData.serviceCategory === 'vip' && <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
+                          {bookingData.serviceCategory === 'prestige' && <Star className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
+                          {!bookingData.serviceCategory && <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
+                          <select 
+                            ref={serviceCategoryRef}
+                            required
+                            value={bookingData.serviceCategory}
+                            onChange={(e) => {
+                              setBookingData(prev => ({ ...prev, serviceCategory: e.target.value }));
+                              if (bookingError) setBookingError(null);
+                            }}
+                            className={`w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 focus:ring-0 outline-none appearance-none cursor-pointer font-medium text-sm transition-colors ${bookingData.serviceCategory ? 'text-stone-900' : 'text-stone-400'}`}
+                          >
+                            <option value="" disabled>{t('placeholder_service_category')}</option>
+                            <option value="intercity" className="text-stone-900">{t('service_cat_intercity')}</option>
+                            <option value="airport" className="text-stone-900">{t('service_cat_airport')}</option>
+                            <option value="vip" className="text-stone-900">{t('service_cat_vip')}</option>
+                            <option value="prestige" className="text-stone-900">{t('service_cat_prestige')}</option>
+                          </select>
+                          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-400">
+                            <ChevronDown size={18} />
+                          </div>
+                        </div>
+                      </div>
+
                       <div className="space-y-2 relative flex flex-col">
                         <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('itinerary_label')}</label>
                         
@@ -2277,88 +2399,122 @@ export default function App() {
                             )}
                           </motion.div>
 
-                          {/* Separator Line with Swap Button */}
-                          <div className="h-px bg-stone-100 mx-12 relative">
-                            <button 
-                              type="button"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                setBookingData(prev => ({
-                                  ...prev,
-                                  pickup: prev.dropoff,
-                                  dropoff: prev.pickup,
-                                  pickupCoords: prev.dropoffCoords,
-                                  dropoffCoords: prev.pickupCoords
-                                }));
-                              }}
-                              className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white border border-stone-200 rounded-full flex items-center justify-center text-stone-400 hover:text-stone-900 shadow-md hover:shadow-lg transition-all z-30"
-                              title={t('swap_addresses')}
-                            >
-                              <iconify-icon icon="solar:transfer-vertical-linear" width="16"></iconify-icon>
-                            </button>
-                          </div>
-
-                          {/* Dropoff Field */}
-                          <motion.div layout className={`relative ${suggestions.dropoff.length > 0 ? 'z-40' : 'z-10'}`}>
-                            <div className="relative">
-                              <Navigation className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />
-                              <input 
-                                ref={dropoffInputRef}
-                                type="text" 
-                                required
-                                value={bookingData.dropoff}
-                                onChange={(e) => {
-                                  setBookingData(prev => ({ ...prev, dropoff: e.target.value, dropoffCoords: null }));
-                                  searchAddress(e.target.value, 'dropoff');
-                                  if (bookingError) setBookingError(null);
-                                }}
-                                placeholder={t('dropoff_placeholder')} 
-                                className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-900 placeholder:text-stone-300 focus:ring-0 outline-none transition-all"
-                              />
-                            </div>
-                            {suggestions.dropoff.length > 0 && (
-                              <div className="absolute z-50 w-full mt-1 bg-white border border-stone-200 rounded-xl overflow-hidden shadow-xl top-full">
-                                {suggestions.dropoff.map((item, i) => (
-                                  <button 
-                                    key={i}
-                                    type="button"
-                                    onClick={() => selectAddress(item, 'dropoff')}
-                                    className="w-full text-left px-4 py-3 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors border-b border-stone-50 last:border-0"
-                                  >
-                                    {item.description}
-                                  </button>
-                                ))}
+                          {bookingData.serviceType === 'transfer' && (
+                            <>
+                              {/* Separator Line with Swap Button */}
+                              <div className="h-px bg-stone-100 mx-12 relative">
+                                <button 
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    setBookingData(prev => ({
+                                      ...prev,
+                                      pickup: prev.dropoff,
+                                      dropoff: prev.pickup,
+                                      pickupCoords: prev.dropoffCoords,
+                                      dropoffCoords: prev.pickupCoords
+                                    }));
+                                  }}
+                                  className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white border border-stone-200 rounded-full flex items-center justify-center text-stone-400 hover:text-stone-900 shadow-md hover:shadow-lg transition-all z-30"
+                                  title={t('swap_addresses')}
+                                >
+                                  <iconify-icon icon="solar:transfer-vertical-linear" width="16"></iconify-icon>
+                                </button>
                               </div>
-                            )}
-                          </motion.div>
+
+                              {/* Dropoff Field */}
+                              <motion.div layout className={`relative ${suggestions.dropoff.length > 0 ? 'z-40' : 'z-10'}`}>
+                                <div className="relative">
+                                  <Navigation className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />
+                                  <input 
+                                    ref={dropoffInputRef}
+                                    type="text" 
+                                    required={bookingData.serviceType === 'transfer'}
+                                    value={bookingData.dropoff}
+                                    onChange={(e) => {
+                                      setBookingData(prev => ({ ...prev, dropoff: e.target.value, dropoffCoords: null }));
+                                      searchAddress(e.target.value, 'dropoff');
+                                      if (bookingError) setBookingError(null);
+                                    }}
+                                    placeholder={t('dropoff_placeholder')} 
+                                    className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-900 placeholder:text-stone-300 focus:ring-0 outline-none transition-all"
+                                  />
+                                </div>
+                                {suggestions.dropoff.length > 0 && (
+                                  <div className="absolute z-50 w-full mt-1 bg-white border border-stone-200 rounded-xl overflow-hidden shadow-xl top-full">
+                                    {suggestions.dropoff.map((item, i) => (
+                                      <button 
+                                        key={i}
+                                        type="button"
+                                        onClick={() => selectAddress(item, 'dropoff')}
+                                        className="w-full text-left px-4 py-3 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors border-b border-stone-50 last:border-0"
+                                      >
+                                        {item.description}
+                                      </button>
+                                    ))}
+                                  </div>
+                                )}
+                              </motion.div>
+                            </>
+                          )}
+
+                          {bookingData.serviceType === 'hourly' && (
+                            <>
+                              <div className="h-px bg-stone-100 mx-12"></div>
+                              <div className="relative">
+                                <Clock className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />
+                                <select 
+                                  value={bookingData.durationHours}
+                                  onChange={(e) => setBookingData(prev => ({ ...prev, durationHours: parseInt(e.target.value) }))}
+                                  className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-900 focus:ring-0 outline-none appearance-none cursor-pointer"
+                                >
+                                  {[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(h => (
+                                    <option key={h} value={h}>{h} {t('hours_count')}</option>
+                                  ))}
+                                </select>
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-400">
+                                  <ChevronDown size={18} />
+                                </div>
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('field_date')}</label>
-                          <DatePicker
-                            selected={parseDateString(bookingData.date)}
-                            onChange={(date: Date | null) => setBookingData(prev => ({ ...prev, date: formatDateToString(date) }))}
-                            dateFormat="dd/MM/yyyy"
-                            minDate={new Date()}
-                            locale={lang === 'fr' ? 'fr' : undefined}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all cursor-pointer"
-                            wrapperClassName="w-full"
-                            required
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('field_time')}</label>
-                          <select 
-                            value={bookingData.time}
-                            onChange={(e) => setBookingData(prev => ({ ...prev, time: e.target.value }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
-                          >
-                            {timeSlots.map(slot => (
-                              <option key={slot} value={slot}>{slot}</option>
-                            ))}
-                          </select>
+                      {/* Unified Date & Time Field */}
+                      <div className="space-y-2 relative flex flex-col">
+                        <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">
+                          {lang === 'fr' ? 'Date & Heure de départ' : 'Departure Date & Time'}
+                        </label>
+                        <div className="grid grid-cols-2 border border-stone-200 rounded-xl bg-white overflow-hidden divide-x divide-stone-100">
+                          {/* Date Selector */}
+                          <div className="relative flex items-center">
+                            <Calendar size={18} className="absolute left-4 text-stone-400 pointer-events-none" />
+                            <input
+                              type="date"
+                              value={bookingData.date}
+                              min={new Date().toISOString().split('T')[0]}
+                              onChange={(e) => setBookingData(prev => ({ ...prev, date: e.target.value }))}
+                              required
+                              className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-900 focus:ring-0 outline-none cursor-pointer font-medium text-sm appearance-none"
+                            />
+                          </div>
+                          {/* Time Selector */}
+                          <div className="relative flex items-center">
+                            <Clock size={18} className="absolute left-4 text-stone-400 pointer-events-none" />
+                            <select 
+                              value={bookingData.time}
+                              onChange={(e) => setBookingData(prev => ({ ...prev, time: e.target.value }))}
+                              className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 text-stone-900 focus:ring-0 outline-none appearance-none cursor-pointer font-medium text-sm"
+                            >
+                              {timeSlots.map(slot => (
+                                <option key={slot} value={slot}>{slot}</option>
+                              ))}
+                            </select>
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-400">
+                              <ChevronDown size={18} />
+                            </div>
+                          </div>
                         </div>
                       </div>
 
@@ -2366,9 +2522,7 @@ export default function App() {
                         <button 
                           onClick={() => setBookingData(prev => ({ 
                             ...prev, 
-                            isReturnTrip: !prev.isReturnTrip,
-                            returnPickup: !prev.isReturnTrip ? prev.dropoff : prev.returnPickup,
-                            returnDropoff: !prev.isReturnTrip ? prev.pickup : prev.returnDropoff
+                            isReturnTrip: !prev.isReturnTrip
                           }))}
                           className={`w-full flex items-center justify-between p-2.5 md:p-3.5 rounded-xl border-2 transition-all ${bookingData.isReturnTrip ? 'border-stone-900 bg-stone-50' : 'border-stone-100 bg-white hover:border-stone-200'}`}
                         >
@@ -2388,95 +2542,40 @@ export default function App() {
 
                         {bookingData.isReturnTrip && (
                           <div className="space-y-2 relative flex flex-col animate-in fade-in slide-in-from-top-2 duration-300">
-                            <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('itinerary_return')}</label>
+                            <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">
+                              {lang === 'fr' ? 'Date & Heure de retour' : 'Return Date & Time'}
+                            </label>
                             
-                            <div className="relative border border-stone-200 rounded-xl bg-white overflow-visible">
-                              {/* Return Pickup Field */}
-                              <motion.div layout className={`relative ${suggestions.returnPickup.length > 0 ? 'z-40' : 'z-20'}`}>
-                                <div className="relative">
-                                  <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />
-                                  <input 
-                                    type="text" 
-                                    required={bookingData.isReturnTrip}
-                                    value={bookingData.returnPickup}
-                                    onChange={(e) => {
-                                      setBookingData(prev => ({ ...prev, returnPickup: e.target.value, returnPickupCoords: null }));
-                                      searchAddress(e.target.value, 'returnPickup');
-                                    }}
-                                    placeholder={t('pickup_placeholder')} 
-                                    className="w-full bg-transparent border-none py-3 md:py-4 pl-12 pr-4 text-stone-900 placeholder:text-stone-300 focus:ring-0 outline-none transition-all"
-                                  />
-                                </div>
-                                {suggestions.returnPickup.length > 0 && (
-                                  <div className="absolute z-50 w-full mt-1 bg-white border border-stone-200 rounded-xl overflow-hidden shadow-xl top-full">
-                                    {suggestions.returnPickup.map((item, i) => (
-                                      <button 
-                                        key={i}
-                                        type="button"
-                                        onClick={() => selectAddress(item, 'returnPickup')}
-                                        className="w-full text-left px-4 py-3 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors border-b border-stone-50 last:border-0"
-                                      >
-                                        {item.description}
-                                      </button>
-                                    ))}
-                                  </div>
-                                )}
-                              </motion.div>
-    
-                              {/* Separator Line with Swap Button */}
-                              <div className="h-px bg-stone-100 mx-12 relative">
-                                <button 
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    setBookingData(prev => ({
-                                      ...prev,
-                                      returnPickup: prev.returnDropoff,
-                                      returnDropoff: prev.returnPickup,
-                                      returnPickupCoords: prev.returnDropoffCoords,
-                                      returnDropoffCoords: prev.returnPickupCoords
-                                    }));
-                                  }}
-                                  className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white border border-stone-200 rounded-full flex items-center justify-center text-stone-400 hover:text-stone-900 shadow-md hover:shadow-lg transition-all z-30"
-                                  title={t('swap_addresses')}
-                                >
-                                  <iconify-icon icon="solar:transfer-vertical-linear" width="16"></iconify-icon>
-                                </button>
+                            <div className="grid grid-cols-2 border border-stone-200 rounded-xl bg-white overflow-hidden divide-x divide-stone-100">
+                              {/* Return Date Selector */}
+                              <div className="relative flex items-center">
+                                <Calendar size={18} className="absolute left-4 text-stone-400 pointer-events-none" />
+                                <input
+                                  type="date"
+                                  value={bookingData.returnDate}
+                                  min={bookingData.date || new Date().toISOString().split('T')[0]}
+                                  onChange={(e) => setBookingData(prev => ({ ...prev, returnDate: e.target.value }))}
+                                  required={bookingData.isReturnTrip}
+                                  className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-900 focus:ring-0 outline-none cursor-pointer font-medium text-sm appearance-none"
+                                />
                               </div>
-    
-                              {/* Return Dropoff Field */}
-                              <motion.div layout className={`relative ${suggestions.returnDropoff.length > 0 ? 'z-40' : 'z-10'}`}>
-                                <div className="relative">
-                                  <Navigation className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />
-                                  <input 
-                                    type="text" 
-                                    required={bookingData.isReturnTrip}
-                                    value={bookingData.returnDropoff}
-                                    onChange={(e) => {
-                                      setBookingData(prev => ({ ...prev, returnDropoff: e.target.value, returnDropoffCoords: null }));
-                                      searchAddress(e.target.value, 'returnDropoff');
-                                    }}
-                                    placeholder={t('dropoff_placeholder')} 
-                                    className="w-full bg-transparent border-none py-3 md:py-4 pl-12 pr-4 text-stone-900 placeholder:text-stone-300 focus:ring-0 outline-none transition-all"
-                                  />
+                              {/* Return Time Selector */}
+                              <div className="relative flex items-center">
+                                <Clock size={18} className="absolute left-4 text-stone-400 pointer-events-none" />
+                                <select 
+                                  value={bookingData.returnTime}
+                                  onChange={(e) => setBookingData(prev => ({ ...prev, returnTime: e.target.value }))}
+                                  className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 text-stone-900 focus:ring-0 outline-none appearance-none cursor-pointer font-medium text-sm"
+                                >
+                                  {timeSlots.map(slot => (
+                                    <option key={slot} value={slot}>{slot}</option>
+                                  ))}
+                                </select>
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-400">
+                                  <ChevronDown size={18} />
                                 </div>
-                                {suggestions.returnDropoff.length > 0 && (
-                                  <div className="absolute z-50 w-full mt-1 bg-white border border-stone-200 rounded-xl overflow-hidden shadow-xl top-full">
-                                    {suggestions.returnDropoff.map((item, i) => (
-                                      <button 
-                                        key={i}
-                                        type="button"
-                                        onClick={() => selectAddress(item, 'returnDropoff')}
-                                        className="w-full text-left px-4 py-3 text-sm text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors border-b border-stone-50 last:border-0"
-                                      >
-                                        {item.description}
-                                      </button>
-                                    ))}
-                                  </div>
-                                )}
-                              </motion.div>
+                              </div>
                             </div>
-
                           </div>
                         )}
                       </div>
@@ -2796,6 +2895,9 @@ export default function App() {
                         onClick={() => {
                           setStep(1);
                           setBookingData({
+                            serviceType: 'transfer',
+                            serviceCategory: '',
+                            durationHours: 2,
                             pickup: '',
                             dropoff: '',
                             pickupCoords: null,
@@ -2867,13 +2969,21 @@ export default function App() {
                             <div className="text-xs text-white/80 font-medium line-clamp-1">{bookingData.pickup || '—'}</div>
                           </div>
                           <div className="space-y-0.5">
-                            <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('arrival')}</div>
-                            <div className="text-xs text-white/80 font-medium line-clamp-1">{bookingData.dropoff || '—'}</div>
+                            <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{bookingData.serviceType === 'transfer' ? t('arrival') : t('duration_label')}</div>
+                            <div className="text-xs text-white/80 font-medium line-clamp-1">
+                              {bookingData.serviceType === 'transfer' ? (bookingData.dropoff || '—') : `${bookingData.durationHours} ${t('hours_count')}`}
+                            </div>
                           </div>
                         </div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5">
+                        <div className="col-span-2 space-y-0.5">
+                          <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('field_service_category')}</div>
+                          <div className="text-xs text-white/80 font-medium">
+                            {bookingData.serviceCategory ? t(`service_cat_${bookingData.serviceCategory}`) : '—'}
+                          </div>
+                        </div>
                         <div className="space-y-0.5">
                           <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('date') || 'Date'}</div>
                           <div className="text-xs text-white/80 font-medium">{bookingData.date || '—'}</div>
@@ -2883,9 +2993,11 @@ export default function App() {
                           <div className="text-xs text-white/80 font-medium">{bookingData.time || '—'}</div>
                         </div>
                         <div className="space-y-0.5">
-                          <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{step < 3 ? 'Distance' : t('step3')}</div>
+                          <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{step < 3 ? (bookingData.serviceType === 'transfer' ? 'Distance' : t('duration_label')) : t('step3')}</div>
                           <div className="text-xs text-white/80 font-medium">
-                            {step < 3 ? `${Math.round(bookingData.distance)} KM` : t(`vehicle_${bookingData.vehicle}`)}
+                            {step < 3 
+                              ? (bookingData.serviceType === 'transfer' ? `${Math.round(bookingData.distance)} KM` : `${bookingData.durationHours} ${t('hours_count')}`) 
+                              : t(`vehicle_${bookingData.vehicle}`)}
                           </div>
                         </div>
                         {step >= 3 && bookingData.extras.length > 0 && (
@@ -2988,7 +3100,7 @@ export default function App() {
                 <div className="w-1 h-4 bg-white/60 rounded-t-sm"></div>
                 <div className="w-1 h-5 bg-white rounded-t-sm"></div>
               </div>
-              <h1 className="text-[19px] font-medium tracking-[0.25em] uppercase text-white/70 mb-5">Safeness & Transferts</h1>
+              <h1 className="text-[19px] font-medium tracking-[0.25em] uppercase text-white/70 mb-5">Safeness transport</h1>
               <p className="text-[13.5px] md:text-[15px] font-light text-white/30 tracking-wide max-w-lg">
                 {t('footer_desc')}
               </p>
@@ -3016,7 +3128,7 @@ export default function App() {
               </div>
             </div>
             <div className="flex flex-col md:flex-row items-center justify-between w-full text-[11px] md:text-[13px] text-white/30 uppercase tracking-[0.2em] mt-8 gap-4 text-center font-normal">
-              <p>Safeness & Transferts © 2026. All Rights Reserved.</p>
+              <p>Safeness transport © 2026. All Rights Reserved.</p>
               <div className="flex gap-8">
                 <a href="#" className="hover:text-white/60 transition-colors">{t('legal')}</a>
                 <a href="#" className="hover:text-white/60 transition-colors">{t('privacy')}</a>

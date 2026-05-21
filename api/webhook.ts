@@ -69,38 +69,41 @@ export default async function handler(req: Request, res: Response) {
       try {
         // Email for the customer
         await resend.emails.send({
-          from: "Safeness & Transferts <onboarding@resend.dev>",
+          from: "SAFENESS transport <onboarding@resend.dev>",
           to: metadata.email,
-          subject: "Confirmation de votre réservation - Safeness & Transferts",
+          subject: "Confirmation de votre réservation - SAFENESS transport",
           html: `
             <div style="font-family: sans-serif; color: #333;">
               <h1 style="color: #000;">Merci pour votre réservation !</h1>
-              <p>Votre paiement a été confirmé. Voici le récapitulatif de votre transfert :</p>
+              <p>Votre paiement a été confirmé. Voici le récapitulatif de votre ${metadata.serviceType === 'hourly' ? 'mise à disposition' : 'transfert'} :</p>
               <hr />
               <p><strong>Départ :</strong> ${metadata.pickup}</p>
-              <p><strong>Arrivée :</strong> ${metadata.dropoff}</p>
+              ${metadata.serviceType === 'hourly' 
+                ? `<p><strong>Durée :</strong> ${metadata.durationHours} heures</p>`
+                : `<p><strong>Arrivée :</strong> ${metadata.dropoff}</p>`
+              }
               <p><strong>Date/Heure :</strong> ${metadata.time}</p>
               <p><strong>Véhicule :</strong> ${metadata.vehicle}</p>
               <p><strong>Passagers :</strong> ${metadata.passengers}</p>
               <p><strong>Bagages :</strong> ${metadata.luggage}</p>
               <p><strong>Extras :</strong> ${metadata.extras}</p>
-              <p><strong>Trajet retour :</strong> ${metadata.isReturnTrip === 'true' ? 'Oui' : 'Non'}</p>
+              ${metadata.serviceType === 'transfer' ? `<p><strong>Trajet retour :</strong> ${metadata.isReturnTrip === 'true' ? 'Oui' : 'Non'}</p>` : ''}
               <hr />
               <p><strong>Prix total payé :</strong> ${amount} €</p>
               <p>Un chauffeur vous contactera peu avant l'heure prévue.</p>
-              <p>À bientôt,<br />L'équipe Safeness & Transferts</p>
+              <p>À bientôt,<br />L'équipe SAFENESS transport</p>
             </div>
           `,
         });
 
         // Email for the admin
         await resend.emails.send({
-          from: "Safeness & Transferts <onboarding@resend.dev>",
+          from: "SAFENESS transport <onboarding@resend.dev>",
           to: "autowebaws@gmail.com", // Adress to notify
           subject: "Nouvelle réservation confirmée !",
           html: `
             <div style="font-family: sans-serif; color: #333;">
-              <h1>Nouvelle réservation reçue</h1>
+              <h1>Nouvelle réservation reçue (${metadata.serviceType === 'hourly' ? 'Mise à disposition' : 'Transfert'})</h1>
               <p>Un client vient de payer une réservation :</p>
               <hr />
               <p><strong>Client :</strong> ${metadata.firstName} ${metadata.lastName}</p>
@@ -109,13 +112,16 @@ export default async function handler(req: Request, res: Response) {
               <p><strong>Numéro de vol/train :</strong> ${metadata.flightNumber}</p>
               <hr />
               <p><strong>Départ :</strong> ${metadata.pickup}</p>
-              <p><strong>Arrivée :</strong> ${metadata.dropoff}</p>
+              ${metadata.serviceType === 'hourly' 
+                ? `<p><strong>Durée :</strong> ${metadata.durationHours} heures</p>`
+                : `<p><strong>Arrivée :</strong> ${metadata.dropoff}</p>`
+              }
               <p><strong>Date/Heure :</strong> ${metadata.time}</p>
               <p><strong>Véhicule :</strong> ${metadata.vehicle}</p>
               <p><strong>Passagers :</strong> ${metadata.passengers}</p>
               <p><strong>Bagages :</strong> ${metadata.luggage}</p>
               <p><strong>Extras :</strong> ${metadata.extras}</p>
-              <p><strong>Trajet retour :</strong> ${metadata.isReturnTrip === 'true' ? 'Oui' : 'Non'}</p>
+              ${metadata.serviceType === 'transfer' ? `<p><strong>Trajet retour :</strong> ${metadata.isReturnTrip === 'true' ? 'Oui' : 'Non'}</p>` : ''}
               <hr />
               <p><strong>Montant payé :</strong> ${amount} €</p>
             </div>

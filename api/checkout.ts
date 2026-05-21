@@ -24,6 +24,8 @@ const extrasList = {
 };
 
 interface CheckoutRequestBody {
+  serviceType: 'transfer' | 'hourly';
+  durationHours: number;
   vehicle: string;
   distance: number;
   extras: string[];
@@ -39,6 +41,7 @@ interface CheckoutRequestBody {
   luggage: number;
   flightNumber: string;
   lang?: string;
+  serviceCategory?: string;
 }
 
 export default async function handler(req: Request, res: Response) {
@@ -48,9 +51,10 @@ export default async function handler(req: Request, res: Response) {
 
   try {
     const { 
-      vehicle, distance, extras, time, isReturnTrip, pickup, dropoff,
+      serviceType, durationHours, vehicle, distance, extras, time, isReturnTrip, pickup, dropoff,
       firstName, lastName, email, phone, passengers, luggage, flightNumber,
-      lang = 'fr'
+      lang = 'fr',
+      serviceCategory
     } = req.body as CheckoutRequestBody;
 
     if (!vehicle || !(vehicles as any)[vehicle]) {
@@ -59,11 +63,28 @@ export default async function handler(req: Request, res: Response) {
 
     // Calculation logic (matching App.tsx)
     const selectedVehicle = (vehicles as any)[vehicle];
-    let calculatedPrice = selectedVehicle.basePrice;
-
-    // Distance pricing: base + 2€/km after 10km
-    if (distance > 10) {
-      calculatedPrice += (distance - 10) * 2;
+    const vehicleConfig = {
+      business: { hourlyPrice: 60 },
+      van: { hourlyPrice: 90 },
+      first: { hourlyPrice: 120 }
+    };
+    
+    let calculatedPrice = 0;
+    
+    if (serviceType === 'hourly') {
+      const hourlyPrice = (vehicleConfig as any)[vehicle].hourlyPrice;
+      calculatedPrice = hourlyPrice * (durationHours || 2);
+    } else {
+      calculatedPrice = selectedVehicle.basePrice;
+      // Distance pricing: base + 2€/km after 10km
+      if (distance > 10) {
+        calculatedPrice += (distance - 10) * 2;
+      }
+      
+      // Double for return trip (only for transfer)
+      if (isReturnTrip) {
+        calculatedPrice *= 2;
+      }
     }
 
     // Extras
@@ -83,20 +104,21 @@ export default async function handler(req: Request, res: Response) {
       }
     }
 
-    // Double for return trip
-    if (isReturnTrip) {
-      calculatedPrice *= 2;
-    }
-
     const finalAmount = Math.round(calculatedPrice);
 
     const stripe = getStripe();
 
     const isEn = lang === 'en';
-    const productName = isEn ? `Transfer ${selectedVehicle.name}` : `Transfert ${selectedVehicle.name}`;
-    const productDesc = isEn 
-      ? `From ${pickup} to ${dropoff}${time ? ` - ${time}` : ""}`
-      : `De ${pickup} à ${dropoff}${time ? ` - ${time}` : ""}`;
+    const serviceName = serviceType === 'hourly' 
+      ? (isEn ? 'Hourly Disposal' : 'Mise à disposition')
+      : (isEn ? 'Transfer' : 'Transfert');
+      
+    const productName = `${serviceName} ${selectedVehicle.name}`;
+    const productDesc = serviceType === 'hourly'
+      ? (isEn ? `For ${durationHours} hours from ${pickup}` : `Pendant ${durationHours} heures depuis ${pickup}`)
+      : (isEn 
+          ? `From ${pickup} to ${dropoff}${time ? ` - ${time}` : ""}`
+          : `De ${pickup} à ${dropoff}${time ? ` - ${time}` : ""}`);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -116,6 +138,9 @@ export default async function handler(req: Request, res: Response) {
       mode: "payment",
       customer_email: email,
       metadata: {
+        serviceType,
+        serviceCategory: serviceCategory || "Default",
+        durationHours: durationHours?.toString() || "0",
         firstName,
         lastName,
         email,

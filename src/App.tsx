@@ -2316,14 +2316,14 @@ export default function App() {
                       <div className="bg-stone-100 p-1 rounded-xl flex">
                         <button
                           onClick={() => setBookingData(prev => ({ ...prev, serviceType: 'transfer', serviceCategory: prev.serviceCategory === 'hourly' ? '' : prev.serviceCategory }))}
-                          className={`flex-1 flex items-center justify-center gap-1.5 md:gap-2 py-2.5 md:py-3 rounded-lg text-[11px] md:text-sm font-bold transition-all ${bookingData.serviceType === 'transfer' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-400 hover:text-stone-600'}`}
+                          className={`flex-1 flex flex-col md:flex-row items-center justify-center text-center gap-1 md:gap-2 py-4 md:py-3 rounded-lg text-[10px] md:text-sm font-bold transition-all ${bookingData.serviceType === 'transfer' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-400 hover:text-stone-600'}`}
                         >
                           <iconify-icon icon="solar:route-linear" width="16" height="16" className="md:w-[18px] md:h-[18px]"></iconify-icon>
                           {t('service_transfer')}
                         </button>
                         <button
                           onClick={() => setBookingData(prev => ({ ...prev, serviceType: 'hourly', serviceCategory: prev.serviceCategory === 'hourly' ? '' : prev.serviceCategory }))}
-                          className={`flex-1 flex items-center justify-center gap-1.5 md:gap-2 py-2.5 md:py-3 rounded-lg text-[11px] md:text-sm font-bold transition-all ${bookingData.serviceType === 'hourly' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-400 hover:text-stone-600'}`}
+                          className={`flex-1 flex flex-col md:flex-row items-center justify-center text-center gap-1 md:gap-2 py-4 md:py-3 rounded-lg text-[10px] md:text-sm font-bold transition-all ${bookingData.serviceType === 'hourly' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-400 hover:text-stone-600'}`}
                         >
                           <iconify-icon icon="solar:clock-circle-linear" width="16" height="16" className="md:w-[18px] md:h-[18px]"></iconify-icon>
                           {t('service_hourly')}

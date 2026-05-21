@@ -2259,7 +2259,7 @@ export default function App() {
           
           <div ref={bookingRef} className="w-full max-w-6xl mx-auto px-6 relative z-10">
             {/* Mobile-only Step Indicators Block */}
-            <div className="md:hidden w-full mb-8">
+            <div className="md:hidden w-full mb-4">
               <div className="w-full flex items-center justify-between py-5 px-6 rounded-xl bg-white border border-stone-100 shadow-xl">
                 {[1, 2, 3, 4].map((s) => (
                   <Fragment key={s}>
@@ -2316,14 +2316,14 @@ export default function App() {
                       <div className="bg-stone-100 p-1 rounded-xl flex">
                         <button
                           onClick={() => setBookingData(prev => ({ ...prev, serviceType: 'transfer', serviceCategory: prev.serviceCategory === 'hourly' ? '' : prev.serviceCategory }))}
-                          className={`flex-1 flex flex-col md:flex-row items-center justify-center text-center gap-1 md:gap-2 py-3 md:py-3 rounded-lg text-xs md:text-sm font-bold transition-all ${bookingData.serviceType === 'transfer' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-400 hover:text-stone-600'}`}
+                          className={`flex-1 flex flex-col md:flex-row items-center justify-center text-center gap-1 md:gap-2 py-3 md:py-3 rounded-lg text-xs md:text-sm font-medium transition-all ${bookingData.serviceType === 'transfer' ? 'bg-white text-stone-900' : 'text-stone-400 hover:text-stone-600'}`}
                         >
                           <iconify-icon icon="solar:route-linear" width="16" height="16" className="md:w-[18px] md:h-[18px]"></iconify-icon>
                           {t('service_transfer')}
                         </button>
                         <button
                           onClick={() => setBookingData(prev => ({ ...prev, serviceType: 'hourly', serviceCategory: prev.serviceCategory === 'hourly' ? '' : prev.serviceCategory }))}
-                          className={`flex-1 flex flex-col md:flex-row items-center justify-center text-center gap-1 md:gap-2 py-3 md:py-3 rounded-lg text-xs md:text-sm font-bold transition-all ${bookingData.serviceType === 'hourly' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-400 hover:text-stone-600'}`}
+                          className={`flex-1 flex flex-col md:flex-row items-center justify-center text-center gap-1 md:gap-2 py-3 md:py-3 rounded-lg text-xs md:text-sm font-medium transition-all ${bookingData.serviceType === 'hourly' ? 'bg-white text-stone-900 px-1' : 'text-stone-400 hover:text-stone-600'}`}
                         >
                           <iconify-icon icon="solar:clock-circle-linear" width="16" height="16" className="md:w-[18px] md:h-[18px]"></iconify-icon>
                           {t('service_hourly')}
@@ -2347,7 +2347,7 @@ export default function App() {
                               setBookingData(prev => ({ ...prev, serviceCategory: e.target.value }));
                               if (bookingError) setBookingError(null);
                             }}
-                            className={`w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 focus:ring-0 outline-none appearance-none cursor-pointer font-medium text-sm transition-colors ${bookingData.serviceCategory ? 'text-stone-900' : 'text-stone-400'}`}
+                            className={`w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 focus:ring-0 outline-none appearance-none cursor-pointer transition-all ${bookingData.serviceCategory ? 'text-stone-900' : 'text-stone-300'}`}
                           >
                             <option value="" disabled>{t('placeholder_service_category')}</option>
                             <option value="intercity" className="text-stone-900">{t('service_cat_intercity')}</option>
@@ -2484,7 +2484,7 @@ export default function App() {
                       {/* Unified Date & Time Field */}
                       <div className="space-y-2 relative flex flex-col">
                         <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">
-                          {lang === 'fr' ? 'Date & Heure de départ' : 'Departure Date & Time'}
+                          {lang === 'fr' ? 'Date & Heure' : 'Date & Time'}
                         </label>
                         <div className="grid grid-cols-2 border border-stone-200 rounded-xl bg-white overflow-hidden divide-x divide-stone-100">
                           {/* Date Selector */}
@@ -2586,7 +2586,14 @@ export default function App() {
                           disabled={loading}
                           className="w-full bg-stone-900 text-white py-5 md:py-6 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 disabled:opacity-50"
                         >
-                          {loading ? <Loader2 className="animate-spin" size={20} /> : t('view_prices')}
+                          {loading ? (
+                            <Loader2 className="animate-spin" size={20} />
+                          ) : (
+                            <>
+                              {t('view_prices')}
+                              <ArrowRight size={18} />
+                            </>
+                          )}
                         </button>
                       </div>
                     </div>

@@ -1568,7 +1568,7 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="grid lg:grid-cols-12 gap-12 items-end reveal"
+              className="grid lg:grid-cols-12 gap-12 items-end"
             >
               <div className="lg:col-span-6">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
@@ -1630,10 +1630,10 @@ export default function App() {
               ].map((service, i) => (
                 <motion.div 
                   key={`card-${i}`} 
-                  initial={i === 0 ? { opacity: 0, x: 50 } : { opacity: 1, x: 0 }}
-                  whileInView={i === 0 ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
                   viewport={{ once: true, margin: "-10%" }}
-                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setActiveServiceCard(activeServiceCard === i ? null : i)}
                   className={`w-[79.5vw] md:w-[calc(50%-12px)] lg:w-[420px] h-[500px] md:h-[495px] border border-white/10 rounded-[2.5rem] bg-stone-950 shadow-2xl flex flex-col shrink-0 group overflow-hidden snap-center relative cursor-pointer transition-colors ${activeServiceCard === i ? 'border-white/30' : ''}`}
@@ -1709,20 +1709,20 @@ export default function App() {
                   whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => scrollServices('prev')}
-                  className="w-16 h-16 md:w-16 md:h-16 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
+                  className="w-[60.8px] h-[60.8px] md:w-16 md:h-16 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
                   aria-label="Previous service"
                 >
-                  <ArrowLeft size={20} strokeWidth={1.5} />
+                  <ArrowLeft className="w-[19px] h-[19px] md:w-5 md:h-5" strokeWidth={1.5} />
                 </motion.button>
 
                 <motion.button 
                   whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => scrollServices('next')}
-                  className="w-16 h-16 md:w-16 md:h-16 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
+                  className="w-[60.8px] h-[60.8px] md:w-16 md:h-16 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
                   aria-label="Next service"
                 >
-                  <ArrowRight size={20} strokeWidth={1.5} />
+                  <ArrowRight className="w-[19px] h-[19px] md:w-5 md:h-5" strokeWidth={1.5} />
                 </motion.button>
               </div>
               
@@ -1739,7 +1739,7 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="flex flex-col items-center mb-16 text-center reveal"
+              className="flex flex-col items-center mb-16 text-center"
             >
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
                 <Tag size={12} className="text-white/60" />

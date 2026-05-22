@@ -1630,10 +1630,6 @@ export default function App() {
               ].map((service, i) => (
                 <motion.div 
                   key={`card-${i}`} 
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true, margin: "-10%" }}
-                  transition={{ duration: 0.5, delay: i * 0.08 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setActiveServiceCard(activeServiceCard === i ? null : i)}
                   className={`w-[79.5vw] md:w-[calc(50%-12px)] lg:w-[420px] h-[500px] md:h-[495px] border border-white/10 rounded-[2.5rem] bg-stone-950 shadow-2xl flex flex-col shrink-0 group overflow-hidden snap-center relative cursor-pointer transition-colors ${activeServiceCard === i ? 'border-white/30' : ''}`}

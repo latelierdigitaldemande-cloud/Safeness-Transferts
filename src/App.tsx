@@ -355,17 +355,29 @@ export default function App() {
     const cards = Array.from(container.querySelectorAll('.snap-center')) as HTMLElement[];
     if (cards.length === 0) return;
 
+    // Separate behavior for desktop (wide screens) and mobile/tablet
+    const isDesktop = window.innerWidth >= 1024;
+
     const containerRect = container.getBoundingClientRect();
     const scrollLeft = container.scrollLeft;
 
-    // Calculate exact target centered horizontal scroll offset for each card
-    const cardPositions = cards.map(card => {
+    // Calculate exact target horizontal scroll offset for each card
+    const cardPositions = cards.map((card, idx) => {
       const cardRect = card.getBoundingClientRect();
       const cardWidth = card.offsetWidth;
       const cardOffsetInContainer = cardRect.left - containerRect.left + scrollLeft;
-      let targetScroll = cardOffsetInContainer - (containerRect.width / 2) + (cardWidth / 2);
-      targetScroll = Math.max(0, Math.min(container.scrollWidth - containerRect.width, targetScroll));
-      return targetScroll;
+      
+      if (isDesktop) {
+        // On desktop, align to the initial grid padding, keeping values unclamped so each card has a unique offset
+        if (idx === 0) return 0;
+        const initialPadding = cards[0].getBoundingClientRect().left - containerRect.left + scrollLeft;
+        return cardOffsetInContainer - initialPadding;
+      } else {
+        // On mobile/tablet, center cards precisely
+        let targetScroll = cardOffsetInContainer - (containerRect.width / 2) + (cardWidth / 2);
+        targetScroll = Math.max(0, Math.min(container.scrollWidth - containerRect.width, targetScroll));
+        return targetScroll;
+      }
     });
 
     // Find the closest active index
@@ -387,7 +399,12 @@ export default function App() {
       targetIndex = Math.max(0, activeIndex - 1);
     }
 
-    const finalScrollLeft = cardPositions[targetIndex];
+    let finalScrollLeft = cardPositions[targetIndex];
+
+    if (isDesktop) {
+      // Clamp the final target index scroll offset only at the end on desktop
+      finalScrollLeft = Math.max(0, Math.min(container.scrollWidth - containerRect.width, finalScrollLeft));
+    }
 
     container.scrollTo({
       left: finalScrollLeft,
@@ -1629,7 +1646,7 @@ export default function App() {
             {/* Native Horizontal Scroll Container with Edge Bleed */}
             <div 
               ref={servicesScrollRef}
-              className="flex gap-6 overflow-x-auto pb-12 snap-x snap-mandatory px-6 lg:px-0 lg:pl-[max(1.5rem,calc((100vw-1280px)/2+1.5rem))]"
+              className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory px-6 lg:px-0 lg:pl-[max(1.5rem,calc((100vw-1280px)/2+1.5rem))] no-scrollbar"
             >
               {[
                 { 
@@ -1662,7 +1679,7 @@ export default function App() {
                   key={`card-${i}`} 
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setActiveServiceCard(activeServiceCard === i ? null : i)}
-                  className={`w-[79.5vw] md:w-[calc(50%-12px)] lg:w-[420px] h-[500px] md:h-[495px] border border-white/10 rounded-[2.5rem] bg-stone-950 shadow-2xl flex flex-col shrink-0 group overflow-hidden snap-center relative cursor-pointer transition-colors ${activeServiceCard === i ? 'border-white/30' : ''}`}
+                  className={`w-[79.5vw] md:w-[calc(50%-12px)] lg:w-[420px] h-[500px] md:h-[495px] border border-white/10 rounded-[2.5rem] bg-stone-950 shadow-md shadow-black/15 flex flex-col shrink-0 group overflow-hidden snap-center relative cursor-pointer transition-colors ${activeServiceCard === i ? 'border-white/30' : ''}`}
                 >
                   {/* Full Card Background Image */}
                   <img 
@@ -1729,26 +1746,26 @@ export default function App() {
             </div>
             
             {/* Navigation Arrows and Scroll Hint */}
-            <div className="max-w-7xl mx-auto px-6 mt-8 flex justify-between items-center">
+            <div className="max-w-7xl mx-auto px-6 mt-4 flex justify-between items-center">
               <div className="flex gap-4">
                 <motion.button 
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                  whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => scrollServices('prev')}
-                  className="w-[60.8px] h-[60.8px] md:w-16 md:h-16 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
+                  className="w-[54.72px] h-[54.72px] md:w-[57.6px] md:h-[57.6px] flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
                   aria-label="Previous service"
                 >
-                  <ArrowLeft className="w-[19px] h-[19px] md:w-5 md:h-5" strokeWidth={1.5} />
+                  <ArrowLeft className="w-[17.1px] h-[17.1px] md:w-[18px] md:h-[18px]" strokeWidth={1.5} />
                 </motion.button>
 
                 <motion.button 
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                  whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => scrollServices('next')}
-                  className="w-[60.8px] h-[60.8px] md:w-16 md:h-16 flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
+                  className="w-[54.72px] h-[54.72px] md:w-[57.6px] md:h-[57.6px] flex items-center justify-center text-white border border-white/10 rounded-full transition-colors"
                   aria-label="Next service"
                 >
-                  <ArrowRight className="w-[19px] h-[19px] md:w-5 md:h-5" strokeWidth={1.5} />
+                  <ArrowRight className="w-[17.1px] h-[17.1px] md:w-[18px] md:h-[18px]" strokeWidth={1.5} />
                 </motion.button>
               </div>
               

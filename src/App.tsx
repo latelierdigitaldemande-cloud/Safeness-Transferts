@@ -352,15 +352,45 @@ export default function App() {
   const scrollServices = (direction: 'next' | 'prev') => {
     if (!servicesScrollRef.current) return;
     const container = servicesScrollRef.current;
-    const card = container.querySelector('div') as HTMLElement;
-    if (!card) return;
-    
-    const cardWidth = card.offsetWidth;
-    const gap = 24; // gap-6 is 24px
-    const scrollAmount = cardWidth + gap;
-    
-    container.scrollBy({
-      left: direction === 'next' ? scrollAmount : -scrollAmount,
+    const cards = Array.from(container.querySelectorAll('.snap-center')) as HTMLElement[];
+    if (cards.length === 0) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const scrollLeft = container.scrollLeft;
+
+    // Calculate exact target centered horizontal scroll offset for each card
+    const cardPositions = cards.map(card => {
+      const cardRect = card.getBoundingClientRect();
+      const cardWidth = card.offsetWidth;
+      const cardOffsetInContainer = cardRect.left - containerRect.left + scrollLeft;
+      let targetScroll = cardOffsetInContainer - (containerRect.width / 2) + (cardWidth / 2);
+      targetScroll = Math.max(0, Math.min(container.scrollWidth - containerRect.width, targetScroll));
+      return targetScroll;
+    });
+
+    // Find the closest active index
+    let activeIndex = 0;
+    let minDistance = Infinity;
+    cardPositions.forEach((pos, idx) => {
+      const distance = Math.abs(scrollLeft - pos);
+      if (distance < minDistance) {
+        minDistance = distance;
+        activeIndex = idx;
+      }
+    });
+
+    // Compute direct target index
+    let targetIndex = activeIndex;
+    if (direction === 'next') {
+      targetIndex = Math.min(cards.length - 1, activeIndex + 1);
+    } else {
+      targetIndex = Math.max(0, activeIndex - 1);
+    }
+
+    const finalScrollLeft = cardPositions[targetIndex];
+
+    container.scrollTo({
+      left: finalScrollLeft,
       behavior: 'smooth'
     });
   };

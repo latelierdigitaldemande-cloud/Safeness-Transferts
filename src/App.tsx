@@ -1441,7 +1441,7 @@ export default function App() {
         {/* COUVERTURE EUROPE - REDESIGNED BENTO GRID */}
         <section 
           id="europe"
-          className="bg-stone-900 w-full py-16 px-6 border-t border-white/5 relative overflow-x-hidden md:overflow-hidden"
+          className="bg-stone-900 w-full py-32 px-6 border-t border-white/5 relative overflow-x-hidden md:overflow-hidden"
         >
           {/* Decorative background elements: Subtle map-inspired lines */}
           <div className="absolute inset-0 pointer-events-none opacity-20 hidden md:block">
@@ -1607,7 +1607,7 @@ export default function App() {
         </section>
 
         {/* Section Nos Services */}
-        <section id="services" className="bg-stone-925 w-full py-20 border-t border-white/5 relative overflow-hidden">
+        <section id="services" className="bg-stone-925 w-full py-32 border-t border-white/5 relative overflow-hidden">
           <div className="max-w-7xl mx-auto relative z-10 px-6">
             {/* Header with standard project SPEC - Split Layout */}
             <motion.div 
@@ -1642,7 +1642,7 @@ export default function App() {
           </div>
 
           {/* Horizontal Scroll Layout - Version Full-Width "Hors Cadre" */}
-          <div className="relative mt-12 overflow-hidden">
+          <div className="relative mt-20 overflow-hidden">
             {/* Native Horizontal Scroll Container with Edge Bleed */}
             <div 
               ref={servicesScrollRef}
@@ -1774,7 +1774,7 @@ export default function App() {
         </section>
 
         {/* Section Transferts Populaires */}
-        <section id="transfers" className="bg-stone-900 w-full py-20 border-t border-white/5 relative overflow-hidden">
+        <section id="transfers" className="bg-stone-900 w-full py-32 border-t border-white/5 relative overflow-hidden">
           <div className="max-w-7xl mx-auto relative z-10 px-6">
              {/* Header with standard project SPEC */}
              <motion.div 
@@ -1924,7 +1924,7 @@ export default function App() {
                 <SolarArrowRightUpLinear size={16} />
               </a>
             </div>
-            <div className="relative w-full rounded-3xl flex items-center justify-center py-12 md:py-20 lg:py-24">
+            <div className="relative w-full rounded-3xl flex items-center justify-center">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 to-transparent"></div>
               
               <div className="w-full max-w-7xl lg:max-w-5xl border border-white/20 rounded-3xl bg-stone-800/40 backdrop-blur-xl p-8 md:p-16 lg:p-20 relative z-10 shadow-2xl">
@@ -2064,7 +2064,7 @@ export default function App() {
         {/* GALERIE */}
         <section 
           id="gallery" 
-          className="bg-stone-900 w-full py-20 border-t border-white/5 relative overflow-hidden"
+          className="bg-stone-900 w-full py-32 border-t border-white/5 relative overflow-hidden"
         >
           {/* Subtle background lift */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none hidden md:block"></div>
@@ -2086,7 +2086,7 @@ export default function App() {
               </div>
               <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('vision_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
-              <p className="mt-8 text-stone-400 font-light tracking-wide max-w-xl mx-auto text-sm">
+              <p className="mt-8 text-stone-400 text-sm md:text-base font-light leading-relaxed max-w-xl mx-auto">
                 {t('vision_desc')}
               </p>
             </motion.div>

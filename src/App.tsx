@@ -1363,7 +1363,7 @@ export default function App() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-5 py-2 text-xs font-normal tracking-wide text-white/80 mb-10 max-w-2xl shadow-xl uppercase"
+          className="bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-5 py-2 text-[13px] font-normal tracking-wide text-white/80 mb-10 max-w-2xl shadow-xl uppercase"
         >
           {t('hero_badge')}
         </motion.div>
@@ -1374,10 +1374,10 @@ export default function App() {
           className="flex flex-col items-center mb-12"
         >
           <div className="relative inline-block pb-1 mb-[2px] md:mb-1">
-            <h2 className="text-[50px] leading-none md:text-7xl lg:text-8xl font-semibold tracking-tight uppercase text-white drop-shadow-sm">{t('hero_brand')}</h2>
+            <h2 className="text-[50px] leading-none md:text-7xl lg:text-8xl font-semibold tracking-[0.02em] uppercase text-white drop-shadow-sm">{t('hero_brand')}</h2>
             <div className="absolute bottom-0 left-[15%] right-[15%] h-px bg-zinc-300 rounded-full opacity-80"></div>
           </div>
-          <h2 className="text-[50px] leading-none md:text-7xl lg:text-8xl font-semibold tracking-tight uppercase text-white drop-shadow-sm mt-[2px] md:mt-1">{t('hero_worldwide')}</h2>
+          <h2 className="text-[50px] leading-none md:text-7xl lg:text-8xl font-semibold tracking-[0.02em] uppercase text-white drop-shadow-sm mt-[2px] md:mt-1">{t('hero_worldwide')}</h2>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -154,6 +154,19 @@ export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const bookingRef = useRef<HTMLDivElement>(null);
 
+  // Fix Safari Mobile shift on refresh/reload by turning off browser scroll restoration and forcing top of page scroll
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    // Timeout to handle late-rendering offsets in Safari iOS
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 50);
+    return () => clearTimeout(timer);
+  }, []);
+
   // Auto-scroll to top of form when step changes (except on first load)
   const isFirstRender = useRef(true);
   useEffect(() => {
@@ -1287,10 +1300,8 @@ export default function App() {
         <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-transparent to-stone-950/50"></div>
       </div>
 
-      {/* HEADER & HERO CONTAINER */}
-      <div className="relative z-10 flex flex-col min-h-[100dvh] md:min-h-screen">
-        {/* HEADER */}
-        <header className="relative z-50 flex items-center justify-between px-6 py-5 w-full max-w-7xl mx-auto">
+      {/* HEADER */}
+      <header className="relative z-50 flex items-center justify-between px-6 py-5 w-full max-w-7xl mx-auto">
         <div className="w-10 flex justify-start">
           <button 
             onClick={() => setIsMobileMenuOpen(true)}
@@ -1347,7 +1358,7 @@ export default function App() {
       </header>
 
       {/* HERO */}
-      <main className="relative flex-grow flex flex-col items-center justify-center pt-8 pb-16 px-4 text-center">
+      <main className="relative z-10 flex flex-col items-center pt-20 pb-32 px-4 text-center min-h-screen">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -1416,7 +1427,6 @@ export default function App() {
           </button>
         </div>
       </main>
-      </div>
 
       {/* SCROLLABLE CONTENT LAYER */}
       <div className="relative z-20 -mt-16 w-full flex flex-col">

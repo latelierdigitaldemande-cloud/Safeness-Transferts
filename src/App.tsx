@@ -940,6 +940,8 @@ export default function App() {
 
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
   const [isReviewsPaused, setIsReviewsPaused] = useState(false);
+  const [isReviewsVisible, setIsReviewsVisible] = useState(false);
+  const reviewsRef = useRef<HTMLElement>(null);
 
   const getItemsPerPage = useCallback(() => {
     if (typeof window === 'undefined') return 3;
@@ -951,7 +953,7 @@ export default function App() {
   const nextReview = useCallback(() => {
     setCurrentReviewIndex((prev) => {
       const itemsPerPage = getItemsPerPage();
-      const max = Math.ceil(reviews.length / itemsPerPage) - 1;
+      const max = Math.max(0, reviews.length - itemsPerPage);
       return prev >= max ? 0 : prev + 1;
     });
   }, [reviews.length, getItemsPerPage]);
@@ -979,15 +981,27 @@ export default function App() {
     if (isLeftSwipe) {
       nextReview();
     } else if (isRightSwipe) {
-      setCurrentReviewIndex((prev) => (prev === 0 ? Math.ceil(reviews.length / getItemsPerPage()) - 1 : prev - 1));
+      setCurrentReviewIndex((prev) => (prev === 0 ? Math.max(0, reviews.length - getItemsPerPage()) : prev - 1));
     }
   };
 
   useEffect(() => {
-    if (isReviewsPaused) return;
-    const timer = setInterval(nextReview, 3000);
+    const el = reviewsRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsReviewsVisible(entry.isIntersecting);
+    }, { threshold: 0.1 });
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isReviewsPaused || !isReviewsVisible) return;
+    const timer = setInterval(nextReview, 2500);
     return () => clearInterval(timer);
-  }, [nextReview, isReviewsPaused]);
+  }, [nextReview, isReviewsPaused, isReviewsVisible]);
 
   // Initialize Map
   useEffect(() => {
@@ -1273,8 +1287,10 @@ export default function App() {
         <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-transparent to-stone-950/50"></div>
       </div>
 
-      {/* HEADER */}
-      <header className="relative z-50 flex items-center justify-between px-6 py-5 w-full max-w-7xl mx-auto">
+      {/* HEADER & HERO CONTAINER */}
+      <div className="relative z-10 flex flex-col min-h-[100dvh] md:min-h-screen">
+        {/* HEADER */}
+        <header className="relative z-50 flex items-center justify-between px-6 py-5 w-full max-w-7xl mx-auto">
         <div className="w-10 flex justify-start">
           <button 
             onClick={() => setIsMobileMenuOpen(true)}
@@ -1331,7 +1347,7 @@ export default function App() {
       </header>
 
       {/* HERO */}
-      <main className="relative z-10 flex flex-col items-center pt-20 pb-32 px-4 text-center min-h-screen">
+      <main className="relative flex-grow flex flex-col items-center justify-center pt-8 pb-16 px-4 text-center">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -1400,6 +1416,7 @@ export default function App() {
           </button>
         </div>
       </main>
+      </div>
 
       {/* SCROLLABLE CONTENT LAYER */}
       <div className="relative z-20 -mt-16 w-full flex flex-col">
@@ -2145,6 +2162,7 @@ export default function App() {
         {/* AVIS CLIENTS */}
         <section 
           id="reviews"
+          ref={reviewsRef}
           className="bg-stone-900 w-full py-32 px-6 border-t border-white/5 relative overflow-hidden"
         >
           {/* Subtle background lift */}
@@ -2168,23 +2186,24 @@ export default function App() {
               <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('reviews_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
               
-              <div className="flex flex-col items-center gap-4 mt-12">
-                <div className="flex flex-col items-center">
-                  <span className="text-white font-medium text-lg leading-none">{t('excellent')}</span>
-                  <span className="text-[10px] text-stone-500 uppercase tracking-[0.15em] mt-2">{t('verified_count')}</span>
+              <div className="flex items-center justify-center gap-x-4 mt-12 bg-white/[0.03] border border-white/10 px-5 py-2.5 rounded-full max-w-max mx-auto backdrop-blur-md shadow-lg shadow-black/10">
+                {/* Brand Logo & Reviews Count */}
+                <div className="flex items-center gap-2">
+                  <iconify-icon icon="logos:google-icon" width="16"></iconify-icon>
+                  <span className="text-white/80 font-semibold text-xs tracking-wider uppercase">
+                    {lang === 'fr' ? '48 Avis' : '48 Reviews'}
+                  </span>
                 </div>
                 
-                <div className="flex text-[#FBBC05] gap-0.5">
-                  <SolarStarBold size={18} />
-                  <SolarStarBold size={18} />
-                  <SolarStarBold size={18} />
-                  <SolarStarBold size={18} />
-                  <SolarStarBold size={18} />
-                </div>
+                <div className="w-px h-4 bg-white/10"></div>
 
-                <div className="flex items-center gap-2.5 bg-white/5 px-5 py-2 rounded-full border border-white/10 mt-2">
-                  <iconify-icon icon="logos:google-icon" width="18"></iconify-icon>
-                  <span className="text-white font-medium text-sm">Google</span>
+                {/* Stars */}
+                <div className="flex text-[#FBBC05] gap-0.5">
+                  <SolarStarBold size={14} />
+                  <SolarStarBold size={14} />
+                  <SolarStarBold size={14} />
+                  <SolarStarBold size={14} />
+                  <SolarStarBold size={14} />
                 </div>
               </div>
             </motion.div>
@@ -2207,7 +2226,8 @@ export default function App() {
               <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 right-0 z-30 px-2 lg:px-4">
                 <button 
                   onClick={() => nextReview()}
-                  className="w-12 h-12 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition-all active:scale-95"
+                  disabled={currentReviewIndex >= Math.max(0, reviews.length - getItemsPerPage())}
+                  className={`w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all ${currentReviewIndex >= Math.max(0, reviews.length - getItemsPerPage()) ? 'opacity-20 cursor-not-allowed' : 'bg-white/5 hover:bg-white/10 text-white active:scale-95'}`}
                 >
                   <ChevronRight size={20} />
                 </button>
@@ -2221,7 +2241,7 @@ export default function App() {
                   onTouchMove={onTouchMove}
                   onTouchEnd={onTouchEnd}
                   animate={{ 
-                    x: `-${currentReviewIndex * 100}%` 
+                    x: `-${currentReviewIndex * (100 / getItemsPerPage())}%` 
                   }}
                   transition={{ 
                     duration: 0.6,
@@ -2229,12 +2249,8 @@ export default function App() {
                   }}
                 >
                   {reviews.map((review, i) => (
-                    <motion.div 
+                    <div 
                       key={`rev-${i}`} 
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.6, delay: i * 0.1 }}
                       className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-3 flex flex-col transform-gpu"
                       style={{ backfaceVisibility: 'hidden' }}
                     >
@@ -2260,14 +2276,14 @@ export default function App() {
                           </div>
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </motion.div>
               </div>
 
               {/* Pagination Dots */}
               <div className="flex justify-center gap-2.5 mt-10">
-                {Array.from({ length: Math.ceil(reviews.length / getItemsPerPage()) }).map((_, i) => (
+                {Array.from({ length: Math.max(1, reviews.length - getItemsPerPage() + 1) }).map((_, i) => (
                   <button
                     key={`dot-${i}`}
                     onClick={() => setCurrentReviewIndex(i)}

@@ -1374,10 +1374,10 @@ export default function App() {
           className="flex flex-col items-center mb-12"
         >
           <div className="relative inline-block pb-1 mb-[2px] md:mb-1">
-            <h2 className="text-[50px] leading-none md:text-7xl lg:text-8xl font-semibold tracking-[0.02em] uppercase text-white drop-shadow-sm">{t('hero_brand')}</h2>
+            <h2 className="text-[51px] leading-none md:text-7xl lg:text-8xl font-semibold tracking-[0.02em] uppercase text-white drop-shadow-sm">{t('hero_brand')}</h2>
             <div className="absolute bottom-0 left-[15%] right-[15%] h-px bg-zinc-300 rounded-full opacity-80"></div>
           </div>
-          <h2 className="text-[50px] leading-none md:text-7xl lg:text-8xl font-semibold tracking-[0.02em] uppercase text-white drop-shadow-sm mt-[2px] md:mt-1">{t('hero_worldwide')}</h2>
+          <h2 className="text-[51px] leading-none md:text-7xl lg:text-8xl font-semibold tracking-[0.02em] uppercase text-white drop-shadow-sm mt-[2px] md:mt-1">{t('hero_worldwide')}</h2>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

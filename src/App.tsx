@@ -2400,7 +2400,7 @@ export default function App() {
                               }
                               if (bookingError) setBookingError(null);
                             }}
-                            className={`w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 focus:ring-0 outline-none appearance-none cursor-pointer transition-all ${bookingData.serviceCategory ? 'text-stone-900' : 'text-stone-300'}`}
+                            className={`w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 focus:ring-0 outline-none appearance-none cursor-pointer transition-all ${bookingData.serviceCategory ? 'text-stone-900' : 'text-stone-500'}`}
                           >
                             <option value="" disabled>{t('placeholder_service_category')}</option>
                             <option value="intercity" className="text-stone-900">{t('service_cat_intercity')}</option>
@@ -2434,7 +2434,7 @@ export default function App() {
                                   if (bookingError) setBookingError(null);
                                 }}
                                 placeholder={t('pickup_placeholder')} 
-                                className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-900 placeholder:text-stone-300 focus:ring-0 outline-none transition-all"
+                                className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-900 placeholder:text-stone-500 focus:ring-0 outline-none transition-all"
                               />
                             </div>
                             {suggestions.pickup.length > 0 && (
@@ -2491,7 +2491,7 @@ export default function App() {
                                       if (bookingError) setBookingError(null);
                                     }}
                                     placeholder={t('dropoff_placeholder')} 
-                                    className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-900 placeholder:text-stone-300 focus:ring-0 outline-none transition-all"
+                                    className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-900 placeholder:text-stone-500 focus:ring-0 outline-none transition-all"
                                   />
                                 </div>
                                 {suggestions.dropoff.length > 0 && (
@@ -2801,7 +2801,7 @@ export default function App() {
                             value={bookingData.firstName}
                             onChange={(e) => setBookingData(prev => ({ ...prev, firstName: e.target.value }))}
                             placeholder={t('placeholder_firstName')}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 placeholder:text-stone-500 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -2813,7 +2813,7 @@ export default function App() {
                             value={bookingData.lastName}
                             onChange={(e) => setBookingData(prev => ({ ...prev, lastName: e.target.value }))}
                             placeholder={t('placeholder_lastName')}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 placeholder:text-stone-500 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                       </div>
@@ -2828,7 +2828,7 @@ export default function App() {
                             value={bookingData.email}
                             onChange={(e) => setBookingData(prev => ({ ...prev, email: e.target.value }))}
                             placeholder={t('placeholder_email')}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 placeholder:text-stone-500 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -2857,7 +2857,7 @@ export default function App() {
                               value={bookingData.phone}
                               onChange={(e) => setBookingData(prev => ({ ...prev, phone: e.target.value }))}
                               placeholder={t('placeholder_phone')}
-                              className="w-full bg-transparent py-3 md:py-4 px-4 text-stone-900 outline-none"
+                              className="w-full bg-transparent py-3 md:py-4 px-4 text-stone-900 placeholder:text-stone-500 outline-none"
                             />
                           </div>
                         </div>
@@ -2897,7 +2897,7 @@ export default function App() {
                           value={bookingData.flightNumber}
                           onChange={(e) => setBookingData(prev => ({ ...prev, flightNumber: e.target.value }))}
                           placeholder={t('flight')}
-                          className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                          className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-900 placeholder:text-stone-500 outline-none focus:border-stone-900 focus:bg-white transition-all"
                         />
                       </div>
 

@@ -2400,14 +2400,14 @@ export default function App() {
                               }
                               if (bookingError) setBookingError(null);
                             }}
-                            className={`w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 focus:ring-0 outline-none appearance-none cursor-pointer transition-all font-semibold text-sm ${bookingData.serviceCategory ? 'text-stone-950' : 'text-stone-700'}`}
+                            className={`w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 focus:ring-0 outline-none appearance-none cursor-pointer transition-all font-semibold text-[15px] ${bookingData.serviceCategory ? 'text-stone-900' : 'text-stone-700'}`}
                           >
-                            <option value="" disabled className="text-stone-950 bg-white font-medium text-sm">{t('placeholder_service_category')}</option>
-                            <option value="intercity" className="text-stone-950 bg-white font-medium text-sm">{t('service_cat_intercity')}</option>
-                            <option value="airport" className="text-stone-950 bg-white font-medium text-sm">{t('service_cat_airport')}</option>
-                            <option value="vip" className="text-stone-950 bg-white font-medium text-sm">{t('service_cat_vip')}</option>
-                            <option value="prestige" className="text-stone-950 bg-white font-medium text-sm">{t('service_cat_prestige')}</option>
-                            <option value="hourly" className="text-stone-950 bg-white font-medium text-sm">{t('service_cat_hourly')}</option>
+                            <option value="" disabled className="text-stone-900 bg-white font-medium text-[15px]">{t('placeholder_service_category')}</option>
+                            <option value="intercity" className="text-stone-900 bg-white font-medium text-[15px]">{t('service_cat_intercity')}</option>
+                            <option value="airport" className="text-stone-900 bg-white font-medium text-[15px]">{t('service_cat_airport')}</option>
+                            <option value="vip" className="text-stone-900 bg-white font-medium text-[15px]">{t('service_cat_vip')}</option>
+                            <option value="prestige" className="text-stone-900 bg-white font-medium text-[15px]">{t('service_cat_prestige')}</option>
+                            <option value="hourly" className="text-stone-900 bg-white font-medium text-[15px]">{t('service_cat_hourly')}</option>
                           </select>
                           <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-800">
                             <ChevronDown size={18} />
@@ -2434,7 +2434,7 @@ export default function App() {
                                   if (bookingError) setBookingError(null);
                                 }}
                                 placeholder={t('pickup_placeholder')} 
-                                className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-955 text-[15px] font-medium placeholder:text-stone-700/90 focus:ring-0 outline-none transition-all"
+                                className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-950 text-[15px] font-medium placeholder:text-stone-700/90 focus:ring-0 outline-none transition-all"
                               />
                             </div>
                             {suggestions.pickup.length > 0 && (
@@ -2491,7 +2491,7 @@ export default function App() {
                                       if (bookingError) setBookingError(null);
                                     }}
                                     placeholder={t('dropoff_placeholder')} 
-                                    className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-955 text-[15px] font-medium placeholder:text-stone-700/90 focus:ring-0 outline-none transition-all"
+                                    className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-950 text-[15px] font-medium placeholder:text-stone-700/90 focus:ring-0 outline-none transition-all"
                                   />
                                 </div>
                                 {suggestions.dropoff.length > 0 && (
@@ -2520,7 +2520,7 @@ export default function App() {
                                 <select 
                                   value={bookingData.durationHours}
                                   onChange={(e) => setBookingData(prev => ({ ...prev, durationHours: parseInt(e.target.value) }))}
-                                  className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-950 text-sm font-semibold focus:ring-0 outline-none appearance-none cursor-pointer"
+                                  className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-950 text-[15px] font-semibold focus:ring-0 outline-none appearance-none cursor-pointer"
                                 >
                                   {[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(h => (
                                     <option key={h} value={h} className="text-stone-950 bg-white font-medium">{h} {t('hours_count')}</option>
@@ -2559,7 +2559,7 @@ export default function App() {
                             <select 
                               value={bookingData.time}
                               onChange={(e) => setBookingData(prev => ({ ...prev, time: e.target.value }))}
-                              className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 text-stone-955 font-semibold focus:ring-0 outline-none appearance-none cursor-pointer text-sm"
+                              className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 text-stone-950 font-semibold focus:ring-0 outline-none appearance-none cursor-pointer text-[15px]"
                             >
                               {timeSlots.map(slot => (
                                 <option key={slot} value={slot} className="text-stone-950 bg-white font-semibold">{slot}</option>
@@ -2609,7 +2609,7 @@ export default function App() {
                                   min={bookingData.date || new Date().toISOString().split('T')[0]}
                                   onChange={(e) => setBookingData(prev => ({ ...prev, returnDate: e.target.value }))}
                                   required={bookingData.isReturnTrip}
-                                  className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-955 font-semibold focus:ring-0 outline-none cursor-pointer text-sm appearance-none"
+                                  className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-950 font-semibold focus:ring-0 outline-none cursor-pointer text-[15px] appearance-none"
                                 />
                               </div>
                               {/* Return Time Selector */}
@@ -2618,10 +2618,10 @@ export default function App() {
                                 <select 
                                   value={bookingData.returnTime}
                                   onChange={(e) => setBookingData(prev => ({ ...prev, returnTime: e.target.value }))}
-                                  className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 text-stone-955 font-semibold focus:ring-0 outline-none appearance-none cursor-pointer text-sm"
+                                  className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 text-stone-950 font-semibold focus:ring-0 outline-none appearance-none cursor-pointer text-[15px]"
                                 >
                                   {timeSlots.map(slot => (
-                                    <option key={slot} value={slot} className="text-stone-955 bg-white font-semibold">{slot}</option>
+                                    <option key={slot} value={slot} className="text-stone-950 bg-white font-semibold">{slot}</option>
                                   ))}
                                 </select>
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-800">
@@ -2800,7 +2800,7 @@ export default function App() {
                             value={bookingData.firstName}
                             onChange={(e) => setBookingData(prev => ({ ...prev, firstName: e.target.value }))}
                             placeholder={t('placeholder_firstName')}
-                            className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-955 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-950 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -2812,7 +2812,7 @@ export default function App() {
                             value={bookingData.lastName}
                             onChange={(e) => setBookingData(prev => ({ ...prev, lastName: e.target.value }))}
                             placeholder={t('placeholder_lastName')}
-                            className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-955 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-950 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                       </div>
@@ -2827,7 +2827,7 @@ export default function App() {
                             value={bookingData.email}
                             onChange={(e) => setBookingData(prev => ({ ...prev, email: e.target.value }))}
                             placeholder={t('placeholder_email')}
-                            className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-955 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-950 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -2842,12 +2842,12 @@ export default function App() {
                               <option value="+44" className="text-stone-950 bg-white font-medium">+44</option>
                               <option value="+39" className="text-stone-950 bg-white font-medium">+39</option>
                               <option value="+49" className="text-stone-950 bg-white font-medium">+49</option>
-                              <option value="+34" className="text-stone-955 bg-white font-medium">+34</option>
-                              <option value="+41" className="text-stone-955 bg-white font-medium">+41</option>
-                              <option value="+32" className="text-stone-955 bg-white font-medium">+32</option>
-                              <option value="+31" className="text-stone-955 bg-white font-medium">+31</option>
-                              <option value="+1" className="text-stone-955 bg-white font-medium">+1</option>
-                              <option value="+971" className="text-stone-955 bg-white font-medium">+971</option>
+                              <option value="+34" className="text-stone-950 bg-white font-medium">+34</option>
+                              <option value="+41" className="text-stone-950 bg-white font-medium">+41</option>
+                              <option value="+32" className="text-stone-950 bg-white font-medium">+32</option>
+                              <option value="+31" className="text-stone-950 bg-white font-medium">+31</option>
+                              <option value="+1" className="text-stone-950 bg-white font-medium">+1</option>
+                              <option value="+971" className="text-stone-950 bg-white font-medium">+971</option>
                             </select>
                             <input 
                               ref={phoneRef}
@@ -2856,7 +2856,7 @@ export default function App() {
                               value={bookingData.phone}
                               onChange={(e) => setBookingData(prev => ({ ...prev, phone: e.target.value }))}
                               placeholder={t('placeholder_phone')}
-                              className="w-full bg-transparent py-3 md:py-4 px-4 text-stone-955 font-medium placeholder:text-stone-700/95 outline-none"
+                              className="w-full bg-transparent py-3 md:py-4 px-4 text-stone-950 font-medium placeholder:text-stone-700/95 outline-none"
                             />
                           </div>
                         </div>
@@ -2896,7 +2896,7 @@ export default function App() {
                           value={bookingData.flightNumber}
                           onChange={(e) => setBookingData(prev => ({ ...prev, flightNumber: e.target.value }))}
                           placeholder={t('flight')}
-                          className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-955 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                          className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-950 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
                         />
                       </div>
 

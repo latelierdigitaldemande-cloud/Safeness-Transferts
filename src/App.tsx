@@ -1519,13 +1519,13 @@ export default function App() {
                   <Globe size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('europe_tag')}</span>
                 </div>
-                <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">
+                <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-[1.1] md:leading-tight">
                   {t('europe_title')} <br/> 
                   <span className="font-bold">{t('europe_subtitle')}</span>
                 </h2>
               </div>
               <div className="lg:col-span-6 lg:border-l lg:border-white/10 lg:pl-12">
-                <p className="text-stone-400 text-sm md:text-base font-light leading-relaxed max-w-lg mb-0 italic">
+                <p className="text-stone-300/90 text-sm md:text-base font-normal leading-relaxed max-w-lg mb-0 italic">
                   {t('europe_desc')}
                 </p>
               </div>
@@ -1671,13 +1671,13 @@ export default function App() {
                   <Briefcase size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('services_tag')}</span>
                 </div>
-                <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-none">
+                <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-[1.1] md:leading-tight">
                   {t('services_title')}
                 </h2>
                 <div className="h-1 w-12 bg-white/20 rounded-full mt-10"></div>
               </div>
               <div className="lg:col-span-6 lg:border-l lg:border-white/10 lg:pl-12 flex flex-col items-start gap-8">
-                <p className="text-stone-400 text-sm md:text-base font-light leading-relaxed mb-0 italic">
+                <p className="text-stone-300/90 text-sm md:text-base font-normal leading-relaxed mb-0 italic">
                   {t('services_desc')}
                 </p>
                 <a 
@@ -1837,11 +1837,11 @@ export default function App() {
                 <Tag size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('transfers_tag')}</span>
               </div>
-              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm text-center">
+              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm text-center leading-[1.1] md:leading-tight">
                 {t('transfers_title')}
               </h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
-              <p className="text-stone-400 text-lg font-light leading-relaxed max-w-3xl mt-12 text-center italic">
+              <p className="text-stone-300/90 text-lg font-normal leading-relaxed max-w-3xl mt-12 text-center italic">
                 {t('transfers_desc')}
               </p>
             </motion.div>
@@ -1948,10 +1948,10 @@ export default function App() {
                   <Briefcase size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('corp_tag')}</span>
                 </div>
-                <h2 className="text-[38px] md:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm mb-8">
+                <h2 className="text-[38px] md:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm mb-8 leading-[1.1] md:leading-tight">
                   {t('corp_subtitle')}
                 </h2>
-                <p className="leading-relaxed text-base font-normal text-stone-300 tracking-wide mb-8 max-w-xl">
+                <p className="leading-relaxed text-[17px] font-normal text-stone-300 tracking-wide mb-8 max-w-xl">
                   {t('corp_desc')}
                 </p>
                 <ul className="flex flex-col gap-4 mb-12">
@@ -2035,7 +2035,7 @@ export default function App() {
                 <Navigation size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('fleet_tag')}</span>
               </div>
-              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('fleet_title')}</h2>
+              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-[1.1] md:leading-tight">{t('fleet_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
             </motion.div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 text-base font-light text-stone-400 tracking-wide">
@@ -2107,9 +2107,9 @@ export default function App() {
                 <Star size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('vision_tag')}</span>
               </div>
-              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('vision_title')}</h2>
+              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-[1.1] md:leading-tight">{t('vision_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
-              <p className="mt-8 text-stone-400 text-sm md:text-base font-light leading-relaxed max-w-xl mx-auto">
+              <p className="mt-8 text-stone-300/90 text-sm md:text-base font-normal leading-relaxed max-w-xl mx-auto">
                 {t('vision_desc')}
               </p>
             </motion.div>
@@ -2183,13 +2183,13 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="flex flex-col items-center mb-20 text-center"
+              className="flex flex-col items-center mb-12 text-center"
             >
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
                 <MessageSquare size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('reviews_tag')}</span>
               </div>
-              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('reviews_title')}</h2>
+              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-[1.1] md:leading-tight">{t('reviews_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
               
               <div className="flex items-center justify-center gap-x-4 mt-12 bg-white/[0.03] border border-white/10 px-5 py-2.5 rounded-full max-w-max mx-auto backdrop-blur-md shadow-lg shadow-black/10">
@@ -2215,7 +2215,7 @@ export default function App() {
             </motion.div>
 
             <div 
-              className="relative py-12"
+              className="relative pt-4 pb-2"
               onMouseEnter={() => setIsReviewsPaused(true)}
               onMouseLeave={() => setIsReviewsPaused(false)}
             >
@@ -2312,20 +2312,20 @@ export default function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col items-center mb-16 text-center px-6 relative z-10"
+            className="flex flex-col items-center mb-16 text-center px-3 md:px-6 relative z-10"
           >
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
               <Calendar size={12} className="text-white/60" />
               <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">Booking</span>
             </div>
-            <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('title')}</h2>
+            <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-[1.1] md:leading-tight">{t('title')}</h2>
             <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
           </motion.div>
           
-          <div ref={bookingRef} className="w-full max-w-6xl mx-auto px-6 relative z-10">
+          <div ref={bookingRef} className="w-full max-w-6xl mx-auto px-2 md:px-6 relative z-10">
             {/* Mobile-only Step Indicators Block */}
             <div className="md:hidden w-full mb-4">
-              <div className="w-full flex items-center justify-between py-5 px-6 rounded-xl bg-white border border-stone-100 shadow-xl">
+              <div className="w-full flex items-center justify-between py-5 px-3 rounded-xl bg-white border border-stone-100 shadow-xl">
                 {[1, 2, 3, 4].map((s) => (
                   <Fragment key={s}>
                     <button
@@ -2355,7 +2355,7 @@ export default function App() {
               <div className="grid grid-cols-1 lg:grid-cols-12">
                 
                 {/* Left Side: Form */}
-                <div className="col-span-full lg:col-span-7 p-5 md:p-12 border-b lg:border-b-0 lg:border-r border-stone-100">
+                <div className="col-span-full lg:col-span-7 px-3.5 py-6 md:p-12 border-b lg:border-b-0 lg:border-r border-stone-100">
                   {/* Progress - Desktop Only */}
                   <div className="hidden md:flex items-center gap-4 mb-8 md:mb-12">
                     {[1, 2, 3, 4].map((s) => (
@@ -2376,24 +2376,6 @@ export default function App() {
                           {bookingError}
                         </div>
                       )}
-
-                      {/* Service Type Toggle */}
-                      <div className="bg-stone-100 p-1 rounded-xl flex">
-                        <button
-                          onClick={() => setBookingData(prev => ({ ...prev, serviceType: 'transfer', serviceCategory: prev.serviceCategory === 'hourly' ? '' : prev.serviceCategory }))}
-                          className={`flex-1 flex flex-col md:flex-row items-center justify-center text-center gap-1 md:gap-2 py-3 md:py-3 rounded-lg text-xs md:text-sm font-medium transition-all ${bookingData.serviceType === 'transfer' ? 'bg-white text-stone-900' : 'text-stone-400 hover:text-stone-600'}`}
-                        >
-                          <iconify-icon icon="solar:route-linear" width="16" height="16" className="md:w-[18px] md:h-[18px]"></iconify-icon>
-                          {t('service_transfer')}
-                        </button>
-                        <button
-                          onClick={() => setBookingData(prev => ({ ...prev, serviceType: 'hourly', serviceCategory: prev.serviceCategory === 'hourly' ? '' : prev.serviceCategory }))}
-                          className={`flex-1 flex flex-col md:flex-row items-center justify-center text-center gap-1 md:gap-2 py-3 md:py-3 rounded-lg text-xs md:text-sm font-medium transition-all ${bookingData.serviceType === 'hourly' ? 'bg-white text-stone-900 px-1' : 'text-stone-400 hover:text-stone-600'}`}
-                        >
-                          <iconify-icon icon="solar:clock-circle-linear" width="16" height="16" className="md:w-[18px] md:h-[18px]"></iconify-icon>
-                          {t('service_hourly')}
-                        </button>
-                      </div>
                       
                       {/* Service Category Selection */}
                       <div className="space-y-2 relative flex flex-col animate-in fade-in slide-in-from-top-2 duration-300">
@@ -2403,13 +2385,19 @@ export default function App() {
                           {bookingData.serviceCategory === 'airport' && <Plane className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
                           {bookingData.serviceCategory === 'vip' && <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
                           {bookingData.serviceCategory === 'prestige' && <Star className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
+                          {bookingData.serviceCategory === 'hourly' && <Clock className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
                           {!bookingData.serviceCategory && <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
                           <select 
                             ref={serviceCategoryRef}
                             required
                             value={bookingData.serviceCategory}
                             onChange={(e) => {
-                              setBookingData(prev => ({ ...prev, serviceCategory: e.target.value }));
+                              const val = e.target.value;
+                              if (val === 'hourly') {
+                                setBookingData(prev => ({ ...prev, serviceType: 'hourly', serviceCategory: 'hourly' }));
+                              } else {
+                                setBookingData(prev => ({ ...prev, serviceType: 'transfer', serviceCategory: val }));
+                              }
                               if (bookingError) setBookingError(null);
                             }}
                             className={`w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 focus:ring-0 outline-none appearance-none cursor-pointer transition-all ${bookingData.serviceCategory ? 'text-stone-900' : 'text-stone-300'}`}
@@ -2419,6 +2407,7 @@ export default function App() {
                             <option value="airport" className="text-stone-900">{t('service_cat_airport')}</option>
                             <option value="vip" className="text-stone-900">{t('service_cat_vip')}</option>
                             <option value="prestige" className="text-stone-900">{t('service_cat_prestige')}</option>
+                            <option value="hourly" className="text-stone-900">{t('service_cat_hourly')}</option>
                           </select>
                           <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-400">
                             <ChevronDown size={18} />
@@ -3010,7 +2999,7 @@ export default function App() {
                 </div>
 
                 {/* Right Side: Map & Dynamic Summary */}
-                <div className={`col-span-full lg:col-span-5 bg-stone-50 ${step === 2 ? 'p-4 pb-4 md:p-10' : 'p-6 md:p-10'} flex flex-col transition-all duration-500 ${step === 1 || step === 5 ? 'hidden lg:flex' : 'flex'}`}>
+                <div className={`col-span-full lg:col-span-5 bg-stone-50 ${step === 2 ? 'px-3.5 py-4 pb-4 md:p-10' : 'px-3.5 py-6 md:p-10'} flex flex-col transition-all duration-500 ${step === 1 || step === 5 ? 'hidden lg:flex' : 'flex'}`}>
                   
                   {/* Map Container - Consistent height across all steps */}
                   {step === 2 && (
@@ -3122,7 +3111,7 @@ export default function App() {
                 <Info size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">FAQ</span>
               </div>
-              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('faq_title')}</h2>
+              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-[1.1] md:leading-tight">{t('faq_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
             </motion.div>
             <div className="flex flex-col">
@@ -3151,7 +3140,7 @@ export default function App() {
                     <iconify-icon icon="solar:alt-arrow-down-linear" width="20" className="text-stone-500 faq-icon" style={{ strokeWidth: 1.5 }}></iconify-icon>
                   </button>
                   <div className="faq-content">
-                    <div className="pb-6 text-[14.5px] text-stone-400 font-light leading-relaxed tracking-wide">
+                    <div className="pb-6 text-[14.5px] text-stone-300/90 font-normal leading-relaxed tracking-wide">
                       {faq.a}
                     </div>
                   </div>
@@ -3173,7 +3162,7 @@ export default function App() {
                 <div className="w-1 h-5 bg-white rounded-t-sm"></div>
               </div>
               <h1 className="text-[19px] font-medium tracking-[0.25em] uppercase text-white/70 mb-5">Safeness transport</h1>
-              <p className="text-[13.5px] md:text-[15px] font-light text-white/30 tracking-wide max-w-lg">
+              <p className="text-[13.5px] md:text-[15px] font-normal text-white/45 tracking-wide max-w-lg">
                 {t('footer_desc')}
               </p>
             </div>

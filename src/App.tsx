@@ -2381,12 +2381,12 @@ export default function App() {
                       <div className="space-y-2 relative flex flex-col animate-in fade-in slide-in-from-top-2 duration-300">
                         <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('field_service_category')}</label>
                         <div className="relative border border-stone-200 rounded-xl bg-white overflow-hidden">
-                          {bookingData.serviceCategory === 'intercity' && <Navigation className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
-                          {bookingData.serviceCategory === 'airport' && <Plane className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
-                          {bookingData.serviceCategory === 'vip' && <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
-                          {bookingData.serviceCategory === 'prestige' && <Star className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
-                          {bookingData.serviceCategory === 'hourly' && <Clock className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
-                          {!bookingData.serviceCategory && <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />}
+                          {bookingData.serviceCategory === 'intercity' && <Navigation className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />}
+                          {bookingData.serviceCategory === 'airport' && <Plane className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />}
+                          {bookingData.serviceCategory === 'vip' && <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />}
+                          {bookingData.serviceCategory === 'prestige' && <Star className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />}
+                          {bookingData.serviceCategory === 'hourly' && <Clock className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />}
+                          {!bookingData.serviceCategory && <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />}
                           <select 
                             ref={serviceCategoryRef}
                             required
@@ -2409,7 +2409,7 @@ export default function App() {
                             <option value="prestige" className="text-stone-900">{t('service_cat_prestige')}</option>
                             <option value="hourly" className="text-stone-900">{t('service_cat_hourly')}</option>
                           </select>
-                          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-400">
+                          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-800">
                             <ChevronDown size={18} />
                           </div>
                         </div>
@@ -2422,7 +2422,7 @@ export default function App() {
                           {/* Pickup Field */}
                           <motion.div layout className={`relative ${suggestions.pickup.length > 0 ? 'z-40' : 'z-20'}`}>
                             <div className="relative">
-                              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />
+                              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />
                               <input 
                                 ref={pickupInputRef}
                                 type="text" 
@@ -2469,7 +2469,7 @@ export default function App() {
                                       dropoffCoords: prev.pickupCoords
                                     }));
                                   }}
-                                  className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white border border-stone-200 rounded-full flex items-center justify-center text-stone-400 hover:text-stone-900 shadow-md hover:shadow-lg transition-all z-30"
+                                  className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white border border-stone-200 rounded-full flex items-center justify-center text-stone-700 hover:text-stone-950 shadow-md hover:shadow-lg transition-all z-30"
                                   title={t('swap_addresses')}
                                 >
                                   <iconify-icon icon="solar:transfer-vertical-linear" width="16"></iconify-icon>
@@ -2479,7 +2479,7 @@ export default function App() {
                               {/* Dropoff Field */}
                               <motion.div layout className={`relative ${suggestions.dropoff.length > 0 ? 'z-40' : 'z-10'}`}>
                                 <div className="relative">
-                                  <Navigation className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />
+                                  <Navigation className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />
                                   <input 
                                     ref={dropoffInputRef}
                                     type="text" 
@@ -2516,7 +2516,7 @@ export default function App() {
                             <>
                               <div className="h-px bg-stone-100 mx-12"></div>
                               <div className="relative">
-                                <Clock className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={18} />
+                                <Clock className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />
                                 <select 
                                   value={bookingData.durationHours}
                                   onChange={(e) => setBookingData(prev => ({ ...prev, durationHours: parseInt(e.target.value) }))}
@@ -2526,7 +2526,7 @@ export default function App() {
                                     <option key={h} value={h}>{h} {t('hours_count')}</option>
                                   ))}
                                 </select>
-                                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-400">
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-800">
                                   <ChevronDown size={18} />
                                 </div>
                               </div>
@@ -2543,7 +2543,7 @@ export default function App() {
                         <div className="grid grid-cols-2 border border-stone-200 rounded-xl bg-white overflow-hidden divide-x divide-stone-100">
                           {/* Date Selector */}
                           <div className="relative flex items-center">
-                            <Calendar size={18} className="absolute left-4 text-stone-400 pointer-events-none" />
+                            <Calendar size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
                             <input
                               type="date"
                               value={bookingData.date}
@@ -2555,7 +2555,7 @@ export default function App() {
                           </div>
                           {/* Time Selector */}
                           <div className="relative flex items-center">
-                            <Clock size={18} className="absolute left-4 text-stone-400 pointer-events-none" />
+                            <Clock size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
                             <select 
                               value={bookingData.time}
                               onChange={(e) => setBookingData(prev => ({ ...prev, time: e.target.value }))}
@@ -2565,7 +2565,7 @@ export default function App() {
                                 <option key={slot} value={slot}>{slot}</option>
                               ))}
                             </select>
-                            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-400">
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-800">
                               <ChevronDown size={18} />
                             </div>
                           </div>
@@ -2603,7 +2603,7 @@ export default function App() {
                             <div className="grid grid-cols-2 border border-stone-200 rounded-xl bg-white overflow-hidden divide-x divide-stone-100">
                               {/* Return Date Selector */}
                               <div className="relative flex items-center">
-                                <Calendar size={18} className="absolute left-4 text-stone-400 pointer-events-none" />
+                                <Calendar size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
                                 <input
                                   type="date"
                                   value={bookingData.returnDate}
@@ -2615,7 +2615,7 @@ export default function App() {
                               </div>
                               {/* Return Time Selector */}
                               <div className="relative flex items-center">
-                                <Clock size={18} className="absolute left-4 text-stone-400 pointer-events-none" />
+                                <Clock size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
                                 <select 
                                   value={bookingData.returnTime}
                                   onChange={(e) => setBookingData(prev => ({ ...prev, returnTime: e.target.value }))}
@@ -2625,7 +2625,7 @@ export default function App() {
                                     <option key={slot} value={slot}>{slot}</option>
                                   ))}
                                 </select>
-                                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-400">
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-800">
                                   <ChevronDown size={18} />
                                 </div>
                               </div>

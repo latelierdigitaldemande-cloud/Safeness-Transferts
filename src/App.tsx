@@ -788,7 +788,7 @@ export default function App() {
       vatIncluded: 'VAT included',
       itinerary_label: 'Your Itinerary',
       pickup_label: 'Pickup location',
-      pickup_placeholder: 'Address, Airport, Station...',
+      pickup_placeholder: 'Address, airport, station...',
       dropoff_label: 'Destination',
       dropoff_placeholder: 'Destination',
       placeholder_firstName: 'Your first name',
@@ -2434,7 +2434,7 @@ export default function App() {
                                   if (bookingError) setBookingError(null);
                                 }}
                                 placeholder={t('pickup_placeholder')} 
-                                className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-950 text-[15px] font-medium placeholder:text-stone-700/90 focus:ring-0 outline-none transition-all"
+                                className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-950 text-[16px] font-medium placeholder:text-stone-700/90 focus:ring-0 outline-none transition-all"
                               />
                             </div>
                             {suggestions.pickup.length > 0 && (
@@ -2491,7 +2491,7 @@ export default function App() {
                                       if (bookingError) setBookingError(null);
                                     }}
                                     placeholder={t('dropoff_placeholder')} 
-                                    className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-950 text-[15px] font-medium placeholder:text-stone-700/90 focus:ring-0 outline-none transition-all"
+                                    className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-950 text-[16px] font-medium placeholder:text-stone-700/90 focus:ring-0 outline-none transition-all"
                                   />
                                 </div>
                                 {suggestions.dropoff.length > 0 && (

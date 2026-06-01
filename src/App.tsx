@@ -2380,7 +2380,7 @@ export default function App() {
                       {/* Service Category Selection */}
                       <div className="space-y-2 relative flex flex-col animate-in fade-in slide-in-from-top-2 duration-300">
                         <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('field_service_category')}</label>
-                        <div className="relative border border-stone-200 rounded-xl bg-white overflow-hidden">
+                        <div className="relative border border-stone-300 rounded-xl bg-white overflow-hidden">
                           {bookingData.serviceCategory === 'intercity' && <Navigation className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />}
                           {bookingData.serviceCategory === 'airport' && <Plane className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />}
                           {bookingData.serviceCategory === 'vip' && <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />}
@@ -2418,7 +2418,7 @@ export default function App() {
                       <div className="space-y-2 relative flex flex-col">
                         <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('itinerary_label')}</label>
                         
-                        <div className="relative border border-stone-200 rounded-xl bg-white overflow-visible">
+                        <div className="relative border border-stone-300 rounded-xl bg-white overflow-visible">
                           {/* Pickup Field */}
                           <motion.div layout className={`relative ${suggestions.pickup.length > 0 ? 'z-40' : 'z-20'}`}>
                             <div className="relative">
@@ -2438,7 +2438,7 @@ export default function App() {
                               />
                             </div>
                             {suggestions.pickup.length > 0 && (
-                              <div className="absolute z-50 w-full mt-1 bg-white border border-stone-200 rounded-xl overflow-hidden shadow-xl top-full">
+                              <div className="absolute z-50 w-full mt-1 bg-white border border-stone-300 rounded-xl overflow-hidden shadow-xl top-full">
                                 {suggestions.pickup.map((item, i) => (
                                   <button 
                                     key={i}
@@ -2495,7 +2495,7 @@ export default function App() {
                                   />
                                 </div>
                                 {suggestions.dropoff.length > 0 && (
-                                  <div className="absolute z-50 w-full mt-1 bg-white border border-stone-200 rounded-xl overflow-hidden shadow-xl top-full">
+                                  <div className="absolute z-50 w-full mt-1 bg-white border border-stone-300 rounded-xl overflow-hidden shadow-xl top-full">
                                     {suggestions.dropoff.map((item, i) => (
                                       <button 
                                         key={i}
@@ -2540,7 +2540,7 @@ export default function App() {
                         <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">
                           {lang === 'fr' ? 'Date & Heure' : 'Date & Time'}
                         </label>
-                        <div className="grid grid-cols-2 border border-stone-200 rounded-xl bg-white overflow-hidden divide-x divide-stone-100">
+                        <div className="grid grid-cols-2 border border-stone-300 rounded-xl bg-white overflow-hidden divide-x divide-stone-200">
                           {/* Date Selector */}
                           <div className="relative flex items-center">
                             <Calendar size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
@@ -2600,7 +2600,7 @@ export default function App() {
                               {lang === 'fr' ? 'Date & Heure de retour' : 'Return Date & Time'}
                             </label>
                             
-                            <div className="grid grid-cols-2 border border-stone-200 rounded-xl bg-white overflow-hidden divide-x divide-stone-100">
+                            <div className="grid grid-cols-2 border border-stone-300 rounded-xl bg-white overflow-hidden divide-x divide-stone-200">
                               {/* Return Date Selector */}
                               <div className="relative flex items-center">
                                 <Calendar size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
@@ -2801,7 +2801,7 @@ export default function App() {
                             value={bookingData.firstName}
                             onChange={(e) => setBookingData(prev => ({ ...prev, firstName: e.target.value }))}
                             placeholder={t('placeholder_firstName')}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-955 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-955 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -2813,7 +2813,7 @@ export default function App() {
                             value={bookingData.lastName}
                             onChange={(e) => setBookingData(prev => ({ ...prev, lastName: e.target.value }))}
                             placeholder={t('placeholder_lastName')}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-955 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-955 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                       </div>
@@ -2828,16 +2828,16 @@ export default function App() {
                             value={bookingData.email}
                             onChange={(e) => setBookingData(prev => ({ ...prev, email: e.target.value }))}
                             placeholder={t('placeholder_email')}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-955 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                            className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-955 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
                           />
                         </div>
                         <div className="space-y-2">
                           <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('phone')}</label>
-                          <div className="flex bg-stone-50 border border-stone-200 rounded-xl focus-within:border-stone-900 focus-within:bg-white transition-all overflow-hidden">
+                          <div className="flex bg-stone-50 border border-stone-300 rounded-xl focus-within:border-stone-900 focus-within:bg-white transition-all overflow-hidden">
                             <select
                               value={bookingData.countryCode}
                               onChange={(e) => setBookingData(prev => ({ ...prev, countryCode: e.target.value }))}
-                              className="bg-transparent border-r border-stone-200 py-3 md:py-4 px-3 text-stone-950 outline-none text-sm font-semibold w-auto cursor-pointer flex-shrink-0"
+                              className="bg-transparent border-r border-stone-300 py-3 md:py-4 px-3 text-stone-950 outline-none text-sm font-semibold w-auto cursor-pointer flex-shrink-0"
                             >
                               <option value="+33" className="text-stone-950 bg-white font-medium">+33</option>
                               <option value="+44" className="text-stone-950 bg-white font-medium">+44</option>
@@ -2869,7 +2869,7 @@ export default function App() {
                           <select 
                             value={bookingData.passengers}
                             onChange={(e) => setBookingData(prev => ({ ...prev, passengers: parseInt(e.target.value) }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-950 font-semibold outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
+                            className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-950 font-semibold outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
                           >
                             {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
                               <option key={n} value={n} className="text-stone-950 bg-white font-semibold">{n} {n > 1 ? t('passenger_plural') : t('passenger_singular')}</option>
@@ -2881,7 +2881,7 @@ export default function App() {
                           <select 
                             value={bookingData.luggage}
                             onChange={(e) => setBookingData(prev => ({ ...prev, luggage: parseInt(e.target.value) }))}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-950 font-semibold outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
+                            className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-950 font-semibold outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
                           >
                             {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
                               <option key={n} value={n} className="text-stone-950 bg-white font-semibold">{n} {t('luggage_label')}</option>
@@ -2897,7 +2897,7 @@ export default function App() {
                           value={bookingData.flightNumber}
                           onChange={(e) => setBookingData(prev => ({ ...prev, flightNumber: e.target.value }))}
                           placeholder={t('flight')}
-                          className="w-full bg-stone-50 border border-stone-200 rounded-xl py-3 md:py-4 px-4 text-stone-955 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
+                          className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-955 font-medium placeholder:text-stone-700/95 outline-none focus:border-stone-900 focus:bg-white transition-all"
                         />
                       </div>
 

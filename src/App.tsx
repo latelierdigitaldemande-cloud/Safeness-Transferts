@@ -556,7 +556,7 @@ export default function App() {
       pickup_label: 'Lieu de prise en charge',
       pickup_placeholder: 'Adresse, Aéroport, Gare...',
       dropoff_label: 'Destination',
-      dropoff_placeholder: 'Adresse, Aéroport, Gare...',
+      dropoff_placeholder: 'Destination',
       placeholder_firstName: 'Votre prénom',
       placeholder_lastName: 'Votre nom',
       placeholder_email: 'jean@entreprise.com',
@@ -790,7 +790,7 @@ export default function App() {
       pickup_label: 'Pickup location',
       pickup_placeholder: 'Address, Airport, Station...',
       dropoff_label: 'Destination',
-      dropoff_placeholder: 'Address, Airport, Station...',
+      dropoff_placeholder: 'Destination',
       placeholder_firstName: 'Your first name',
       placeholder_lastName: 'Your last name',
       placeholder_email: 'john@example.com',
@@ -2434,7 +2434,7 @@ export default function App() {
                                   if (bookingError) setBookingError(null);
                                 }}
                                 placeholder={t('pickup_placeholder')} 
-                                className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-950 text-sm font-medium placeholder:text-stone-700/90 focus:ring-0 outline-none transition-all"
+                                className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-955 text-[15px] font-medium placeholder:text-stone-700/90 focus:ring-0 outline-none transition-all"
                               />
                             </div>
                             {suggestions.pickup.length > 0 && (
@@ -2491,7 +2491,7 @@ export default function App() {
                                       if (bookingError) setBookingError(null);
                                     }}
                                     placeholder={t('dropoff_placeholder')} 
-                                    className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-950 text-sm font-medium placeholder:text-stone-700/90 focus:ring-0 outline-none transition-all"
+                                    className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-955 text-[15px] font-medium placeholder:text-stone-700/90 focus:ring-0 outline-none transition-all"
                                   />
                                 </div>
                                 {suggestions.dropoff.length > 0 && (
@@ -2540,7 +2540,7 @@ export default function App() {
                         <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">
                           {lang === 'fr' ? 'Date & Heure' : 'Date & Time'}
                         </label>
-                        <div className="grid grid-cols-2 border border-stone-300 rounded-xl bg-white overflow-hidden divide-x divide-stone-200">
+                        <div className="flex flex-col border border-stone-300 rounded-xl bg-white overflow-hidden divide-y divide-stone-200">
                           {/* Date Selector */}
                           <div className="relative flex items-center">
                             <Calendar size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
@@ -2559,7 +2559,7 @@ export default function App() {
                             <select 
                               value={bookingData.time}
                               onChange={(e) => setBookingData(prev => ({ ...prev, time: e.target.value }))}
-                              className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 text-stone-950 font-semibold focus:ring-0 outline-none appearance-none cursor-pointer text-sm"
+                              className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 text-stone-955 font-semibold focus:ring-0 outline-none appearance-none cursor-pointer text-sm"
                             >
                               {timeSlots.map(slot => (
                                 <option key={slot} value={slot} className="text-stone-950 bg-white font-semibold">{slot}</option>
@@ -2599,8 +2599,7 @@ export default function App() {
                             <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">
                               {lang === 'fr' ? 'Date & Heure de retour' : 'Return Date & Time'}
                             </label>
-                            
-                            <div className="grid grid-cols-2 border border-stone-300 rounded-xl bg-white overflow-hidden divide-x divide-stone-200">
+                            <div className="flex flex-col border border-stone-300 rounded-xl bg-white overflow-hidden divide-y divide-stone-200">
                               {/* Return Date Selector */}
                               <div className="relative flex items-center">
                                 <Calendar size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
@@ -2610,7 +2609,7 @@ export default function App() {
                                   min={bookingData.date || new Date().toISOString().split('T')[0]}
                                   onChange={(e) => setBookingData(prev => ({ ...prev, returnDate: e.target.value }))}
                                   required={bookingData.isReturnTrip}
-                                  className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-950 font-semibold focus:ring-0 outline-none cursor-pointer text-sm appearance-none"
+                                  className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-955 font-semibold focus:ring-0 outline-none cursor-pointer text-sm appearance-none"
                                 />
                               </div>
                               {/* Return Time Selector */}
@@ -2619,10 +2618,10 @@ export default function App() {
                                 <select 
                                   value={bookingData.returnTime}
                                   onChange={(e) => setBookingData(prev => ({ ...prev, returnTime: e.target.value }))}
-                                  className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 text-stone-950 font-semibold focus:ring-0 outline-none appearance-none cursor-pointer text-sm"
+                                  className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 text-stone-955 font-semibold focus:ring-0 outline-none appearance-none cursor-pointer text-sm"
                                 >
                                   {timeSlots.map(slot => (
-                                    <option key={slot} value={slot} className="text-stone-950 bg-white font-semibold">{slot}</option>
+                                    <option key={slot} value={slot} className="text-stone-955 bg-white font-semibold">{slot}</option>
                                   ))}
                                 </select>
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-800">

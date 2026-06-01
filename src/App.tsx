@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Stripe, loadStripe } from '@stripe/stripe-js';
 import L from 'leaflet';
 import { 
-  MapPin, Navigation, Calendar, Clock, Users, Briefcase, Building2,
+  MapPin, Navigation, Calendar, Clock, Users, User, Briefcase, Building2,
   ChevronRight, ChevronLeft, ChevronDown, ArrowUpRight, Check, CreditCard, Plane, Tag, Sparkles, Palette,
   Train, Info, ShieldCheck, Star, ArrowRight, ArrowLeft, X, Menu, Plus,
   Phone, Mail, MessageSquare, Globe, Search, Loader2,
@@ -260,7 +260,7 @@ export default function App() {
   }, [isCityTransitioning]);
 
   useEffect(() => {
-    const timer = setInterval(nextCity, 2000);
+    const timer = setInterval(nextCity, 1500);
     return () => clearInterval(timer);
   }, [nextCity]);
 
@@ -633,8 +633,17 @@ export default function App() {
       corp_li1: 'Facturation simplifiée et relevés mensuels détaillés.',
       corp_li2: 'Priorité sur les réservations et support client dédié 24/7.',
       corp_li3: 'Coordination complète pour vos roadshows et grands événements.',
-      corp_cta: 'Ouvrir un compte professionnel',
+      corp_cta: 'Contact pour transferts entreprises',
       contact_pro: 'Contact Pro',
+      vip_tag: 'En approche',
+      vip_guest: 'Client VIP',
+      vip_flight: 'Vol AF1234',
+      vip_pickup_label: 'Pick-up',
+      vip_pickup_val: 'Aéroport CDG, Terminal 2E',
+      vip_dropoff_label: 'Drop-off',
+      vip_dropoff_val: 'Siège Social, Paris 8',
+      vip_vehicle_label: 'Véhicule',
+      vip_vehicle_val: 'Mercedes Classe S',
       field_name: 'Nom Complet',
       field_date: 'Date de départ',
       field_company: 'Société (facultatif)',
@@ -858,8 +867,17 @@ export default function App() {
       corp_li1: 'Simplified billing and detailed monthly statements.',
       corp_li2: 'Priority on bookings and dedicated 24/7 client support.',
       corp_li3: 'Complete coordination for your roadshows and major events.',
-      corp_cta: 'Open a business account',
+      corp_cta: 'Contact us for corporate transfers',
       contact_pro: 'Contact Pro',
+      vip_tag: 'Inbound',
+      vip_guest: 'VIP Guest',
+      vip_flight: 'Flight AF1234',
+      vip_pickup_label: 'Pick-up',
+      vip_pickup_val: 'CDG Airport, Terminal 2E',
+      vip_dropoff_label: 'Drop-off',
+      vip_dropoff_val: 'Headquarters, Paris 8',
+      vip_vehicle_label: 'Vehicle',
+      vip_vehicle_val: 'Mercedes S-Class',
       field_name: 'Full Name',
       field_date: 'Pick-up date',
       field_company: 'Company (optional)',
@@ -1300,6 +1318,10 @@ export default function App() {
         <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-transparent to-stone-950/50"></div>
       </div>
 
+      {/* SCROLL TO THE ABSOLUT TOP OF THE PAGE (ABOVE HEADER & SPEC LOGO) */}
+      <div id="top" className="absolute top-0 left-0 w-full h-0 pointer-events-none" />
+      <div id="hero" className="absolute top-0 left-0 w-full h-0 pointer-events-none" />
+
       {/* HEADER */}
       <header className="relative z-50 flex items-center justify-between px-6 py-5 w-full max-w-7xl mx-auto">
         <div className="w-10 flex justify-start">
@@ -1374,10 +1396,10 @@ export default function App() {
           className="flex flex-col items-center mb-12"
         >
           <div className="relative inline-block pb-1 mb-[2px] md:mb-1">
-            <h2 className="text-[51px] leading-none md:text-7xl lg:text-8xl font-semibold tracking-[0.02em] uppercase text-white drop-shadow-sm">{t('hero_brand')}</h2>
+            <h2 className="text-[51px] leading-none md:text-7xl font-semibold tracking-[0.02em] uppercase text-white drop-shadow-sm">{t('hero_brand')}</h2>
             <div className="absolute bottom-0 left-[15%] right-[15%] h-px bg-zinc-300 rounded-full opacity-80"></div>
           </div>
-          <h2 className="text-[51px] leading-none md:text-7xl lg:text-8xl font-semibold tracking-[0.02em] uppercase text-white drop-shadow-sm mt-[2px] md:mt-1">{t('hero_worldwide')}</h2>
+          <h2 className="text-[51px] leading-none md:text-7xl font-semibold tracking-[0.02em] uppercase text-white drop-shadow-sm mt-[2px] md:mt-1">{t('hero_worldwide')}</h2>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -1443,22 +1465,22 @@ export default function App() {
             <h3 className="text-4xl md:text-5xl font-semibold tracking-tight uppercase text-white/90">Excellence</h3>
           </div>
           <div className="w-full pt-16 border-t border-white/5 relative">
-            <p className="text-xs font-normal text-white/40 tracking-[0.2em] mb-12 uppercase">Corporate Partners</p>
+            <p className="text-xs font-normal text-white/50 tracking-[0.2em] mb-12 uppercase">Corporate Partners</p>
             
             {/* Infinite Marquee */}
             <div className="relative flex overflow-hidden w-full">
               <div className="animate-marquee flex whitespace-nowrap w-max">
                 <div className="flex items-center gap-12 md:gap-24 px-6 md:px-12 flex-none">
-                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/uniformation.png" alt="Uniformation" className="h-6 object-contain brightness-0 invert opacity-50" />
-                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/2560px-Prada-Logo.svg-1024x159-1.webp" alt="Prada" className="h-4 object-contain brightness-0 invert opacity-50" />
-                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/1200px-Vaisala_logo.svg.png" alt="Vaisala" className="h-6 object-contain brightness-0 invert opacity-50" />
-                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/ETSGlobal_logo.a83452a9.png" alt="ETS Global" className="h-8 object-contain brightness-0 invert opacity-50" />
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/uniformation.png" alt="Uniformation" className="h-6 object-contain brightness-0 invert opacity-60" />
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/2560px-Prada-Logo.svg-1024x159-1.webp" alt="Prada" className="h-4 object-contain brightness-0 invert opacity-60" />
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/1200px-Vaisala_logo.svg.png" alt="Vaisala" className="h-6 object-contain brightness-0 invert opacity-60" />
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/ETSGlobal_logo.a83452a9.png" alt="ETS Global" className="h-8 object-contain brightness-0 invert opacity-60" />
                 </div>
                 <div className="flex items-center gap-12 md:gap-24 px-6 md:px-12 flex-none">
-                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/uniformation.png" alt="Uniformation" className="h-6 object-contain brightness-0 invert opacity-50" />
-                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/2560px-Prada-Logo.svg-1024x159-1.webp" alt="Prada" className="h-4 object-contain brightness-0 invert opacity-50" />
-                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/1200px-Vaisala_logo.svg.png" alt="Vaisala" className="h-6 object-contain brightness-0 invert opacity-50" />
-                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/ETSGlobal_logo.a83452a9.png" alt="ETS Global" className="h-8 object-contain brightness-0 invert opacity-50" />
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/uniformation.png" alt="Uniformation" className="h-6 object-contain brightness-0 invert opacity-60" />
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/2560px-Prada-Logo.svg-1024x159-1.webp" alt="Prada" className="h-4 object-contain brightness-0 invert opacity-60" />
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/1200px-Vaisala_logo.svg.png" alt="Vaisala" className="h-6 object-contain brightness-0 invert opacity-60" />
+                  <img src="https://mcslimo.fr/wp-content/uploads/2023/04/ETSGlobal_logo.a83452a9.png" alt="ETS Global" className="h-8 object-contain brightness-0 invert opacity-60" />
                 </div>
               </div>
             </div>
@@ -1497,7 +1519,7 @@ export default function App() {
                   <Globe size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('europe_tag')}</span>
                 </div>
-                <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">
+                <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">
                   {t('europe_title')} <br/> 
                   <span className="font-bold">{t('europe_subtitle')}</span>
                 </h2>
@@ -1649,7 +1671,7 @@ export default function App() {
                   <Briefcase size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('services_tag')}</span>
                 </div>
-                <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-none">
+                <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-none">
                   {t('services_title')}
                 </h2>
                 <div className="h-1 w-12 bg-white/20 rounded-full mt-10"></div>
@@ -1815,7 +1837,7 @@ export default function App() {
                 <Tag size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('transfers_tag')}</span>
               </div>
-              <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm text-center">
+              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm text-center">
                 {t('transfers_title')}
               </h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
@@ -1921,101 +1943,75 @@ export default function App() {
 
 
             <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="flex flex-col text-base font-light text-stone-400 tracking-wide">
+              <div className="flex flex-col text-left text-base font-light text-stone-400 tracking-wide">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8 w-fit">
                   <Briefcase size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('corp_tag')}</span>
                 </div>
-                <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm mb-10">
+                <h2 className="text-[38px] md:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm mb-8">
                   {t('corp_subtitle')}
                 </h2>
-              <p className="leading-relaxed mb-8">
-                {t('corp_desc')}
-              </p>
-              <ul className="flex flex-col gap-4 mb-8">
-                <li className="flex items-start gap-3">
-                  <SolarCheckCircleLinear size={20} className="text-white mt-0.5" strokeWidth={1.5} />
-                  <span>{t('corp_li1')}</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <SolarCheckCircleLinear size={20} className="text-white mt-0.5" strokeWidth={1.5} />
-                  <span>{t('corp_li2')}</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <SolarCheckCircleLinear size={20} className="text-white mt-0.5" strokeWidth={1.5} />
-                  <span>{t('corp_li3')}</span>
-                </li>
-              </ul>
-              <a href="#contact" className="text-base text-white font-normal border-b border-white/20 pb-1 w-fit hover:border-white transition-colors flex items-center gap-2">
-                {t('corp_cta')}
-                <SolarArrowRightUpLinear size={16} />
-              </a>
-            </div>
-            <div className="relative w-full rounded-3xl flex items-center justify-center">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 to-transparent"></div>
-              
-              <div className="w-full max-w-7xl lg:max-w-5xl border border-white/20 rounded-3xl bg-stone-800/40 backdrop-blur-xl p-8 md:p-16 lg:p-20 relative z-10 shadow-2xl">
-                
-                <form className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8" onSubmit={(e) => e.preventDefault()}>
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[10px] uppercase tracking-widest text-white font-bold ml-1">
-                      {t('field_name')}
-                    </label>
-                    <input 
-                      type="text" 
-                      className="w-full bg-transparent border-b border-white/20 py-2 text-white text-base focus:outline-none focus:border-white transition-all placeholder:text-white/20"
-                      placeholder={t('placeholder_name')}
-                    />
+                <p className="leading-relaxed text-base font-normal text-stone-300 tracking-wide mb-8 max-w-xl">
+                  {t('corp_desc')}
+                </p>
+                <ul className="flex flex-col gap-4 mb-12">
+                  <li className="flex items-start gap-3 text-stone-200">
+                    <SolarCheckCircleLinear size={20} className="text-white mt-1 shrink-0" strokeWidth={1.5} />
+                    <span className="font-normal text-[15px]">{t('corp_li1')}</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-stone-200">
+                    <SolarCheckCircleLinear size={20} className="text-white mt-1 shrink-0" strokeWidth={1.5} />
+                    <span className="font-normal text-[15px]">{t('corp_li2')}</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-stone-200">
+                    <SolarCheckCircleLinear size={20} className="text-white mt-1 shrink-0" strokeWidth={1.5} />
+                    <span className="font-normal text-[15px]">{t('corp_li3')}</span>
+                  </li>
+                </ul>
+                <a href="#hero" className="text-base text-white font-normal border-b border-white/20 pb-1 w-fit hover:border-white transition-colors flex items-center gap-2">
+                  {t('corp_cta')}
+                  <SolarArrowRightUpLinear size={16} />
+                </a>
+              </div>
+
+              <div className="relative w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden border border-white/10 bg-stone-900/50 flex items-end justify-center p-8">
+                <img 
+                  src="https://i.ibb.co/HL730gdy/Image.jpg" 
+                  alt="Chauffeur Service background" 
+                  className="absolute inset-0 w-full h-full object-cover opacity-100"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-black/15"></div>
+                <div className="w-full max-w-sm border border-white/10 rounded-2xl bg-stone-800/85 backdrop-blur-md p-6 relative z-10 shadow-2xl">
+                  <div className="flex justify-between items-center mb-6 pb-6 border-b border-white/5">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                        <User size={16} className="text-white" />
+                      </div>
+                      <div>
+                        <div className="text-xs text-white font-medium">{t('vip_guest')}</div>
+                        <div className="text-xs text-stone-500">{t('vip_flight')}</div>
+                      </div>
+                    </div>
+                    <span className="text-xs text-stone-400 bg-white/5 px-2 py-1 rounded">{t('vip_tag')}</span>
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[10px] uppercase tracking-widest text-white font-bold ml-1">
-                      {t('field_company')}
-                    </label>
-                    <input 
-                      type="text" 
-                      className="w-full bg-transparent border-b border-white/20 py-2 text-white text-base focus:outline-none focus:border-white transition-all placeholder:text-white/20"
-                      placeholder={t('placeholder_company')}
-                    />
+                  <div className="flex flex-col gap-4">
+                    <div className="flex justify-between text-xs">
+                      <span className="text-stone-500">{t('vip_pickup_label')}</span>
+                      <span className="text-white">{t('vip_pickup_val')}</span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-stone-500">{t('vip_dropoff_label')}</span>
+                      <span className="text-white">{t('vip_dropoff_val')}</span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-stone-500">{t('vip_vehicle_label')}</span>
+                      <span className="text-white">{t('vip_vehicle_val')}</span>
+                    </div>
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[10px] uppercase tracking-widest text-white font-bold ml-1">
-                      {t('email')}
-                    </label>
-                    <input 
-                      type="email" 
-                      className="w-full bg-transparent border-b border-white/20 py-2 text-white text-base focus:outline-none focus:border-white transition-all placeholder:text-white/20"
-                      placeholder="email@example.com"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[10px] uppercase tracking-widest text-white font-bold ml-1">
-                      {t('phone_contact') || 'Phone Number'}
-                    </label>
-                    <input 
-                      type="tel" 
-                      className="w-full bg-transparent border-b border-white/20 py-2 text-white text-base focus:outline-none focus:border-white transition-all placeholder:text-white/20"
-                      placeholder="+33 6 00 00 00 00"
-                    />
-                  </div>
-                  <div className="md:col-span-2 flex flex-col gap-2">
-                    <label className="text-[10px] uppercase tracking-widest text-white font-bold ml-1">
-                      {t('field_message')}
-                    </label>
-                    <textarea 
-                      className="w-full bg-transparent border-b border-white/20 py-2 text-white text-base focus:outline-none focus:border-white transition-all h-24 resize-none placeholder:text-white/20"
-                      placeholder={t('placeholder_message')}
-                    ></textarea>
-                  </div>
-                  <div className="md:col-span-2 pt-4">
-                    <button className="w-full md:w-auto md:px-12 bg-white text-stone-900 font-bold uppercase tracking-widest text-[11px] py-5 rounded-xl hover:bg-stone-200 transition-all flex items-center justify-center gap-3 group shadow-xl">
-                      <span>{t('contact_btn')}</span>
-                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </div>
-                </form>
+                </div>
               </div>
             </div>
-          </div>
         </motion.div>
       </section>
 
@@ -2039,7 +2035,7 @@ export default function App() {
                 <Navigation size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('fleet_tag')}</span>
               </div>
-              <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('fleet_title')}</h2>
+              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('fleet_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
             </motion.div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 text-base font-light text-stone-400 tracking-wide">
@@ -2111,7 +2107,7 @@ export default function App() {
                 <Star size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('vision_tag')}</span>
               </div>
-              <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('vision_title')}</h2>
+              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('vision_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
               <p className="mt-8 text-stone-400 text-sm md:text-base font-light leading-relaxed max-w-xl mx-auto">
                 {t('vision_desc')}
@@ -2193,7 +2189,7 @@ export default function App() {
                 <MessageSquare size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('reviews_tag')}</span>
               </div>
-              <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('reviews_title')}</h2>
+              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('reviews_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
               
               <div className="flex items-center justify-center gap-x-4 mt-12 bg-white/[0.03] border border-white/10 px-5 py-2.5 rounded-full max-w-max mx-auto backdrop-blur-md shadow-lg shadow-black/10">
@@ -2322,7 +2318,7 @@ export default function App() {
               <Calendar size={12} className="text-white/60" />
               <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">Booking</span>
             </div>
-            <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('title')}</h2>
+            <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('title')}</h2>
             <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
           </motion.div>
           
@@ -3126,7 +3122,7 @@ export default function App() {
                 <Info size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">FAQ</span>
               </div>
-              <h2 className="text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('faq_title')}</h2>
+              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm">{t('faq_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
             </motion.div>
             <div className="flex flex-col">

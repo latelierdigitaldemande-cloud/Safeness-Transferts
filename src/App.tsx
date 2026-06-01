@@ -2322,10 +2322,10 @@ export default function App() {
             <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
           </motion.div>
           
-          <div ref={bookingRef} className="w-full max-w-6xl mx-auto px-2 md:px-6 relative z-10">
+          <div ref={bookingRef} className="w-full max-w-6xl mx-auto px-4 md:px-6 relative z-10">
             {/* Mobile-only Step Indicators Block */}
             <div className="md:hidden w-full mb-4">
-              <div className="w-full flex items-center justify-between py-5 px-3 rounded-xl bg-white border border-stone-100 shadow-xl">
+              <div className="w-full flex items-center justify-between py-5 px-4 rounded-xl bg-white border border-stone-100 shadow-xl">
                 {[1, 2, 3, 4].map((s) => (
                   <Fragment key={s}>
                     <button
@@ -2355,7 +2355,7 @@ export default function App() {
               <div className="grid grid-cols-1 lg:grid-cols-12">
                 
                 {/* Left Side: Form */}
-                <div className="col-span-full lg:col-span-7 px-3.5 py-6 md:p-12 border-b lg:border-b-0 lg:border-r border-stone-100">
+                <div className="col-span-full lg:col-span-7 px-5 py-6 md:p-12 border-b lg:border-b-0 lg:border-r border-stone-100">
                   {/* Progress - Desktop Only */}
                   <div className="hidden md:flex items-center gap-4 mb-8 md:mb-12">
                     {[1, 2, 3, 4].map((s) => (
@@ -2999,7 +2999,7 @@ export default function App() {
                 </div>
 
                 {/* Right Side: Map & Dynamic Summary */}
-                <div className={`col-span-full lg:col-span-5 bg-stone-50 ${step === 2 ? 'px-3.5 py-4 pb-4 md:p-10' : 'px-3.5 py-6 md:p-10'} flex flex-col transition-all duration-500 ${step === 1 || step === 5 ? 'hidden lg:flex' : 'flex'}`}>
+                <div className={`col-span-full lg:col-span-5 bg-stone-50 ${step === 2 ? 'px-5 py-4 pb-4 md:p-10' : 'px-5 py-6 md:p-10'} flex flex-col transition-all duration-500 ${step === 1 || step === 5 ? 'hidden lg:flex' : 'flex'}`}>
                   
                   {/* Map Container - Consistent height across all steps */}
                   {step === 2 && (

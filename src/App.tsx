@@ -695,7 +695,7 @@ export default function App() {
       footer_desc: "L'élite du transport : prestige mondial, excellence sans compromis",
       legal: 'Mentions légales',
       privacy: 'Mentions légales',
-      whatsapp_tooltip: 'Réserver par WhatsApp',
+      whatsapp_tooltip: 'Réserver sur WhatsApp',
       lang_fr: 'Français',
       lang_en: 'Anglais',
       rev1_text: '"Service impeccable pour mon transfert vers Orly. Le chauffeur était en avance, le véhicule (Classe S) d\'une propreté absolue. Conduite très douce. Je recommande vivement Safeness transport."',
@@ -981,13 +981,23 @@ export default function App() {
     return 1;
   }, []);
 
+  const [itemsPerPage, setItemsPerPage] = useState(3);
+
+  useEffect(() => {
+    setItemsPerPage(getItemsPerPage());
+    const handleResize = () => {
+      setItemsPerPage(getItemsPerPage());
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [getItemsPerPage]);
+
   const nextReview = useCallback(() => {
     setCurrentReviewIndex((prev) => {
-      const itemsPerPage = getItemsPerPage();
       const max = Math.max(0, reviews.length - itemsPerPage);
       return prev >= max ? 0 : prev + 1;
     });
-  }, [reviews.length, getItemsPerPage]);
+  }, [reviews.length, itemsPerPage]);
 
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
@@ -1012,7 +1022,7 @@ export default function App() {
     if (isLeftSwipe) {
       nextReview();
     } else if (isRightSwipe) {
-      setCurrentReviewIndex((prev) => (prev === 0 ? Math.max(0, reviews.length - getItemsPerPage()) : prev - 1));
+      setCurrentReviewIndex((prev) => (prev === 0 ? Math.max(0, reviews.length - itemsPerPage) : prev - 1));
     }
   };
 
@@ -1728,7 +1738,7 @@ export default function App() {
                   key={`card-${i}`} 
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setActiveServiceCard(activeServiceCard === i ? null : i)}
-                  className={`w-[79.5vw] md:w-[calc(50%-12px)] lg:w-[420px] h-[500px] md:h-[495px] border border-white/10 rounded-[2.5rem] bg-stone-950 shadow-md shadow-black/15 flex flex-col shrink-0 group overflow-hidden snap-center relative cursor-pointer transition-colors ${activeServiceCard === i ? 'border-white/30' : ''}`}
+                  className={`w-[79.5vw] md:w-[calc(50%-12px)] lg:w-[420px] h-[500px] md:h-[495px] border border-white/10 rounded-[2.5rem] bg-stone-950 shadow-sm shadow-black/5 flex flex-col shrink-0 group overflow-hidden snap-center relative cursor-pointer transition-colors ${activeServiceCard === i ? 'border-white/30' : ''}`}
                 >
                   {/* Full Card Background Image */}
                   <img 
@@ -2171,9 +2181,6 @@ export default function App() {
           ref={reviewsRef}
           className="bg-stone-900 w-full py-32 px-6 border-t border-white/5 relative overflow-hidden"
         >
-          {/* Subtle background lift */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none hidden md:block"></div>
-          
           <div 
             ref={el => { if (el) revealRefs.current[2] = el; }}
             className="max-w-7xl mx-auto reveal relative z-10"
@@ -2232,22 +2239,22 @@ export default function App() {
               <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 right-0 z-30 px-2 lg:px-4">
                 <button 
                   onClick={() => nextReview()}
-                  disabled={currentReviewIndex >= Math.max(0, reviews.length - getItemsPerPage())}
-                  className={`w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all ${currentReviewIndex >= Math.max(0, reviews.length - getItemsPerPage()) ? 'opacity-20 cursor-not-allowed' : 'bg-white/5 hover:bg-white/10 text-white active:scale-95'}`}
+                  disabled={currentReviewIndex >= Math.max(0, reviews.length - itemsPerPage)}
+                  className={`w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all ${currentReviewIndex >= Math.max(0, reviews.length - itemsPerPage) ? 'opacity-20 cursor-not-allowed' : 'bg-white/5 hover:bg-white/10 text-white active:scale-95'}`}
                 >
                   <ChevronRight size={20} />
                 </button>
               </div>
 
               {/* Slider Container */}
-              <div className="overflow-hidden px-4 md:px-12 lg:px-20">
+              <div className="overflow-hidden px-0">
                 <motion.div 
                   className="flex will-change-transform"
                   onTouchStart={onTouchStart}
                   onTouchMove={onTouchMove}
                   onTouchEnd={onTouchEnd}
                   animate={{ 
-                    x: `-${currentReviewIndex * (100 / getItemsPerPage())}%` 
+                    x: `-${currentReviewIndex * (100 / itemsPerPage)}%` 
                   }}
                   transition={{ 
                     duration: 0.6,
@@ -2260,7 +2267,7 @@ export default function App() {
                       className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-3 flex flex-col transform-gpu"
                       style={{ backfaceVisibility: 'hidden' }}
                     >
-                      <div className="h-full border border-white/5 rounded-3xl p-8 bg-white/[0.03] backdrop-blur-md shadow-2xl flex flex-col hover:bg-white/[0.05] hover:border-white/10 transition-colors duration-500">
+                      <div className="h-full border border-white/5 rounded-3xl p-8 bg-white/[0.03] backdrop-blur-md shadow-none flex flex-col hover:bg-white/[0.05] hover:border-white/10 transition-colors duration-500">
                         <div className="flex gap-1 text-[#FBBC05] mb-8">
                           {[...Array(5)].map((_, idx) => (
                             <SolarStarBold key={idx} size={18} />
@@ -2289,7 +2296,7 @@ export default function App() {
 
               {/* Pagination Dots */}
               <div className="flex justify-center gap-2.5 mt-10">
-                {Array.from({ length: Math.max(1, reviews.length - getItemsPerPage() + 1) }).map((_, i) => (
+                {Array.from({ length: Math.max(1, reviews.length - itemsPerPage + 1) }).map((_, i) => (
                   <button
                     key={`dot-${i}`}
                     onClick={() => setCurrentReviewIndex(i)}

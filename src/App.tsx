@@ -628,7 +628,7 @@ export default function App() {
       val4_desc: 'Votre temps est précieux. Nos chauffeurs arrivent 15 minutes avant chaque prestation.',
       corp_tag: 'Corporate',
       corp_title: 'Solutions Business',
-      corp_subtitle: 'Solutions pour professionnels',
+      corp_subtitle: 'Solutions pour entreprises',
       corp_desc: 'Safeness Transport propose des comptes corporate sur-mesure pour les entreprises, les hôtels de luxe et les agences événementielles. Optimisez la gestion des déplacements de vos collaborateurs et de vos clients VIP avec un partenaire fiable.',
       corp_li1: 'Facturation simplifiée et relevés mensuels détaillés.',
       corp_li2: 'Priorité sur les réservations et support client dédié 24/7.',
@@ -862,7 +862,7 @@ export default function App() {
       val4_desc: 'Your time is precious. Our drivers arrive 15 minutes before each service.',
       corp_tag: 'Corporate',
       corp_title: 'Business Solutions',
-      corp_subtitle: 'Solutions for professionals',
+      corp_subtitle: 'Solutions for business',
       corp_desc: 'Safeness Transport offers bespoke corporate accounts for companies, luxury hotels and event agencies. Optimize the management of your employees and VIP clients travels with a reliable partner.',
       corp_li1: 'Simplified billing and detailed monthly statements.',
       corp_li2: 'Priority on bookings and dedicated 24/7 client support.',
@@ -1500,10 +1500,10 @@ export default function App() {
         {/* COUVERTURE EUROPE - REDESIGNED BENTO GRID */}
         <section 
           id="europe"
-          className="bg-stone-900 w-full py-32 px-6 border-t border-white/5 relative overflow-x-hidden md:overflow-hidden"
+          className="bg-stone-900 w-full py-32 px-6 border-t border-white/5 relative overflow-hidden"
         >
-          {/* Decorative background elements: Subtle map-inspired lines */}
-          <div className="absolute inset-0 pointer-events-none opacity-20 hidden md:block">
+          {/* Decorative background elements: Subtle map-inspired lines (always visible on mobile and desktop) */}
+          <div className="absolute inset-0 pointer-events-none opacity-20">
             <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
               <path d="M10,20 Q40,10 70,30 T90,80" fill="none" stroke="white" strokeWidth="0.05" strokeDasharray="1,2" />
               <path d="M20,70 Q50,60 80,90" fill="none" stroke="white" strokeWidth="0.05" strokeDasharray="1,2" />
@@ -1515,7 +1515,7 @@ export default function App() {
           
           <div 
             ref={el => { if (el) revealRefs.current[0] = el; }}
-            className="max-w-7xl mx-auto reveal relative z-10"
+            className="max-w-7xl mx-auto relative z-10"
           >
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
@@ -1529,13 +1529,13 @@ export default function App() {
                   <Globe size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('europe_tag')}</span>
                 </div>
-                <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-[1.1] md:leading-tight">
+                <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">
                   {t('europe_title')} <br/> 
                   <span className="font-bold">{t('europe_subtitle')}</span>
                 </h2>
               </div>
               <div className="lg:col-span-6 lg:border-l lg:border-white/10 lg:pl-12">
-                <p className="text-stone-300/90 text-sm md:text-base font-normal leading-relaxed max-w-lg mb-0 italic">
+                <p className="text-stone-300/90 text-[15px] md:text-[17px] font-normal leading-relaxed max-w-lg mb-0 italic">
                   {t('europe_desc')}
                 </p>
               </div>
@@ -1646,7 +1646,7 @@ export default function App() {
                 <div className="absolute inset-0 p-8 flex flex-col justify-between">
                   <div>
                     <h3 className="text-xl font-semibold text-white uppercase mb-2 tracking-tight">{t('europe_connect_title')}</h3>
-                    <p className="text-stone-400 text-xs font-light leading-relaxed">
+                    <p className="text-stone-400 text-[13px] font-light leading-relaxed">
                       {t('europe_connect_desc')}
                     </p>
                   </div>
@@ -1681,13 +1681,13 @@ export default function App() {
                   <Briefcase size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('services_tag')}</span>
                 </div>
-                <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-[1.1] md:leading-tight">
+                <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">
                   {t('services_title')}
                 </h2>
                 <div className="h-1 w-12 bg-white/20 rounded-full mt-10"></div>
               </div>
               <div className="lg:col-span-6 lg:border-l lg:border-white/10 lg:pl-12 flex flex-col items-start gap-8">
-                <p className="text-stone-300/90 text-sm md:text-base font-normal leading-relaxed mb-0 italic">
+                <p className="text-stone-300/90 text-[15px] md:text-[17px] font-normal leading-relaxed mb-0 italic">
                   {t('services_desc')}
                 </p>
                 <a 
@@ -1762,7 +1762,7 @@ export default function App() {
                         <h3 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-tight leading-tight">
                            {t(`service${i + 1}_title`)}
                         </h3>
-                        <p className="text-stone-400 text-sm font-light leading-relaxed">
+                        <p className="text-stone-400 text-[15px] font-light leading-relaxed">
                           {t(`service${i + 1}_desc`)}
                         </p>
                       </div>
@@ -1847,7 +1847,7 @@ export default function App() {
                 <Tag size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('transfers_tag')}</span>
               </div>
-              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm text-center leading-[1.1] md:leading-tight">
+              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm text-center leading-[1.25] md:leading-snug">
                 {t('transfers_title')}
               </h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
@@ -1934,12 +1934,42 @@ export default function App() {
 
 
 
-
         {/* BUSINESS B2B */}
         <section 
           id="business" 
-          className="bg-stone-900 w-full py-32 px-6 border-t border-white/5 relative overflow-hidden"
+          className="bg-[#181514] w-full py-32 px-6 relative overflow-hidden"
         >
+          {/* Subtle gradient overlay starting from stone-900 at the top and fading down into the corporate section */}
+          <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-stone-900 to-transparent pointer-events-none z-10" />
+
+          {/* Decorative rounded SVG background (fluid curves & organic luxury waves on corners and edges only) */}
+          <div className="absolute inset-0 opacity-[0.04] select-none pointer-events-none mix-blend-screen overflow-hidden">
+            <svg className="w-full h-full min-w-[1024px]" viewBox="0 0 1440 800" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* Top-Left Corner Waves (stays completely on the left/top corner) */}
+              <path d="M-50,50 C180,80 120,400 -50,550" stroke="white" strokeWidth="0.75" />
+              <path d="M-50,80 C150,110 90,370 -50,520" stroke="white" strokeWidth="0.5" strokeDasharray="6 6" />
+              
+              {/* Bottom-Left Corner Waves */}
+              <path d="M-50,580 C180,600 420,720 520,850" stroke="white" strokeWidth="0.75" />
+              <path d="M-50,610 C150,630 390,730 490,850" stroke="white" strokeWidth="0.5" strokeDasharray="3 3" />
+
+              {/* Top-Right Corner Waves (stays completely on the right/top corner) */}
+              <path d="M1490,50 C1260,80 1320,400 1490,550" stroke="white" strokeWidth="0.75" />
+              <path d="M1490,80 C1290,110 1350,370 1490,520" stroke="white" strokeWidth="0.5" strokeDasharray="6 6" />
+
+              {/* Bottom-Right Corner Waves */}
+              <path d="M920,850 C1020,720 1260,600 1490,580" stroke="white" strokeWidth="0.75" />
+              <path d="M950,850 C1050,730 1290,630 1490,610" stroke="white" strokeWidth="0.5" strokeDasharray="3 3" />
+
+              {/* Ambient rings confined entirely to outer edges */}
+              <circle cx="0" cy="350" r="150" stroke="white" strokeWidth="0.5" strokeDasharray="2 4" opacity="0.4" />
+              <circle cx="0" cy="350" r="240" stroke="white" strokeWidth="0.5" opacity="0.2" />
+              
+              <circle cx="1440" cy="450" r="150" stroke="white" strokeWidth="0.5" strokeDasharray="2 4" opacity="0.4" />
+              <circle cx="1440" cy="450" r="240" stroke="white" strokeWidth="0.5" opacity="0.2" />
+            </svg>
+          </div>
+
           {/* Subtle background lift */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none hidden md:block"></div>
           
@@ -1952,19 +1982,20 @@ export default function App() {
           >
 
 
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="grid lg:grid-cols-2 gap-y-8 lg:gap-16 items-center">
               <div className="flex flex-col text-left text-base font-light text-stone-400 tracking-wide">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8 w-fit">
                   <Briefcase size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('corp_tag')}</span>
                 </div>
-                <h2 className="text-[38px] md:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm mb-8 leading-[1.1] md:leading-tight">
+                <h2 className="text-[38px] md:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">
                   {t('corp_subtitle')}
                 </h2>
+                <div className="h-1 w-12 bg-white/20 rounded-full mt-8 mb-8"></div>
                 <p className="leading-relaxed text-[17px] font-normal text-stone-300 tracking-wide mb-8 max-w-xl">
                   {t('corp_desc')}
                 </p>
-                <ul className="flex flex-col gap-4 mb-12">
+                <ul className="flex flex-col gap-4 mb-8 lg:mb-12">
                   <li className="flex items-start gap-3 text-stone-200">
                     <SolarCheckCircleLinear size={20} className="text-white mt-1 shrink-0" strokeWidth={1.5} />
                     <span className="font-normal text-[15px]">{t('corp_li1')}</span>
@@ -1978,48 +2009,54 @@ export default function App() {
                     <span className="font-normal text-[15px]">{t('corp_li3')}</span>
                   </li>
                 </ul>
-                <a href="#hero" className="text-base text-white font-normal border-b border-white/20 pb-1 w-fit hover:border-white transition-colors flex items-center gap-2">
+                <a href="#hero" className="hidden lg:flex text-base text-white font-normal border-b border-white/20 pb-1 w-fit hover:border-white transition-colors items-center gap-2">
                   {t('corp_cta')}
                   <SolarArrowRightUpLinear size={16} />
                 </a>
               </div>
 
-              <div className="relative w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden border border-white/10 bg-stone-900/50 flex items-end justify-center p-8">
-                <img 
-                  src="https://i.ibb.co/HL730gdy/Image.jpg" 
-                  alt="Chauffeur Service background" 
-                  className="absolute inset-0 w-full h-full object-cover opacity-100"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-black/15"></div>
-                <div className="w-full max-w-sm border border-white/10 rounded-2xl bg-stone-800/85 backdrop-blur-md p-6 relative z-10 shadow-2xl">
-                  <div className="flex justify-between items-center mb-6 pb-6 border-b border-white/5">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                        <User size={16} className="text-white" />
+              <div className="flex flex-col gap-6 lg:gap-0 w-full">
+                <div className="relative w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden border border-white/10 bg-stone-900/50 flex items-end justify-center p-8">
+                  <img 
+                    src="https://i.ibb.co/HL730gdy/Image.jpg" 
+                    alt="Chauffeur Service background" 
+                    className="absolute inset-0 w-full h-full object-cover opacity-100"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-black/15"></div>
+                  <div className="w-full max-w-sm border border-white/10 rounded-2xl bg-stone-800/85 backdrop-blur-md p-6 relative z-10 shadow-2xl">
+                    <div className="flex justify-between items-center mb-6 pb-6 border-b border-white/5">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                          <User size={16} className="text-white" />
+                        </div>
+                        <div>
+                          <div className="text-xs text-white font-medium">{t('vip_guest')}</div>
+                          <div className="text-xs text-stone-500">{t('vip_flight')}</div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="text-xs text-white font-medium">{t('vip_guest')}</div>
-                        <div className="text-xs text-stone-500">{t('vip_flight')}</div>
+                      <span className="text-xs text-stone-400 bg-white/5 px-2 py-1 rounded">{t('vip_tag')}</span>
+                    </div>
+                    <div className="flex flex-col gap-4">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-stone-500">{t('vip_pickup_label')}</span>
+                        <span className="text-white">{t('vip_pickup_val')}</span>
                       </div>
-                    </div>
-                    <span className="text-xs text-stone-400 bg-white/5 px-2 py-1 rounded">{t('vip_tag')}</span>
-                  </div>
-                  <div className="flex flex-col gap-4">
-                    <div className="flex justify-between text-xs">
-                      <span className="text-stone-500">{t('vip_pickup_label')}</span>
-                      <span className="text-white">{t('vip_pickup_val')}</span>
-                    </div>
-                    <div className="flex justify-between text-xs">
-                      <span className="text-stone-500">{t('vip_dropoff_label')}</span>
-                      <span className="text-white">{t('vip_dropoff_val')}</span>
-                    </div>
-                    <div className="flex justify-between text-xs">
-                      <span className="text-stone-500">{t('vip_vehicle_label')}</span>
-                      <span className="text-white">{t('vip_vehicle_val')}</span>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-stone-500">{t('vip_dropoff_label')}</span>
+                        <span className="text-white">{t('vip_dropoff_val')}</span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-stone-500">{t('vip_vehicle_label')}</span>
+                        <span className="text-white">{t('vip_vehicle_val')}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <a href="#hero" className="flex lg:hidden text-base text-white font-normal border-b border-white/20 pb-1 w-fit hover:border-white transition-colors items-center gap-2 mt-6">
+                  {t('corp_cta')}
+                  <SolarArrowRightUpLinear size={16} />
+                </a>
               </div>
             </div>
         </motion.div>
@@ -2045,7 +2082,7 @@ export default function App() {
                 <Navigation size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('fleet_tag')}</span>
               </div>
-              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-[1.1] md:leading-tight">{t('fleet_title')}</h2>
+              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">{t('fleet_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
             </motion.div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 text-base font-light text-stone-400 tracking-wide">
@@ -2117,9 +2154,9 @@ export default function App() {
                 <Star size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('vision_tag')}</span>
               </div>
-              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-[1.1] md:leading-tight">{t('vision_title')}</h2>
+              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">{t('vision_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
-              <p className="mt-8 text-stone-300/90 text-sm md:text-base font-normal leading-relaxed max-w-xl mx-auto">
+              <p className="text-stone-300/90 text-lg font-normal leading-relaxed max-w-3xl mt-8 text-center italic">
                 {t('vision_desc')}
               </p>
             </motion.div>
@@ -2196,7 +2233,7 @@ export default function App() {
                 <MessageSquare size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('reviews_tag')}</span>
               </div>
-              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-[1.1] md:leading-tight">{t('reviews_title')}</h2>
+              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">{t('reviews_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
               
               <div className="flex items-center justify-center gap-x-4 mt-12 bg-white/[0.03] border border-white/10 px-5 py-2.5 rounded-full max-w-max mx-auto backdrop-blur-md shadow-lg shadow-black/10">
@@ -2325,7 +2362,7 @@ export default function App() {
               <Calendar size={12} className="text-white/60" />
               <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">Booking</span>
             </div>
-            <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-[1.1] md:leading-tight">{t('title')}</h2>
+            <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">{t('title')}</h2>
             <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
           </motion.div>
           
@@ -3117,7 +3154,7 @@ export default function App() {
                 <Info size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">FAQ</span>
               </div>
-              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-white drop-shadow-sm leading-[1.1] md:leading-tight">{t('faq_title')}</h2>
+              <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">{t('faq_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
             </motion.div>
             <div className="flex flex-col">

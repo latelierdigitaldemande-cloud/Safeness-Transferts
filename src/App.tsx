@@ -1692,9 +1692,10 @@ export default function App() {
                 </p>
                 <a 
                   href="#booking"
-                  className="px-8 py-4 bg-white text-stone-950 text-xs font-bold uppercase tracking-[0.2em] rounded-full hover:bg-stone-100 transition-all shadow-xl shadow-white/5 active:scale-95"
+                  className="px-8 py-4 bg-white text-stone-950 text-base font-normal rounded-full hover:bg-stone-100 transition-all shadow-xl shadow-white/5 active:scale-95 inline-flex items-center gap-2"
                 >
                   {t('section_book_btn')}
+                  <SolarArrowRightUpLinear size={16} />
                 </a>
               </div>
             </motion.div>
@@ -2236,24 +2237,25 @@ export default function App() {
               <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">{t('reviews_title')}</h2>
               <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
               
-              <div className="flex items-center justify-center gap-x-4 mt-12 bg-white/[0.03] border border-white/10 px-5 py-2.5 rounded-full max-w-max mx-auto backdrop-blur-md shadow-lg shadow-black/10">
-                {/* Brand Logo & Reviews Count */}
-                <div className="flex items-center gap-2">
-                  <iconify-icon icon="logos:google-icon" width="16"></iconify-icon>
-                  <span className="text-white/80 font-semibold text-xs tracking-wider uppercase">
-                    {lang === 'fr' ? '48 Avis' : '48 Reviews'}
-                  </span>
+              <div className="flex items-center gap-4 mt-12 bg-white/[0.03] border border-white/10 px-6 py-3 rounded-full max-w-max mx-auto backdrop-blur-md shadow-lg shadow-black/10">
+                {/* Brand Logo */}
+                <div className="flex items-center justify-center">
+                  <iconify-icon icon="logos:google-icon" width="22"></iconify-icon>
                 </div>
                 
-                <div className="w-px h-4 bg-white/10"></div>
-
-                {/* Stars */}
-                <div className="flex text-[#FBBC05] gap-0.5">
-                  <SolarStarBold size={14} />
-                  <SolarStarBold size={14} />
-                  <SolarStarBold size={14} />
-                  <SolarStarBold size={14} />
-                  <SolarStarBold size={14} />
+                {/* Text & Underneath Stars */}
+                <div className="flex flex-col items-start gap-0.5">
+                  <span className="text-white font-bold text-sm tracking-wide">
+                    Google
+                  </span>
+                  {/* Stars */}
+                  <div className="flex text-[#FBBC05] gap-0.5">
+                    <SolarStarBold size={12} />
+                    <SolarStarBold size={12} />
+                    <SolarStarBold size={12} />
+                    <SolarStarBold size={12} />
+                    <SolarStarBold size={12} />
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -2263,26 +2265,6 @@ export default function App() {
               onMouseEnter={() => setIsReviewsPaused(true)}
               onMouseLeave={() => setIsReviewsPaused(false)}
             >
-              {/* Navigation Desktop */}
-              <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 left-0 z-30 px-2 lg:px-4">
-                <button 
-                  onClick={() => setCurrentReviewIndex(prev => Math.max(0, prev - 1))}
-                  disabled={currentReviewIndex === 0}
-                  className={`w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all ${currentReviewIndex === 0 ? 'opacity-20 cursor-not-allowed' : 'bg-white/5 hover:bg-white/10 text-white active:scale-95'}`}
-                >
-                  <ChevronLeft size={20} />
-                </button>
-              </div>
-              <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 right-0 z-30 px-2 lg:px-4">
-                <button 
-                  onClick={() => nextReview()}
-                  disabled={currentReviewIndex >= Math.max(0, reviews.length - itemsPerPage)}
-                  className={`w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all ${currentReviewIndex >= Math.max(0, reviews.length - itemsPerPage) ? 'opacity-20 cursor-not-allowed' : 'bg-white/5 hover:bg-white/10 text-white active:scale-95'}`}
-                >
-                  <ChevronRight size={20} />
-                </button>
-              </div>
-
               {/* Slider Container */}
               <div className="overflow-hidden px-0">
                 <motion.div 

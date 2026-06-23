@@ -1368,7 +1368,7 @@ export default function App() {
             <Globe size={24} strokeWidth={1.5} className="md:w-7 md:h-7" />
           </button>
           <div 
-            className={`absolute right-0 mt-3 w-40 bg-stone-900/95 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-300 z-50 ${isLangMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}`}
+            className={`absolute right-0 top-full mt-1 w-40 bg-stone-900/95 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-300 z-50 ${isLangMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}`}
           >
             <button 
               onClick={() => { setLang('fr'); setIsLangMenuOpen(false); }}
@@ -1690,13 +1690,6 @@ export default function App() {
                 <p className="text-stone-300/90 text-[15px] md:text-[17px] font-normal leading-relaxed mb-0 italic">
                   {t('services_desc')}
                 </p>
-                <a 
-                  href="#booking"
-                  className="px-8 py-4 bg-white text-stone-950 text-base font-normal rounded-full hover:bg-stone-100 transition-all shadow-xl shadow-white/5 active:scale-95 inline-flex items-center gap-2"
-                >
-                  {t('section_book_btn')}
-                  <SolarArrowRightUpLinear size={16} />
-                </a>
               </div>
             </motion.div>
           </div>
@@ -1940,8 +1933,6 @@ export default function App() {
           id="business" 
           className="bg-[#181514] w-full py-32 px-6 relative overflow-hidden"
         >
-          {/* Subtle gradient overlay starting from stone-900 at the top and fading down into the corporate section */}
-          <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-stone-900 to-transparent pointer-events-none z-10" />
 
           {/* Decorative rounded SVG background (fluid curves & organic luxury waves on corners and edges only) */}
           <div className="absolute inset-0 opacity-[0.04] select-none pointer-events-none mix-blend-screen overflow-hidden">

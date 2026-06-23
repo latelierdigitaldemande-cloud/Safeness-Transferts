@@ -1861,9 +1861,13 @@ export default function App() {
                 { key: 'route_beauvais', price: '140€', time: '80 min', icon: <Plane size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp', lgOnly: true },
               ].map((item: any, i) => {
                 return (
-                  <div 
+                  <motion.div 
                     key={i}
-                    className={`group relative border rounded-[2.5rem] transition-all duration-500 overflow-hidden h-[320px] bg-stone-900 border-white/10 hover:border-white/20 shadow-2xl ${item.lgOnly ? 'hidden lg:flex' : 'flex'} flex-col`}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-10px" }}
+                    transition={{ duration: 0.8, delay: i * 0.15 }}
+                    className={`group relative border rounded-[2.5rem] transition-colors duration-500 overflow-hidden h-[320px] bg-stone-900 border-white/10 hover:border-white/20 shadow-2xl ${item.lgOnly ? 'hidden lg:flex' : 'flex'} flex-col`}
                   >
                     {/* Background Image with Overlay */}
                     <div className="absolute inset-0 z-0">
@@ -1918,7 +1922,7 @@ export default function App() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
@@ -2001,7 +2005,7 @@ export default function App() {
                     <span className="font-normal text-[15px]">{t('corp_li3')}</span>
                   </li>
                 </ul>
-                <a href="#hero" className="hidden lg:flex text-base text-white font-normal border-b border-white/20 pb-1 w-fit hover:border-white transition-colors items-center gap-2">
+                <a href="#hero" className="flex text-base text-white font-normal border-b border-white/20 pb-1 w-fit hover:border-white transition-colors items-center gap-2">
                   {t('corp_cta')}
                   <SolarArrowRightUpLinear size={16} />
                 </a>
@@ -2045,10 +2049,6 @@ export default function App() {
                     </div>
                   </div>
                 </div>
-                <a href="#hero" className="flex lg:hidden text-base text-white font-normal border-b border-white/20 pb-1 w-fit hover:border-white transition-colors items-center gap-2 mt-6">
-                  {t('corp_cta')}
-                  <SolarArrowRightUpLinear size={16} />
-                </a>
               </div>
             </div>
         </motion.div>

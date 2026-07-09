@@ -1981,7 +1981,7 @@ export default function App() {
           >
 
 
-            <div className="grid lg:grid-cols-2 gap-y-12 lg:gap-16 items-center">
+            <div className="grid lg:grid-cols-2 gap-y-14 lg:gap-16 items-center">
               <div className="flex flex-col text-left text-base font-light text-stone-400 tracking-wide">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8 w-fit">
                   <Briefcase size={12} className="text-white/60" />
@@ -1991,7 +1991,7 @@ export default function App() {
                   {t('corp_subtitle')}
                 </h2>
                 <div className="h-1 w-12 bg-white/20 rounded-full mt-8 mb-10"></div>
-                <p className="leading-relaxed text-[17px] font-normal text-stone-300 tracking-wide mb-10 max-w-xl">
+                <p className="leading-relaxed text-[17px] font-normal text-stone-300 tracking-wide mb-8 max-w-xl">
                   {t('corp_desc')}
                 </p>
                 <ul className="flex flex-col gap-4 mb-10 lg:mb-12">

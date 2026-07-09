@@ -1991,7 +1991,7 @@ export default function App() {
                   {t('corp_subtitle')}
                 </h2>
                 <div className="h-1 w-12 bg-white/20 rounded-full mt-7 md:mt-8 mb-10"></div>
-                <p className="leading-relaxed text-[17px] font-normal text-stone-300 tracking-wide mb-8 max-w-xl">
+                <p className="text-stone-300/90 text-lg font-normal leading-relaxed italic mb-8 max-w-xl">
                   {t('corp_desc')}
                 </p>
                 <ul className="flex flex-col gap-4 mb-10 lg:mb-12">

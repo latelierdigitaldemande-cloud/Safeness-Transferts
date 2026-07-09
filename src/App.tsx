@@ -271,14 +271,14 @@ export default function App() {
   // Booking Form State
   const [bookingData, setBookingData] = useState({
     serviceType: 'transfer' as 'transfer' | 'hourly',
-    serviceCategory: '',
+    serviceCategory: 'transfer',
     durationHours: 2,
     pickup: '',
     dropoff: '',
     pickupCoords: null as [number, number] | null,
     dropoffCoords: null as [number, number] | null,
-    date: new Date().toISOString().split('T')[0],
-    time: getCurrentTimeSlot(),
+    date: '',
+    time: '',
     vehicle: 'business',
     passengers: 1,
     luggage: 1,
@@ -295,8 +295,8 @@ export default function App() {
     returnDropoff: '',
     returnPickupCoords: null as [number, number] | null,
     returnDropoffCoords: null as [number, number] | null,
-    returnDate: new Date().toISOString().split('T')[0],
-    returnTime: getCurrentTimeSlot(),
+    returnDate: '',
+    returnTime: '',
     distance: 0,
     duration: 0
   });
@@ -328,7 +328,6 @@ export default function App() {
 
   const pickupInputRef = useRef<HTMLInputElement>(null);
   const dropoffInputRef = useRef<HTMLInputElement>(null);
-  const serviceCategoryRef = useRef<HTMLSelectElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -449,11 +448,6 @@ export default function App() {
   // --- Booking Form Logic ---
 
   const handleNextStep1 = async () => {
-    if (serviceCategoryRef.current && !serviceCategoryRef.current.reportValidity()) return;
-
-    if (pickupInputRef.current && !pickupInputRef.current.reportValidity()) return;
-    if (bookingData.serviceType === 'transfer' && dropoffInputRef.current && !dropoffInputRef.current.reportValidity()) return;
-
     const { pickupCoords, dropoffCoords, serviceType } = bookingData;
     
     setLoading(true);
@@ -464,6 +458,15 @@ export default function App() {
       } else if (serviceType === 'hourly' && pickupCoords) {
         // Just center map on pickup if hourly
         mapRef.current?.setView(pickupCoords, 14);
+      } else {
+        // Fallback values if coordinates are missing or not geocoded yet
+        setBookingData(prev => ({
+          ...prev,
+          distance: prev.distance || 15,
+          duration: prev.duration || 30,
+          pickup: prev.pickup || 'Paris',
+          dropoff: prev.serviceType === 'transfer' ? (prev.dropoff || 'Aéroport Charles de Gaulle (CDG)') : prev.dropoff
+        }));
       }
       setStep(2);
     } catch (error) {
@@ -1935,7 +1938,7 @@ export default function App() {
         {/* BUSINESS B2B */}
         <section 
           id="business" 
-          className="bg-[#181514] w-full py-32 px-6 relative overflow-hidden"
+          className="bg-[#181514] w-full py-28 md:py-32 px-6 relative overflow-hidden"
         >
 
           {/* Decorative rounded SVG background (fluid curves & organic luxury waves on corners and edges only) */}
@@ -1978,7 +1981,7 @@ export default function App() {
           >
 
 
-            <div className="grid lg:grid-cols-2 gap-y-8 lg:gap-16 items-center">
+            <div className="grid lg:grid-cols-2 gap-y-12 lg:gap-16 items-center">
               <div className="flex flex-col text-left text-base font-light text-stone-400 tracking-wide">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8 w-fit">
                   <Briefcase size={12} className="text-white/60" />
@@ -1987,11 +1990,11 @@ export default function App() {
                 <h2 className="text-[38px] md:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">
                   {t('corp_subtitle')}
                 </h2>
-                <div className="h-1 w-12 bg-white/20 rounded-full mt-8 mb-8"></div>
-                <p className="leading-relaxed text-[17px] font-normal text-stone-300 tracking-wide mb-8 max-w-xl">
+                <div className="h-1 w-12 bg-white/20 rounded-full mt-8 mb-10"></div>
+                <p className="leading-relaxed text-[17px] font-normal text-stone-300 tracking-wide mb-10 max-w-xl">
                   {t('corp_desc')}
                 </p>
-                <ul className="flex flex-col gap-4 mb-8 lg:mb-12">
+                <ul className="flex flex-col gap-4 mb-10 lg:mb-12">
                   <li className="flex items-start gap-3 text-stone-200">
                     <SolarCheckCircleLinear size={20} className="text-white mt-1 shrink-0" strokeWidth={1.5} />
                     <span className="font-normal text-[15px]">{t('corp_li1')}</span>
@@ -2347,9 +2350,7 @@ export default function App() {
                   <Fragment key={s}>
                     <button
                       onClick={() => {
-                          if (s < step || (s === 2 && bookingData.pickup && bookingData.dropoff) || (s >= 3 && step >= s - 1)) {
-                              setStep(s);
-                          }
+                          setStep(s);
                       }}
                       className="flex items-center justify-center focus:outline-none"
                     >
@@ -2394,44 +2395,6 @@ export default function App() {
                         </div>
                       )}
                       
-                      {/* Service Category Selection */}
-                      <div className="space-y-2 relative flex flex-col animate-in fade-in slide-in-from-top-2 duration-300">
-                        <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('field_service_category')}</label>
-                        <div className="relative border border-stone-300 rounded-xl bg-white overflow-hidden">
-                          {bookingData.serviceCategory === 'intercity' && <Navigation className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />}
-                          {bookingData.serviceCategory === 'airport' && <Plane className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />}
-                          {bookingData.serviceCategory === 'vip' && <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />}
-                          {bookingData.serviceCategory === 'prestige' && <Star className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />}
-                          {bookingData.serviceCategory === 'hourly' && <Clock className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />}
-                          {!bookingData.serviceCategory && <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-800" size={18} />}
-                          <select 
-                            ref={serviceCategoryRef}
-                            required
-                            value={bookingData.serviceCategory}
-                            onChange={(e) => {
-                              const val = e.target.value;
-                              if (val === 'hourly') {
-                                setBookingData(prev => ({ ...prev, serviceType: 'hourly', serviceCategory: 'hourly' }));
-                              } else {
-                                setBookingData(prev => ({ ...prev, serviceType: 'transfer', serviceCategory: val }));
-                              }
-                              if (bookingError) setBookingError(null);
-                            }}
-                            className={`w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 focus:ring-0 outline-none appearance-none cursor-pointer transition-all font-semibold text-[15px] ${bookingData.serviceCategory ? 'text-stone-900' : 'text-stone-700'}`}
-                          >
-                            <option value="" disabled className="text-stone-900 bg-white font-medium text-[15px]">{t('placeholder_service_category')}</option>
-                            <option value="intercity" className="text-stone-900 bg-white font-medium text-[15px]">{t('service_cat_intercity')}</option>
-                            <option value="airport" className="text-stone-900 bg-white font-medium text-[15px]">{t('service_cat_airport')}</option>
-                            <option value="vip" className="text-stone-900 bg-white font-medium text-[15px]">{t('service_cat_vip')}</option>
-                            <option value="prestige" className="text-stone-900 bg-white font-medium text-[15px]">{t('service_cat_prestige')}</option>
-                            <option value="hourly" className="text-stone-900 bg-white font-medium text-[15px]">{t('service_cat_hourly')}</option>
-                          </select>
-                          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-800">
-                            <ChevronDown size={18} />
-                          </div>
-                        </div>
-                      </div>
-
                       <div className="space-y-2 relative flex flex-col">
                         <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('itinerary_label')}</label>
                         
@@ -2443,7 +2406,6 @@ export default function App() {
                               <input 
                                 ref={pickupInputRef}
                                 type="text" 
-                                required
                                 value={bookingData.pickup}
                                 onChange={(e) => {
                                   setBookingData(prev => ({ ...prev, pickup: e.target.value, pickupCoords: null }));
@@ -2500,7 +2462,6 @@ export default function App() {
                                   <input 
                                     ref={dropoffInputRef}
                                     type="text" 
-                                    required={bookingData.serviceType === 'transfer'}
                                     value={bookingData.dropoff}
                                     onChange={(e) => {
                                       setBookingData(prev => ({ ...prev, dropoff: e.target.value, dropoffCoords: null }));
@@ -2557,29 +2518,43 @@ export default function App() {
                         <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">
                           {lang === 'fr' ? 'Date & Heure' : 'Date & Time'}
                         </label>
-                        <div className="flex flex-col border border-stone-300 rounded-xl bg-white overflow-hidden divide-y divide-stone-200">
+                        <div className="flex flex-col md:flex-row border border-stone-300 rounded-xl bg-white overflow-hidden divide-y md:divide-y-0 md:divide-x divide-stone-200">
                           {/* Date Selector */}
-                          <div className="relative flex items-center">
+                          <div className="relative flex items-center md:flex-1">
                             <Calendar size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
                             <input
-                              type="date"
+                              type={bookingData.date ? "date" : "text"}
+                              placeholder={lang === 'fr' ? 'Choisir une date' : 'Select a date'}
+                              onFocus={(e) => (e.target.type = "date")}
+                              onBlur={(e) => {
+                                if (!bookingData.date) e.target.type = "text";
+                              }}
                               value={bookingData.date}
                               min={new Date().toISOString().split('T')[0]}
-                              onChange={(e) => setBookingData(prev => ({ ...prev, date: e.target.value }))}
+                              onChange={(e) => {
+                                setBookingData(prev => ({ ...prev, date: e.target.value }));
+                                if (bookingError) setBookingError(null);
+                              }}
                               required
-                              className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-950 font-semibold focus:ring-0 outline-none cursor-pointer text-sm appearance-none"
+                              className={`w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 font-medium placeholder:text-stone-700/90 focus:ring-0 outline-none cursor-pointer text-[16px] appearance-none ${bookingData.date ? 'text-stone-950' : 'text-stone-700/90'}`}
                             />
                           </div>
                           {/* Time Selector */}
-                          <div className="relative flex items-center">
+                          <div className="relative flex items-center md:flex-1">
                             <Clock size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
                             <select 
                               value={bookingData.time}
-                              onChange={(e) => setBookingData(prev => ({ ...prev, time: e.target.value }))}
-                              className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 text-stone-950 font-semibold focus:ring-0 outline-none appearance-none cursor-pointer text-[15px]"
+                              onChange={(e) => {
+                                setBookingData(prev => ({ ...prev, time: e.target.value }));
+                                if (bookingError) setBookingError(null);
+                              }}
+                              className={`w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 font-medium focus:ring-0 outline-none appearance-none cursor-pointer text-[16px] ${bookingData.time ? 'text-stone-950' : 'text-stone-700/90'}`}
                             >
+                              <option value="" disabled className="text-stone-700/90 bg-white font-medium">
+                                {lang === 'fr' ? 'Choisir un créneau' : 'Select a time'}
+                              </option>
                               {timeSlots.map(slot => (
-                                <option key={slot} value={slot} className="text-stone-950 bg-white font-semibold">{slot}</option>
+                                <option key={slot} value={slot} className="text-stone-950 bg-white font-medium">{slot}</option>
                               ))}
                             </select>
                             <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-800">
@@ -2616,29 +2591,43 @@ export default function App() {
                             <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">
                               {lang === 'fr' ? 'Date & Heure de retour' : 'Return Date & Time'}
                             </label>
-                            <div className="flex flex-col border border-stone-300 rounded-xl bg-white overflow-hidden divide-y divide-stone-200">
+                            <div className="flex flex-col md:flex-row border border-stone-300 rounded-xl bg-white overflow-hidden divide-y md:divide-y-0 md:divide-x divide-stone-200">
                               {/* Return Date Selector */}
-                              <div className="relative flex items-center">
+                              <div className="relative flex items-center md:flex-1">
                                 <Calendar size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
                                 <input
-                                  type="date"
+                                  type={bookingData.returnDate ? "date" : "text"}
+                                  placeholder={lang === 'fr' ? 'Choisir une date de retour' : 'Select a return date'}
+                                  onFocus={(e) => (e.target.type = "date")}
+                                  onBlur={(e) => {
+                                    if (!bookingData.returnDate) e.target.type = "text";
+                                  }}
                                   value={bookingData.returnDate}
                                   min={bookingData.date || new Date().toISOString().split('T')[0]}
-                                  onChange={(e) => setBookingData(prev => ({ ...prev, returnDate: e.target.value }))}
+                                  onChange={(e) => {
+                                    setBookingData(prev => ({ ...prev, returnDate: e.target.value }));
+                                    if (bookingError) setBookingError(null);
+                                  }}
                                   required={bookingData.isReturnTrip}
-                                  className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 text-stone-950 font-semibold focus:ring-0 outline-none cursor-pointer text-[15px] appearance-none"
+                                  className={`w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-4 font-medium placeholder:text-stone-700/90 focus:ring-0 outline-none cursor-pointer text-[16px] appearance-none ${bookingData.returnDate ? 'text-stone-950' : 'text-stone-700/90'}`}
                                 />
                               </div>
                               {/* Return Time Selector */}
-                              <div className="relative flex items-center">
+                              <div className="relative flex items-center md:flex-1">
                                 <Clock size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
                                 <select 
                                   value={bookingData.returnTime}
-                                  onChange={(e) => setBookingData(prev => ({ ...prev, returnTime: e.target.value }))}
-                                  className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 text-stone-950 font-semibold focus:ring-0 outline-none appearance-none cursor-pointer text-[15px]"
+                                  onChange={(e) => {
+                                    setBookingData(prev => ({ ...prev, returnTime: e.target.value }));
+                                    if (bookingError) setBookingError(null);
+                                  }}
+                                  className={`w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 font-medium focus:ring-0 outline-none appearance-none cursor-pointer text-[16px] ${bookingData.returnTime ? 'text-stone-950' : 'text-stone-700/90'}`}
                                 >
+                                  <option value="" disabled className="text-stone-700/90 bg-white font-medium">
+                                    {lang === 'fr' ? 'Choisir un créneau de retour' : 'Select a return time'}
+                                  </option>
                                   {timeSlots.map(slot => (
-                                    <option key={slot} value={slot} className="text-stone-950 bg-white font-semibold">{slot}</option>
+                                    <option key={slot} value={slot} className="text-stone-950 bg-white font-medium">{slot}</option>
                                   ))}
                                 </select>
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-800">
@@ -2654,7 +2643,7 @@ export default function App() {
                         <button 
                           onClick={handleNextStep1}
                           disabled={loading}
-                          className="w-full bg-stone-900 text-white py-5 md:py-6 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 disabled:opacity-50"
+                          className="w-full bg-stone-900 text-white py-[19px] md:py-[21px] rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 disabled:opacity-50"
                         >
                           {loading ? (
                             <Loader2 className="animate-spin" size={20} />
@@ -2973,14 +2962,14 @@ export default function App() {
                           setStep(1);
                           setBookingData({
                             serviceType: 'transfer',
-                            serviceCategory: '',
+                            serviceCategory: 'transfer',
                             durationHours: 2,
                             pickup: '',
                             dropoff: '',
                             pickupCoords: null,
                             dropoffCoords: null,
-                            date: new Date().toISOString().split('T')[0],
-                            time: getCurrentTimeSlot(),
+                            date: '',
+                            time: '',
                             vehicle: 'business',
                             passengers: 1,
                             luggage: 1,
@@ -2997,8 +2986,8 @@ export default function App() {
                             returnDropoff: '',
                             returnPickupCoords: null,
                             returnDropoffCoords: null,
-                            returnDate: new Date().toISOString().split('T')[0],
-                            returnTime: getCurrentTimeSlot(),
+                            returnDate: '',
+                            returnTime: '',
                             distance: 0,
                             duration: 0
                           });
@@ -3055,12 +3044,6 @@ export default function App() {
                       </div>
 
                       <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5">
-                        <div className="col-span-2 space-y-0.5">
-                          <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('field_service_category')}</div>
-                          <div className="text-xs text-white/80 font-medium">
-                            {bookingData.serviceCategory ? t(`service_cat_${bookingData.serviceCategory}`) : '—'}
-                          </div>
-                        </div>
                         <div className="space-y-0.5">
                           <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('date') || 'Date'}</div>
                           <div className="text-xs text-white/80 font-medium">{bookingData.date || '—'}</div>

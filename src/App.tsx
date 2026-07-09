@@ -1983,14 +1983,14 @@ export default function App() {
 
             <div className="grid lg:grid-cols-2 gap-y-14 lg:gap-16 items-center">
               <div className="flex flex-col text-left text-base font-light text-stone-400 tracking-wide">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8 w-fit">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-7 md:mb-8 w-fit">
                   <Briefcase size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('corp_tag')}</span>
                 </div>
                 <h2 className="text-[38px] md:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">
                   {t('corp_subtitle')}
                 </h2>
-                <div className="h-1 w-12 bg-white/20 rounded-full mt-8 mb-10"></div>
+                <div className="h-1 w-12 bg-white/20 rounded-full mt-7 md:mt-8 mb-10"></div>
                 <p className="leading-relaxed text-[17px] font-normal text-stone-300 tracking-wide mb-8 max-w-xl">
                   {t('corp_desc')}
                 </p>

@@ -152,7 +152,12 @@ export default function App() {
   const [selectedTransfer, setSelectedTransfer] = useState<number | null>(null);
   const [isChatTooltipVisible, setIsChatTooltipVisible] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const bookingRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  }, []);
 
   // Fix Safari Mobile shift on refresh/reload by turning off browser scroll restoration and forcing top of page scroll
   useEffect(() => {
@@ -1553,7 +1558,7 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.1, ease: "easeOut" } }}
                 viewport={{ once: true }}
-                whileHover="hover"
+                whileHover={isTouchDevice ? undefined : "hover"}
                 whileTap="tap"
                 variants={{
                   hover: { y: -4, transition: { duration: 0.4, ease: "easeOut" } },
@@ -1593,7 +1598,7 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.2, ease: "easeOut" } }}
                 viewport={{ once: true }}
-                whileHover="hover"
+                whileHover={isTouchDevice ? undefined : "hover"}
                 whileTap="tap"
                 variants={{
                   hover: { y: -4, transition: { duration: 0.4, ease: "easeOut" } },
@@ -1625,7 +1630,7 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.3, ease: "easeOut" } }}
                 viewport={{ once: true }}
-                whileHover="hover"
+                whileHover={isTouchDevice ? undefined : "hover"}
                 whileTap="tap"
                 variants={{
                   hover: { y: -4, transition: { duration: 0.4, ease: "easeOut" } },
@@ -1657,7 +1662,7 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.4, ease: "easeOut" } }}
                 viewport={{ once: true }}
-                whileHover="hover"
+                whileHover={isTouchDevice ? undefined : "hover"}
                 whileTap="tap"
                 variants={{
                   hover: { y: -4, transition: { duration: 0.4, ease: "easeOut" } },
@@ -1689,7 +1694,7 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.5, ease: "easeOut" } }}
                 viewport={{ once: true }}
-                whileHover={{ y: -4, transition: { duration: 0.4, ease: "easeOut" } }}
+                whileHover={isTouchDevice ? undefined : { y: -4, transition: { duration: 0.4, ease: "easeOut" } }}
                 whileTap={{ scale: 0.96, transition: { duration: 0.4, ease: "easeOut" } }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full bg-stone-800/40 cursor-pointer"

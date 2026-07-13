@@ -1432,7 +1432,7 @@ export default function App() {
           </a>
         </motion.div>
         
-        <div className="mt-20 relative w-full max-w-md">
+        <div className="mt-20 relative w-[85%] sm:w-full max-w-md">
           <div className="border border-white/10 rounded-[2.5rem] p-8 pb-10 flex flex-col items-center justify-center bg-stone-950/30 backdrop-blur-sm shadow-2xl h-[180px] overflow-hidden relative">
             <AnimatePresence mode="wait">
               <motion.div 
@@ -1503,7 +1503,7 @@ export default function App() {
         {/* COUVERTURE EUROPE - REDESIGNED BENTO GRID */}
         <section 
           id="europe"
-          className="bg-stone-900 w-full py-32 px-6 border-t border-white/5 relative overflow-hidden"
+          className="bg-stone-900 w-full py-28 md:py-32 px-6 border-t border-white/5 relative overflow-hidden"
         >
           {/* Decorative background elements: Subtle map-inspired lines (always visible on mobile and desktop) */}
           <div className="absolute inset-0 pointer-events-none opacity-20">
@@ -1669,7 +1669,7 @@ export default function App() {
         </section>
 
         {/* Section Nos Services */}
-        <section id="services" className="bg-stone-925 w-full py-32 border-t border-white/5 relative overflow-hidden">
+        <section id="services" className="bg-stone-925 w-full py-28 md:py-32 border-t border-white/5 relative overflow-hidden">
           <div className="max-w-7xl mx-auto relative z-10 px-6">
             {/* Header with standard project SPEC - Split Layout */}
             <motion.div 
@@ -1830,7 +1830,7 @@ export default function App() {
         </section>
 
         {/* Section Transferts Populaires */}
-        <section id="transfers" className="bg-stone-900 w-full py-32 border-t border-white/5 relative overflow-hidden">
+        <section id="transfers" className="bg-stone-900 w-full py-28 md:py-32 border-t border-white/5 relative overflow-hidden">
           <div className="max-w-7xl mx-auto relative z-10 px-6">
              {/* Header with standard project SPEC */}
              <motion.div 
@@ -2058,7 +2058,7 @@ export default function App() {
       </section>
 
         {/* Flotte */}
-        <div id="fleet" className="bg-stone-925 w-full py-32 flex flex-col items-center border-t border-white/5 relative overflow-hidden">
+        <div id="fleet" className="bg-stone-925 w-full py-28 md:py-32 flex flex-col items-center border-t border-white/5 relative overflow-hidden">
           {/* Subtle background lift */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none hidden md:block"></div>
           
@@ -2129,7 +2129,7 @@ export default function App() {
         {/* GALERIE */}
         <section 
           id="gallery" 
-          className="bg-stone-900 w-full py-32 border-t border-white/5 relative overflow-hidden"
+          className="bg-stone-900 w-full py-28 md:py-32 border-t border-white/5 relative overflow-hidden"
         >
           {/* Subtle background lift */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none hidden md:block"></div>
@@ -2211,7 +2211,7 @@ export default function App() {
         <section 
           id="reviews"
           ref={reviewsRef}
-          className="bg-stone-900 w-full py-32 px-6 border-t border-white/5 relative overflow-hidden"
+          className="bg-stone-900 w-full py-28 md:py-32 px-6 border-t border-white/5 relative overflow-hidden"
         >
           <div 
             ref={el => { if (el) revealRefs.current[2] = el; }}
@@ -2323,7 +2323,7 @@ export default function App() {
         </section>
 
         {/* Booking / Estimate Form */}
-        <section id="booking" className="bg-stone-925 w-full py-32 flex flex-col items-center border-t border-white/5 relative overflow-hidden">
+        <section id="booking" className="bg-stone-925 w-full py-28 md:py-32 flex flex-col items-center border-t border-white/5 relative overflow-hidden">
           {/* Subtle background lift */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none hidden md:block"></div>
           
@@ -3090,7 +3090,7 @@ export default function App() {
         {/* FAQ with custom smooth accordion */}
         <section 
           id="faq" 
-          className="bg-stone-925 w-full py-32 px-6 border-t border-white/5 relative overflow-hidden"
+          className="bg-stone-925 w-full py-28 md:py-32 px-6 border-t border-white/5 relative overflow-hidden"
         >
           {/* Subtle background lift */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/[0.02] to-transparent pointer-events-none"></div>

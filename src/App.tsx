@@ -1398,7 +1398,7 @@ export default function App() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[1.25rem] sm:rounded-full px-5 py-2.5 sm:py-2 text-[13px] font-normal tracking-wide text-white/80 mb-10 max-w-[calc(100vw-48px)] sm:max-w-2xl shadow-xl uppercase text-center flex items-center justify-center"
+          className="bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-5 py-2.5 sm:py-2 text-[13px] font-normal tracking-wide text-white/80 mb-10 max-w-[calc(100vw-48px)] sm:max-w-2xl shadow-xl uppercase text-center flex items-center justify-center"
         >
           {t('hero_badge')}
         </motion.div>

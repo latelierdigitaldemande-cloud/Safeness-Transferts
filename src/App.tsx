@@ -1538,7 +1538,7 @@ export default function App() {
                 </h2>
               </div>
               <div className="lg:col-span-6 lg:border-l lg:border-white/10 lg:pl-12">
-                <p className="text-stone-300/90 text-[15px] md:text-[17px] font-normal leading-relaxed max-w-lg mb-0 italic">
+                <p className="text-stone-300/90 text-lg font-normal leading-relaxed max-w-lg mb-0 italic">
                   {t('europe_desc')}
                 </p>
               </div>
@@ -1690,7 +1690,7 @@ export default function App() {
                 <div className="h-1 w-12 bg-white/20 rounded-full mt-10"></div>
               </div>
               <div className="lg:col-span-6 lg:border-l lg:border-white/10 lg:pl-12 flex flex-col items-start gap-8">
-                <p className="text-stone-300/90 text-[15px] md:text-[17px] font-normal leading-relaxed mb-0 italic">
+                <p className="text-stone-300/90 text-lg font-normal leading-relaxed mb-0 italic">
                   {t('services_desc')}
                 </p>
               </div>
@@ -3222,9 +3222,9 @@ export default function App() {
             href="https://wa.me/33782274920" 
             target="_blank"
             rel="noreferrer"
-            className="w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(37,211,102,0.3)] text-white hover:scale-110 transition-transform"
+            className="w-[68px] h-[68px] bg-[#25D366] rounded-full flex items-center justify-center shadow-[0_0_35px_rgba(37,211,102,0.4)] text-white hover:scale-110 transition-transform"
           >
-            <iconify-icon icon="ic:baseline-whatsapp" width="28"></iconify-icon>
+            <iconify-icon icon="ic:baseline-whatsapp" width="34"></iconify-icon>
           </a>
         </div>
       </div>

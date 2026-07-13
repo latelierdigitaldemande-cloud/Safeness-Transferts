@@ -1551,23 +1551,23 @@ export default function App() {
               {/* PARIS: Main Hub - Large Bento Item */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.1, ease: "easeOut" } }}
                 viewport={{ once: true }}
                 whileHover="hover"
                 whileTap="tap"
                 variants={{
-                  hover: { y: -4, transition: { duration: 0.8, ease: "easeOut" } },
-                  tap: { scale: 0.98, transition: { duration: 0.8, ease: "easeOut" } }
+                  hover: { y: -4, transition: { duration: 0.4, ease: "easeOut" } },
+                  tap: { scale: 0.96, transition: { duration: 0.4, ease: "easeOut" } }
                 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="lg:col-span-2 lg:row-span-2 group relative border border-white/10 rounded-[2.4rem] overflow-hidden cursor-pointer"
               >
                 <motion.img 
                   variants={{
-                    hover: { scale: 1.05, transition: { duration: 1.0, ease: "easeOut" } },
-                    tap: { scale: 1.05, transition: { duration: 1.0, ease: "easeOut" } }
+                    hover: { scale: 1.05, transition: { duration: 0.6, ease: "easeOut" } },
+                    tap: { scale: 1.05, transition: { duration: 0.6, ease: "easeOut" } }
                   }}
-                  transition={{ duration: 1.0 }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073&auto=format&fit=crop" 
                   alt="Paris" 
                   className="absolute inset-0 w-full h-full object-cover opacity-90 md:opacity-80 group-hover:opacity-95"
@@ -1591,23 +1591,23 @@ export default function App() {
               {/* MUNICH */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.2, ease: "easeOut" } }}
                 viewport={{ once: true }}
                 whileHover="hover"
                 whileTap="tap"
                 variants={{
-                  hover: { y: -4, transition: { duration: 0.8, ease: "easeOut" } },
-                  tap: { scale: 0.98, transition: { duration: 0.8, ease: "easeOut" } }
+                  hover: { y: -4, transition: { duration: 0.4, ease: "easeOut" } },
+                  tap: { scale: 0.96, transition: { duration: 0.4, ease: "easeOut" } }
                 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full cursor-pointer"
               >
                 <motion.img 
                   variants={{
-                    hover: { scale: 1.05, transition: { duration: 1.0, ease: "easeOut" } },
-                    tap: { scale: 1.05, transition: { duration: 1.0, ease: "easeOut" } }
+                    hover: { scale: 1.05, transition: { duration: 0.6, ease: "easeOut" } },
+                    tap: { scale: 1.05, transition: { duration: 0.6, ease: "easeOut" } }
                   }}
-                  transition={{ duration: 1.0 }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   src="https://images.unsplash.com/photo-1595867818082-083862f3d630?q=80&w=2070&auto=format&fit=crop" 
                   alt="Munich" 
                   className="absolute inset-0 w-full h-full object-cover opacity-90 md:opacity-80 group-hover:opacity-95"
@@ -1623,23 +1623,23 @@ export default function App() {
               {/* MILAN */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.3, ease: "easeOut" } }}
                 viewport={{ once: true }}
                 whileHover="hover"
                 whileTap="tap"
                 variants={{
-                  hover: { y: -4, transition: { duration: 0.8, ease: "easeOut" } },
-                  tap: { scale: 0.98, transition: { duration: 0.8, ease: "easeOut" } }
+                  hover: { y: -4, transition: { duration: 0.4, ease: "easeOut" } },
+                  tap: { scale: 0.96, transition: { duration: 0.4, ease: "easeOut" } }
                 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full cursor-pointer"
               >
                 <motion.img 
                   variants={{
-                    hover: { scale: 1.05, transition: { duration: 1.0, ease: "easeOut" } },
-                    tap: { scale: 1.05, transition: { duration: 1.0, ease: "easeOut" } }
+                    hover: { scale: 1.05, transition: { duration: 0.6, ease: "easeOut" } },
+                    tap: { scale: 1.05, transition: { duration: 0.6, ease: "easeOut" } }
                   }}
-                  transition={{ duration: 1.0 }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   src="https://images.unsplash.com/photo-1610016302534-6f67f1c968d8?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&dl=ouael-ben-salah-0xe2FGo7Vc0-unsplash.jpg" 
                   alt="Milan" 
                   className="absolute inset-0 w-full h-full object-cover opacity-90 md:opacity-80 group-hover:opacity-95"
@@ -1655,23 +1655,23 @@ export default function App() {
               {/* BERLIN */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.4, ease: "easeOut" } }}
                 viewport={{ once: true }}
                 whileHover="hover"
                 whileTap="tap"
                 variants={{
-                  hover: { y: -4, transition: { duration: 0.8, ease: "easeOut" } },
-                  tap: { scale: 0.98, transition: { duration: 0.8, ease: "easeOut" } }
+                  hover: { y: -4, transition: { duration: 0.4, ease: "easeOut" } },
+                  tap: { scale: 0.96, transition: { duration: 0.4, ease: "easeOut" } }
                 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full cursor-pointer"
               >
                 <motion.img 
                   variants={{
-                    hover: { scale: 1.05, transition: { duration: 1.0, ease: "easeOut" } },
-                    tap: { scale: 1.05, transition: { duration: 1.0, ease: "easeOut" } }
+                    hover: { scale: 1.05, transition: { duration: 0.6, ease: "easeOut" } },
+                    tap: { scale: 1.05, transition: { duration: 0.6, ease: "easeOut" } }
                   }}
-                  transition={{ duration: 1.0 }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   src="https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070&auto=format&fit=crop" 
                   alt="Berlin" 
                   className="absolute inset-0 w-full h-full object-cover opacity-90 md:opacity-80 group-hover:opacity-95"
@@ -1687,11 +1687,11 @@ export default function App() {
               {/* FRANCE / AMSTERDAM Hybrid Duo */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.5, ease: "easeOut" } }}
                 viewport={{ once: true }}
-                whileHover={{ y: -4, transition: { duration: 0.8, ease: "easeOut" } }}
-                whileTap={{ scale: 0.98, transition: { duration: 0.8, ease: "easeOut" } }}
-                transition={{ duration: 0.8, delay: 0.5 }}
+                whileHover={{ y: -4, transition: { duration: 0.4, ease: "easeOut" } }}
+                whileTap={{ scale: 0.96, transition: { duration: 0.4, ease: "easeOut" } }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full bg-stone-800/40 cursor-pointer"
               >
                 <div className="absolute inset-0 p-8 flex flex-col justify-between">

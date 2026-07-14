@@ -1495,7 +1495,7 @@ export default function App() {
         </svg>
 
         {/* Intro & Trust */}
-        <div className="bg-stone-900 w-full pt-8 pb-32 flex flex-col items-center text-center overflow-hidden">
+        <div className="bg-stone-900 w-full pt-8 pb-16 flex flex-col items-center text-center overflow-hidden">
           <div className="px-6 mb-24 text-base font-normal text-stone-400 tracking-wide">
             <p className="uppercase tracking-[0.15em] mb-1">Est. 2018,</p>
             <h3 className="text-4xl md:text-5xl font-semibold tracking-tight uppercase text-white/90">Excellence</h3>

@@ -153,11 +153,24 @@ export default function App() {
   const [isChatTooltipVisible, setIsChatTooltipVisible] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [activeBentoCard, setActiveBentoCard] = useState<string | null>(null);
   const bookingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
   }, []);
+
+  useEffect(() => {
+    if (!isTouchDevice) return;
+    const handleTouchOutside = (e: TouchEvent) => {
+      const container = document.getElementById('bento-grid-container');
+      if (container && !container.contains(e.target as Node)) {
+        setActiveBentoCard(null);
+      }
+    };
+    window.addEventListener('touchstart', handleTouchOutside);
+    return () => window.removeEventListener('touchstart', handleTouchOutside);
+  }, [isTouchDevice]);
 
   // Fix Safari Mobile shift on refresh/reload by turning off browser scroll restoration and forcing top of page scroll
   useEffect(() => {
@@ -1551,7 +1564,7 @@ export default function App() {
               </div>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-2 gap-4 h-auto lg:h-[550px]">
+            <div id="bento-grid-container" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-2 gap-4 h-auto lg:h-[550px]">
               
               {/* PARIS: Main Hub - Large Bento Item */}
               <motion.div 
@@ -1559,10 +1572,13 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.1, ease: "easeOut" } }}
                 viewport={{ once: true }}
                 whileHover={isTouchDevice ? undefined : "hover"}
-                whileTap="tap"
+                whileTap={isTouchDevice ? undefined : "tap"}
+                onTouchStart={() => setActiveBentoCard('paris')}
+                onClick={() => setActiveBentoCard('paris')}
                 className="lg:col-span-2 lg:row-span-2 group relative border border-white/10 rounded-[2.4rem] overflow-hidden cursor-pointer"
               >
                 <motion.img 
+                  animate={activeBentoCard === 'paris' ? "hover" : "initial"}
                   variants={{
                     hover: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } },
                     tap: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } }
@@ -1594,10 +1610,13 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.2, ease: "easeOut" } }}
                 viewport={{ once: true }}
                 whileHover={isTouchDevice ? undefined : "hover"}
-                whileTap="tap"
+                whileTap={isTouchDevice ? undefined : "tap"}
+                onTouchStart={() => setActiveBentoCard('munich')}
+                onClick={() => setActiveBentoCard('munich')}
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full cursor-pointer"
               >
                 <motion.img 
+                  animate={activeBentoCard === 'munich' ? "hover" : "initial"}
                   variants={{
                     hover: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } },
                     tap: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } }
@@ -1621,10 +1640,13 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.3, ease: "easeOut" } }}
                 viewport={{ once: true }}
                 whileHover={isTouchDevice ? undefined : "hover"}
-                whileTap="tap"
+                whileTap={isTouchDevice ? undefined : "tap"}
+                onTouchStart={() => setActiveBentoCard('milan')}
+                onClick={() => setActiveBentoCard('milan')}
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full cursor-pointer"
               >
                 <motion.img 
+                  animate={activeBentoCard === 'milan' ? "hover" : "initial"}
                   variants={{
                     hover: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } },
                     tap: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } }
@@ -1648,10 +1670,13 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.4, ease: "easeOut" } }}
                 viewport={{ once: true }}
                 whileHover={isTouchDevice ? undefined : "hover"}
-                whileTap="tap"
+                whileTap={isTouchDevice ? undefined : "tap"}
+                onTouchStart={() => setActiveBentoCard('berlin')}
+                onClick={() => setActiveBentoCard('berlin')}
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full cursor-pointer"
               >
                 <motion.img 
+                  animate={activeBentoCard === 'berlin' ? "hover" : "initial"}
                   variants={{
                     hover: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } },
                     tap: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } }

@@ -1564,10 +1564,10 @@ export default function App() {
               >
                 <motion.img 
                   variants={{
-                    hover: { scale: 1.12, transition: { duration: 3.0, ease: [0.16, 1, 0.3, 1] } },
-                    tap: { scale: 1.12, transition: { duration: 3.0, ease: [0.16, 1, 0.3, 1] } }
+                    hover: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } },
+                    tap: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } }
                   }}
-                  transition={{ duration: 3.0, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 6.0, ease: [0.16, 1, 0.3, 1] }}
                   src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073&auto=format&fit=crop" 
                   alt="Paris" 
                   className="absolute inset-0 w-full h-full object-cover opacity-90 md:opacity-80 group-hover:opacity-95"
@@ -1599,10 +1599,10 @@ export default function App() {
               >
                 <motion.img 
                   variants={{
-                    hover: { scale: 1.12, transition: { duration: 3.0, ease: [0.16, 1, 0.3, 1] } },
-                    tap: { scale: 1.12, transition: { duration: 3.0, ease: [0.16, 1, 0.3, 1] } }
+                    hover: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } },
+                    tap: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } }
                   }}
-                  transition={{ duration: 3.0, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 6.0, ease: [0.16, 1, 0.3, 1] }}
                   src="https://images.unsplash.com/photo-1595867818082-083862f3d630?q=80&w=2070&auto=format&fit=crop" 
                   alt="Munich" 
                   className="absolute inset-0 w-full h-full object-cover opacity-90 md:opacity-80 group-hover:opacity-95"
@@ -1626,10 +1626,10 @@ export default function App() {
               >
                 <motion.img 
                   variants={{
-                    hover: { scale: 1.12, transition: { duration: 3.0, ease: [0.16, 1, 0.3, 1] } },
-                    tap: { scale: 1.12, transition: { duration: 3.0, ease: [0.16, 1, 0.3, 1] } }
+                    hover: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } },
+                    tap: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } }
                   }}
-                  transition={{ duration: 3.0, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 6.0, ease: [0.16, 1, 0.3, 1] }}
                   src="https://images.unsplash.com/photo-1610016302534-6f67f1c968d8?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&dl=ouael-ben-salah-0xe2FGo7Vc0-unsplash.jpg" 
                   alt="Milan" 
                   className="absolute inset-0 w-full h-full object-cover opacity-90 md:opacity-80 group-hover:opacity-95"
@@ -1653,10 +1653,10 @@ export default function App() {
               >
                 <motion.img 
                   variants={{
-                    hover: { scale: 1.12, transition: { duration: 3.0, ease: [0.16, 1, 0.3, 1] } },
-                    tap: { scale: 1.12, transition: { duration: 3.0, ease: [0.16, 1, 0.3, 1] } }
+                    hover: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } },
+                    tap: { scale: 1.25, transition: { duration: 6.0, ease: [0.16, 1, 0.3, 1] } }
                   }}
-                  transition={{ duration: 3.0, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 6.0, ease: [0.16, 1, 0.3, 1] }}
                   src="https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070&auto=format&fit=crop" 
                   alt="Berlin" 
                   className="absolute inset-0 w-full h-full object-cover opacity-90 md:opacity-80 group-hover:opacity-95"

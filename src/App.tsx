@@ -1455,7 +1455,7 @@ export default function App() {
           </a>
         </motion.div>
         
-        <div className="mt-20 relative w-[92%] sm:w-full max-w-md">
+        <div className="mt-20 relative w-[96%] sm:w-full max-w-md">
           <div className="border border-white/10 rounded-[2.5rem] p-8 pb-10 flex flex-col items-center justify-center bg-stone-950/30 backdrop-blur-sm shadow-2xl h-[180px] overflow-hidden relative">
             <AnimatePresence mode="wait">
               <motion.div 

@@ -1583,7 +1583,7 @@ export default function App() {
                 className="lg:col-span-2 lg:row-span-2 group relative border border-white/10 rounded-[2.4rem] overflow-hidden cursor-pointer"
               >
                 <motion.img 
-                  animate={activeBentoCard === 'paris' ? "hover" : "initial"}
+                  animate={isTouchDevice ? (activeBentoCard === 'paris' ? "hover" : "initial") : undefined}
                   variants={{
                     hover: { scale: 1.12, transition: { duration: 3.2, ease: [0.16, 1, 0.3, 1] } },
                     tap: { scale: 1.12, transition: { duration: 3.2, ease: [0.16, 1, 0.3, 1] } }
@@ -1621,7 +1621,7 @@ export default function App() {
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full cursor-pointer"
               >
                 <motion.img 
-                  animate={activeBentoCard === 'munich' ? "hover" : "initial"}
+                  animate={isTouchDevice ? (activeBentoCard === 'munich' ? "hover" : "initial") : undefined}
                   variants={{
                     hover: { scale: 1.12, transition: { duration: 3.2, ease: [0.16, 1, 0.3, 1] } },
                     tap: { scale: 1.12, transition: { duration: 3.2, ease: [0.16, 1, 0.3, 1] } }
@@ -1651,7 +1651,7 @@ export default function App() {
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full cursor-pointer"
               >
                 <motion.img 
-                  animate={activeBentoCard === 'milan' ? "hover" : "initial"}
+                  animate={isTouchDevice ? (activeBentoCard === 'milan' ? "hover" : "initial") : undefined}
                   variants={{
                     hover: { scale: 1.12, transition: { duration: 3.2, ease: [0.16, 1, 0.3, 1] } },
                     tap: { scale: 1.12, transition: { duration: 3.2, ease: [0.16, 1, 0.3, 1] } }
@@ -1681,7 +1681,7 @@ export default function App() {
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full cursor-pointer"
               >
                 <motion.img 
-                  animate={activeBentoCard === 'berlin' ? "hover" : "initial"}
+                  animate={isTouchDevice ? (activeBentoCard === 'berlin' ? "hover" : "initial") : undefined}
                   variants={{
                     hover: { scale: 1.12, transition: { duration: 3.2, ease: [0.16, 1, 0.3, 1] } },
                     tap: { scale: 1.12, transition: { duration: 3.2, ease: [0.16, 1, 0.3, 1] } }
@@ -1922,9 +1922,9 @@ export default function App() {
                 { key: 'route_cdg', price: '120€', time: '45 min', icon: <Navigation size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/603b4374-0730-4377-a001-ab58e60cb33d_l6ue2k' },
                 { key: 'route_orly', price: '120€', time: '35 min', icon: <MapPin size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp' },
                 { key: 'route_disney', price: '120€', time: '50 min', icon: <Sparkles size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/b04fc1f4-3d8d-4e87-89a5-7d9dd8d174ae_jw5xtm' },
-                { key: 'route_versailles', price: '90€', time: '40 min', icon: <Building2 size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp' },
-                { key: 'route_giverny', price: '250€', time: '75 min', icon: <Palette size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp', lgOnly: true },
-                { key: 'route_beauvais', price: '140€', time: '80 min', icon: <Plane size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp', lgOnly: true },
+                { key: 'route_versailles', price: '120€', time: '40 min', icon: <Building2 size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp' },
+                { key: 'route_giverny', price: '120€', time: '75 min', icon: <Palette size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp', lgOnly: true },
+                { key: 'route_beauvais', price: '120€', time: '80 min', icon: <Plane size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp', lgOnly: true },
               ].map((item: any, i) => {
                 return (
                   <motion.div 
@@ -1938,10 +1938,10 @@ export default function App() {
                     <div
                       onTouchStart={() => setActiveTransferCard(i)}
                       onClick={() => setActiveTransferCard(i)}
-                      className={`group relative border rounded-[2.5rem] transition-all duration-500 overflow-hidden h-full bg-stone-900 shadow-2xl flex flex-col ${
+                      className={`group relative border rounded-[2.5rem] transition-all duration-[1200ms] ease-[0.16,1,0.3,1] overflow-hidden h-full bg-stone-900 shadow-2xl flex flex-col ${
                         isTouchDevice && activeTransferCard === i 
                           ? 'border-white/35 scale-[1.015] shadow-[0_0_25px_rgba(255,255,255,0.06),_0_25px_50px_-12px_rgba(0,0,0,0.5)]' 
-                          : 'border-white/10 hover:border-white/20'
+                          : 'border-white/10 hover:border-white/20 hover:scale-[1.008]'
                       }`}
                     >
                       {/* Background Image with Overlay */}
@@ -1949,7 +1949,7 @@ export default function App() {
                         <img 
                           src={item.image} 
                           alt={t(item.key)}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 md:opacity-80 group-hover:opacity-95"
+                          className="w-full h-full object-cover transition-all duration-[2500ms] ease-[0.16,1,0.3,1] group-hover:scale-106 opacity-90 md:opacity-80 group-hover:opacity-95"
                           referrerPolicy="no-referrer"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 md:from-stone-950/95 via-stone-950/20 to-transparent"></div>
@@ -1990,7 +1990,7 @@ export default function App() {
                                   setStep(1);
                                   window.scrollTo({ top: 0, behavior: 'smooth' });
                                 }}
-                                className="w-12 h-12 rounded-full bg-white/10 border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-stone-900 transition-all shadow-lg active:scale-95"
+                                className="w-12 h-12 rounded-full bg-white/10 border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-stone-900 transition-all duration-700 ease-out shadow-lg active:scale-95"
                               >
                                 <ArrowRight size={20} />
                               </button>

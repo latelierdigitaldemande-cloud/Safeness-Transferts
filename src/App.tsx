@@ -1933,63 +1933,68 @@ export default function App() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-10px" }}
                     transition={{ duration: 0.8, delay: i * 0.15 }}
-                    onTouchStart={() => setActiveTransferCard(i)}
-                    onClick={() => setActiveTransferCard(i)}
-                    className={`group relative border rounded-[2.5rem] transition-all duration-500 overflow-hidden h-[320px] bg-stone-900 shadow-2xl ${item.lgOnly ? 'hidden lg:flex' : 'flex'} flex-col ${
-                      isTouchDevice && activeTransferCard === i 
-                        ? 'border-white/35 scale-[1.015] shadow-[0_0_25px_rgba(255,255,255,0.06),_0_25px_50px_-12px_rgba(0,0,0,0.5)]' 
-                        : 'border-white/10 hover:border-white/20'
-                    }`}
+                    className={`${item.lgOnly ? 'hidden lg:block' : 'block'} w-full h-[320px]`}
                   >
-                    {/* Background Image with Overlay */}
-                    <div className="absolute inset-0 z-0">
-                      <img 
-                        src={item.image} 
-                        alt={t(item.key)}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 md:opacity-80 group-hover:opacity-95"
-                        referrerPolicy="no-referrer"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 md:from-stone-950/95 via-stone-950/20 to-transparent"></div>
-                    </div>
-
-                    <div className="p-8 relative z-10 flex flex-col h-full">
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex flex-col gap-4 w-full">
-                          <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-white text-stone-900 shadow-xl shrink-0">
-                            {item.icon}
-                          </div>
-                          <div className="min-w-0">
-                            <h4 className="text-lg md:text-xl font-bold uppercase tracking-tight text-white leading-tight">
-                              {t(item.key)}
-                            </h4>
-                          </div>
-                        </div>
+                    <div
+                      onTouchStart={() => setActiveTransferCard(i)}
+                      onClick={() => setActiveTransferCard(i)}
+                      className={`group relative border rounded-[2.5rem] transition-all duration-500 overflow-hidden h-full bg-stone-900 shadow-2xl flex flex-col ${
+                        isTouchDevice && activeTransferCard === i 
+                          ? 'border-white/35 scale-[1.015] shadow-[0_0_25px_rgba(255,255,255,0.06),_0_25px_50px_-12px_rgba(0,0,0,0.5)]' 
+                          : 'border-white/10 hover:border-white/20'
+                      }`}
+                    >
+                      {/* Background Image with Overlay */}
+                      <div className="absolute inset-0 z-0">
+                        <img 
+                          src={item.image} 
+                          alt={t(item.key)}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 md:opacity-80 group-hover:opacity-95"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 md:from-stone-950/95 via-stone-950/20 to-transparent"></div>
                       </div>
 
-                      {/* Content always visible */}
-                      <div className="mt-auto space-y-5">
-                        <div className="border-t border-white/10 pt-5">
-                          <div className="flex items-center text-white/60 text-[9px] font-bold uppercase tracking-[0.2em] mb-5">
-                            <div className="flex items-center gap-2">
-                              <Clock size={14} className="text-white/40" />
-                              <span>{item.time}</span>
+                      <div className="p-8 relative z-10 flex flex-col h-full">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex flex-col gap-4 w-full">
+                            <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-white text-stone-900 shadow-xl shrink-0">
+                              {item.icon}
+                            </div>
+                            <div className="min-w-0">
+                              <h4 className="text-lg md:text-xl font-bold uppercase tracking-tight text-white leading-tight">
+                                {t(item.key)}
+                              </h4>
                             </div>
                           </div>
-                          
-                          <div className="flex items-center justify-between">
-                            <div className="text-left">
-                              <span className="block text-[8px] uppercase tracking-widest text-white/30 mb-1">{t('total')}</span>
-                              <span className="text-3xl font-bold text-white tracking-tighter">{item.price}</span>
+                        </div>
+
+                        {/* Content always visible */}
+                        <div className="mt-auto space-y-5">
+                          <div className="border-t border-white/10 pt-5">
+                            <div className="flex items-center text-white/60 text-[9px] font-bold uppercase tracking-[0.2em] mb-5">
+                              <div className="flex items-center gap-2">
+                                <Clock size={14} className="text-white/40" />
+                                <span>{item.time}</span>
+                              </div>
                             </div>
-                            <button 
-                              onClick={() => {
-                                setStep(1);
-                                window.scrollTo({ top: 0, behavior: 'smooth' });
-                              }}
-                              className="w-12 h-12 rounded-full bg-white/10 border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-stone-900 transition-all shadow-lg active:scale-95"
-                            >
-                              <ArrowRight size={20} />
-                            </button>
+                            
+                            <div className="flex items-center justify-between">
+                              <div className="text-left">
+                                <span className="block text-[8px] uppercase tracking-widest text-white/30 mb-1">{t('total')}</span>
+                                <span className="text-3xl font-bold text-white tracking-tighter">{item.price}</span>
+                              </div>
+                              <button 
+                                onClick={(e) => {
+                                  e.stopPropagation(); // Avoid triggering onTouchStart/onClick on parent
+                                  setStep(1);
+                                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                                }}
+                                className="w-12 h-12 rounded-full bg-white/10 border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-stone-900 transition-all shadow-lg active:scale-95"
+                              >
+                                <ArrowRight size={20} />
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>

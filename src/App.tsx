@@ -2304,14 +2304,14 @@ export default function App() {
               transition={{ duration: 0.8 }}
               className="flex flex-col items-center mb-12 text-center"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-7 md:mb-8">
                 <MessageSquare size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('reviews_tag')}</span>
               </div>
               <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">{t('reviews_title')}</h2>
-              <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
+              <div className="h-1 w-12 bg-white/20 rounded-full mt-7 md:mt-8"></div>
               
-              <div className="flex items-center gap-4 mt-12 bg-white/[0.03] border border-white/10 px-6 py-3 rounded-full max-w-max mx-auto backdrop-blur-md shadow-lg shadow-black/10">
+              <div className="flex items-center gap-4 mt-10 md:mt-12 bg-white/[0.03] border border-white/10 px-6 py-3 rounded-full max-w-max mx-auto backdrop-blur-md shadow-lg shadow-black/10">
                 {/* Brand Logo */}
                 <div className="flex items-center justify-center">
                   <iconify-icon icon="logos:google-icon" width="22"></iconify-icon>
@@ -2414,12 +2414,12 @@ export default function App() {
             transition={{ duration: 0.8 }}
             className="flex flex-col items-center mb-16 text-center px-3 md:px-6 relative z-10"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-7 md:mb-8">
               <Calendar size={12} className="text-white/60" />
               <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">Booking</span>
             </div>
             <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">{t('title')}</h2>
-            <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
+            <div className="h-1 w-12 bg-white/20 rounded-full mt-7 md:mt-8"></div>
           </motion.div>
           
           <div ref={bookingRef} className="w-full max-w-6xl mx-auto px-4 md:px-6 relative z-10">
@@ -3186,12 +3186,12 @@ export default function App() {
               transition={{ duration: 0.8 }}
               className="flex flex-col items-center mb-12 text-center"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-7 md:mb-8">
                 <Info size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">FAQ</span>
               </div>
               <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">{t('faq_title')}</h2>
-              <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
+              <div className="h-1 w-12 bg-white/20 rounded-full mt-7 md:mt-8"></div>
             </motion.div>
             <div className="flex flex-col">
               {[

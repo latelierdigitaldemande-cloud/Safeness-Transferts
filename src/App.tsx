@@ -1558,7 +1558,7 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.1, ease: "easeOut" } }}
                 viewport={{ once: true }}
-                whileHover="hover"
+                whileHover={isTouchDevice ? undefined : "hover"}
                 whileTap="tap"
                 className="lg:col-span-2 lg:row-span-2 group relative border border-white/10 rounded-[2.4rem] overflow-hidden cursor-pointer"
               >
@@ -1593,7 +1593,7 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.2, ease: "easeOut" } }}
                 viewport={{ once: true }}
-                whileHover="hover"
+                whileHover={isTouchDevice ? undefined : "hover"}
                 whileTap="tap"
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full cursor-pointer"
               >
@@ -1620,7 +1620,7 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.3, ease: "easeOut" } }}
                 viewport={{ once: true }}
-                whileHover="hover"
+                whileHover={isTouchDevice ? undefined : "hover"}
                 whileTap="tap"
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full cursor-pointer"
               >
@@ -1647,7 +1647,7 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.4, ease: "easeOut" } }}
                 viewport={{ once: true }}
-                whileHover="hover"
+                whileHover={isTouchDevice ? undefined : "hover"}
                 whileTap="tap"
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full cursor-pointer"
               >

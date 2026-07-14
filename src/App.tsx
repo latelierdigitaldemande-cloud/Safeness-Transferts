@@ -1554,10 +1554,10 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="grid lg:grid-cols-12 gap-12 mb-12 items-end"
+              className="grid lg:grid-cols-12 gap-10 lg:gap-12 mb-12 items-end"
             >
               <div className="lg:col-span-6">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-7 md:mb-8">
                   <Globe size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('europe_tag')}</span>
                 </div>
@@ -1565,7 +1565,7 @@ export default function App() {
                   {t('europe_title')} <br/> 
                   <span className="font-bold">{t('europe_subtitle')}</span>
                 </h2>
-                <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
+                <div className="h-1 w-12 bg-white/20 rounded-full mt-7 md:mt-8"></div>
               </div>
 
               <div className="lg:col-span-6 lg:border-l lg:border-white/10 lg:pl-12">
@@ -1746,17 +1746,17 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="grid lg:grid-cols-12 gap-12 items-end"
+              className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-end"
             >
               <div className="lg:col-span-6">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-7 md:mb-8">
                   <Briefcase size={12} className="text-white/60" />
                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('services_tag')}</span>
                 </div>
                 <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">
                   {t('services_title')}
                 </h2>
-                <div className="h-1 w-12 bg-white/20 rounded-full mt-10"></div>
+                <div className="h-1 w-12 bg-white/20 rounded-full mt-7 md:mt-10"></div>
               </div>
               <div className="lg:col-span-6 lg:border-l lg:border-white/10 lg:pl-12 flex flex-col items-start gap-8">
                 <p className="text-stone-300/90 text-lg font-normal leading-relaxed mb-0 italic">
@@ -1767,7 +1767,7 @@ export default function App() {
           </div>
 
           {/* Horizontal Scroll Layout - Version Full-Width "Hors Cadre" */}
-          <div className="relative mt-20 overflow-hidden">
+          <div className="relative mt-12 md:mt-20 overflow-hidden">
             {/* Native Horizontal Scroll Container with Edge Bleed */}
             <div 
               ref={servicesScrollRef}
@@ -1909,15 +1909,15 @@ export default function App() {
               transition={{ duration: 0.8 }}
               className="flex flex-col items-center mb-16 text-center"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-7 md:mb-8">
                 <Tag size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('transfers_tag')}</span>
               </div>
               <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm text-center leading-[1.25] md:leading-snug">
                 {t('transfers_title')}
               </h2>
-              <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
-              <p className="text-stone-300/90 text-lg font-normal leading-relaxed max-w-3xl mt-12 text-center italic">
+              <div className="h-1 w-12 bg-white/20 rounded-full mt-7 md:mt-8"></div>
+              <p className="text-stone-300/90 text-lg font-normal leading-relaxed max-w-3xl mt-10 md:mt-12 text-center italic">
                 {t('transfers_desc')}
               </p>
             </motion.div>
@@ -2151,14 +2151,14 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="flex flex-col items-center mb-24 text-center"
+              className="flex flex-col items-center mb-12 md:mb-24 text-center"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-7 md:mb-8">
                 <Navigation size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('fleet_tag')}</span>
               </div>
               <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">{t('fleet_title')}</h2>
-              <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
+              <div className="h-1 w-12 bg-white/20 rounded-full mt-7 md:mt-8"></div>
             </motion.div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 text-base font-light text-stone-400 tracking-wide">
               {[
@@ -2225,13 +2225,13 @@ export default function App() {
               transition={{ duration: 0.8 }}
               className="max-w-6xl mx-auto px-6 flex flex-col items-center mb-16 text-center"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-7 md:mb-8">
                 <Star size={12} className="text-white/60" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/90">{t('vision_tag')}</span>
               </div>
               <h2 className="text-[38px] md:text-4xl lg:text-5xl font-bold tracking-[0.02em] uppercase text-white drop-shadow-sm leading-[1.25] md:leading-snug">{t('vision_title')}</h2>
-              <div className="h-1 w-12 bg-white/20 rounded-full mt-8"></div>
-              <p className="text-stone-300/90 text-lg font-normal leading-relaxed max-w-3xl mt-8 text-center italic">
+              <div className="h-1 w-12 bg-white/20 rounded-full mt-7 md:mt-8"></div>
+              <p className="text-stone-300/90 text-lg font-normal leading-relaxed max-w-3xl mt-10 md:mt-8 text-center italic">
                 {t('vision_desc')}
               </p>
             </motion.div>

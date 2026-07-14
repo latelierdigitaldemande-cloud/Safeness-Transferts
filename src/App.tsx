@@ -154,6 +154,7 @@ export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [activeBentoCard, setActiveBentoCard] = useState<string | null>(null);
+  const [activeTransferCard, setActiveTransferCard] = useState<number | null>(null);
   const bookingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -166,6 +167,10 @@ export default function App() {
       const container = document.getElementById('bento-grid-container');
       if (container && !container.contains(e.target as Node)) {
         setActiveBentoCard(null);
+      }
+      const transfersContainer = document.getElementById('transfers-grid-container');
+      if (transfersContainer && !transfersContainer.contains(e.target as Node)) {
+        setActiveTransferCard(null);
       }
     };
     window.addEventListener('touchstart', handleTouchOutside);
@@ -1912,7 +1917,7 @@ export default function App() {
             </motion.div>
 
             {/* Transfers Grid - Static Tall Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="transfers-grid-container" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 { key: 'route_cdg', price: '120€', time: '45 min', icon: <Navigation size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/603b4374-0730-4377-a001-ab58e60cb33d_l6ue2k' },
                 { key: 'route_orly', price: '120€', time: '35 min', icon: <MapPin size={20} />, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/39169e3d-ae4f-46b7-a9a0-9aee8857f11a_wzsemp' },
@@ -1928,7 +1933,13 @@ export default function App() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-10px" }}
                     transition={{ duration: 0.8, delay: i * 0.15 }}
-                    className={`group relative border rounded-[2.5rem] transition-colors duration-500 overflow-hidden h-[320px] bg-stone-900 border-white/10 hover:border-white/20 shadow-2xl ${item.lgOnly ? 'hidden lg:flex' : 'flex'} flex-col`}
+                    onTouchStart={() => setActiveTransferCard(i)}
+                    onClick={() => setActiveTransferCard(i)}
+                    className={`group relative border rounded-[2.5rem] transition-all duration-500 overflow-hidden h-[320px] bg-stone-900 shadow-2xl ${item.lgOnly ? 'hidden lg:flex' : 'flex'} flex-col ${
+                      isTouchDevice && activeTransferCard === i 
+                        ? 'border-white/35 scale-[1.015] shadow-[0_0_25px_rgba(255,255,255,0.06),_0_25px_50px_-12px_rgba(0,0,0,0.5)]' 
+                        : 'border-white/10 hover:border-white/20'
+                    }`}
                   >
                     {/* Background Image with Overlay */}
                     <div className="absolute inset-0 z-0">

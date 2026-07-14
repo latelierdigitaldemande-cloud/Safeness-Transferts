@@ -1455,7 +1455,7 @@ export default function App() {
           </a>
         </motion.div>
         
-        <div className="mt-20 relative w-[96%] sm:w-full max-w-md">
+        <div className="mt-10 md:mt-20 relative w-[96%] sm:w-full max-w-md">
           <div className="border border-white/10 rounded-[2.5rem] p-8 pb-10 flex flex-col items-center justify-center bg-stone-950/30 backdrop-blur-sm shadow-2xl h-[180px] overflow-hidden relative">
             <AnimatePresence mode="wait">
               <motion.div 
@@ -1478,14 +1478,14 @@ export default function App() {
           </div>
           <button 
             onClick={nextCity}
-            className="absolute top-1/2 -translate-y-1/2 bg-white text-stone-950 rounded-full flex items-center justify-center shadow-xl hover:bg-stone-200 transition-colors z-20 w-[30px] h-[30px] -right-[15px] md:w-10 md:h-10 md:-right-5" 
+            className="absolute top-1/2 -translate-y-1/2 bg-white text-stone-950 rounded-full flex items-center justify-center shadow-xl hover:bg-stone-200 transition-colors z-20 w-[32px] h-[32px] -right-[16px] md:w-10 md:h-10 md:-right-5" 
             aria-label="Next Location"
           >
             <iconify-icon 
               icon="solar:alt-arrow-right-linear" 
               width="100%"
               height="100%"
-              class="w-[15px] h-[15px] md:w-[20px] md:h-[20px] flex items-center justify-center text-center" 
+              class="w-[16px] h-[16px] md:w-[20px] md:h-[20px] flex items-center justify-center text-center" 
               style={{ strokeWidth: 1.5 }}
             ></iconify-icon>
           </button>

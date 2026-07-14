@@ -1560,11 +1560,6 @@ export default function App() {
                 viewport={{ once: true }}
                 whileHover="hover"
                 whileTap="tap"
-                variants={{
-                  hover: { y: -4, transition: { duration: 0.5, ease: "easeOut" } },
-                  tap: { y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-                }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="lg:col-span-2 lg:row-span-2 group relative border border-white/10 rounded-[2.4rem] overflow-hidden cursor-pointer"
               >
                 <motion.img 
@@ -1600,11 +1595,6 @@ export default function App() {
                 viewport={{ once: true }}
                 whileHover="hover"
                 whileTap="tap"
-                variants={{
-                  hover: { y: -4, transition: { duration: 0.5, ease: "easeOut" } },
-                  tap: { y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-                }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full cursor-pointer"
               >
                 <motion.img 
@@ -1632,11 +1622,6 @@ export default function App() {
                 viewport={{ once: true }}
                 whileHover="hover"
                 whileTap="tap"
-                variants={{
-                  hover: { y: -4, transition: { duration: 0.5, ease: "easeOut" } },
-                  tap: { y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-                }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full cursor-pointer"
               >
                 <motion.img 
@@ -1664,11 +1649,6 @@ export default function App() {
                 viewport={{ once: true }}
                 whileHover="hover"
                 whileTap="tap"
-                variants={{
-                  hover: { y: -4, transition: { duration: 0.5, ease: "easeOut" } },
-                  tap: { y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-                }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="lg:col-span-1 group relative border border-white/10 rounded-[2rem] overflow-hidden h-64 lg:h-full cursor-pointer"
               >
                 <motion.img 

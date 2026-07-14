@@ -939,7 +939,7 @@ export default function App() {
       verified_count: '48 verified reviews',
       verified_label: 'Verified',
       faq_tag: 'FAQ',
-      faq_title: 'Frequently Asked Questions',
+      faq_title: 'Frequently Asked',
       q1: 'How far can you carry out transfers?',
       a1: 'Although our base is in Paris, we cover all of France and regularly carry out transfers to major European cities (Munich, Milan, Berlin, Amsterdam, Geneva, etc.). Ask us for a quote for your long-distance trip.',
       q2: 'How does the welcome at the airport or station work?',
@@ -1416,7 +1416,7 @@ export default function App() {
       </header>
 
       {/* HERO */}
-      <main className="relative z-10 flex flex-col items-center pt-20 pb-32 px-4 text-center min-h-screen">
+      <main className="relative z-10 flex flex-col items-center pt-10 md:pt-16 pb-32 px-4 text-center min-h-screen">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -3184,7 +3184,7 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="flex flex-col items-center mb-20 text-center"
+              className="flex flex-col items-center mb-12 text-center"
             >
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8">
                 <Info size={12} className="text-white/60" />

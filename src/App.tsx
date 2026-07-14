@@ -1478,10 +1478,16 @@ export default function App() {
           </div>
           <button 
             onClick={nextCity}
-            className="absolute -right-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-white text-stone-950 rounded-full flex items-center justify-center shadow-xl hover:bg-stone-200 transition-colors z-20" 
+            className="absolute top-1/2 -translate-y-1/2 bg-white text-stone-950 rounded-full flex items-center justify-center shadow-xl hover:bg-stone-200 transition-colors z-20 w-[30px] h-[30px] -right-[15px] md:w-10 md:h-10 md:-right-5" 
             aria-label="Next Location"
           >
-            <iconify-icon icon="solar:alt-arrow-right-linear" width="20" style={{ strokeWidth: 1.5 }}></iconify-icon>
+            <iconify-icon 
+              icon="solar:alt-arrow-right-linear" 
+              width="100%"
+              height="100%"
+              class="w-[15px] h-[15px] md:w-[20px] md:h-[20px] flex items-center justify-center text-center" 
+              style={{ strokeWidth: 1.5 }}
+            ></iconify-icon>
           </button>
         </div>
       </main>

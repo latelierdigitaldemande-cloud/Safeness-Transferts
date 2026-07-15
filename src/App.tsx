@@ -507,9 +507,9 @@ export default function App() {
   };
 
   const vehicles = {
-    business: { name: 'Business Class', model: 'Mercedes Classe E', basePrice: 80, hourlyPrice: 60, pax: 3, bag: 3, img: 'https://mcslimo.fr/wp-content/uploads/2023/04/eclass.png' },
-    van: { name: 'Business Van', model: 'Mercedes Classe V', basePrice: 120, hourlyPrice: 90, pax: 7, bag: 7, img: 'https://i.ibb.co/KpKpkmqP/d2baa86d-beb9-42eb-9ba0-a2e127210aee.png' },
-    first: { name: 'First Class', model: 'Mercedes Classe S', basePrice: 160, hourlyPrice: 120, pax: 3, bag: 3, img: 'https://i.ibb.co/mxSK38h/9019b055-8de3-499d-b0c2-ce9e669fb9d5.png' }
+    business: { name: 'Business Class', model: 'Mercedes Classe E', basePrice: 80, hourlyPrice: 60, pax: 3, bag: 3, img: 'https://i.ibb.co/DPTqpP5k/classe-e.png' },
+    van: { name: 'Business Van', model: 'Mercedes Classe V', basePrice: 120, hourlyPrice: 90, pax: 7, bag: 7, img: 'https://i.ibb.co/cK654DjV/classe-v.png' },
+    first: { name: 'First Class', model: 'Mercedes Classe S', basePrice: 160, hourlyPrice: 120, pax: 3, bag: 3, img: 'https://i.ibb.co/B7Vvx9F/classe-s.png' }
   };
 
   const extras = {
@@ -2428,10 +2428,10 @@ export default function App() {
             </motion.div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 text-base font-light text-stone-400 tracking-wide">
               {[
-                { type: 'Confort', model: 'Tesla', img: 'https://pngimg.com/uploads/tesla_car/tesla_car_PNG21.png', pax: `3 ${t('passengers')}`, bag: `3 ${t('luggage')}`, mobileOnly: true },
-                { type: 'Business', model: 'Classe E', img: 'https://mcslimo.fr/wp-content/uploads/2023/04/eclass.png', pax: `3 ${t('passengers')}`, bag: `3 ${t('luggage')}` },
-                { type: 'Premium', model: 'Classe V', img: 'https://i.ibb.co/KpKpkmqP/d2baa86d-beb9-42eb-9ba0-a2e127210aee.png', pax: `7 ${t('passengers')}`, bag: `7 ${t('luggage')}`, isPremium: true },
-                { type: 'Luxe', model: 'Classe S', img: 'https://i.ibb.co/mxSK38h/9019b055-8de3-499d-b0c2-ce9e669fb9d5.png', pax: `3 ${t('passengers')}`, bag: `3 ${t('luggage')}` }
+                { type: 'Confort', model: 'Tesla', img: 'https://i.ibb.co/5gGysbdL/tesla.png', pax: `3 ${t('passengers')}`, bag: `3 ${t('luggage')}`, mobileOnly: true },
+                { type: 'Business', model: 'Classe E', img: 'https://i.ibb.co/DPTqpP5k/classe-e.png', pax: `3 ${t('passengers')}`, bag: `3 ${t('luggage')}` },
+                { type: 'Premium', model: 'Classe V', img: 'https://i.ibb.co/cK654DjV/classe-v.png', pax: `7 ${t('passengers')}`, bag: `7 ${t('luggage')}`, isPremium: true },
+                { type: 'Luxe', model: 'Classe S', img: 'https://i.ibb.co/B7Vvx9F/classe-s.png', pax: `3 ${t('passengers')}`, bag: `3 ${t('luggage')}` }
               ].map((car, i) => (
                 <motion.div 
                   key={i} 

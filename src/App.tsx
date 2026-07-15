@@ -1327,6 +1327,7 @@ export default function App() {
 
   // Initialize Map
   useEffect(() => {
+    let mapInstance: L.Map | null = null;
     if (mapContainerRef.current && !mapRef.current) {
       const map = L.map(mapContainerRef.current, {
         zoomControl: false,
@@ -1338,12 +1339,44 @@ export default function App() {
       }).addTo(map);
       
       mapRef.current = map;
+      mapInstance = map;
+
+      // Draw pickup marker if it exists
+      if (bookingData.pickupCoords) {
+        const icon = L.divIcon({
+          className: 'custom-div-icon',
+          html: `<div class="w-8 h-8 bg-stone-900 rounded-full border-2 border-white flex items-center justify-center shadow-lg"><div class="w-2 h-2 bg-white rounded-full"></div></div>`,
+          iconSize: [32, 32],
+          iconAnchor: [16, 16]
+        });
+        markersRef.current.pickup = L.marker(bookingData.pickupCoords, { icon }).addTo(map);
+      }
+
+      // Draw dropoff marker if it exists
+      if (bookingData.dropoffCoords) {
+        const icon = L.divIcon({
+          className: 'custom-div-icon',
+          html: `<div class="w-8 h-8 bg-stone-600 rounded-full border-2 border-white flex items-center justify-center shadow-lg"><div class="w-2 h-2 bg-white rounded-full"></div></div>`,
+          iconSize: [32, 32],
+          iconAnchor: [16, 16]
+        });
+        markersRef.current.dropoff = L.marker(bookingData.dropoffCoords, { icon }).addTo(map);
+      }
     }
     
     // Ensure route is drawn if container is now available and map is ready
     if (mapRef.current && bookingData.pickupCoords && bookingData.dropoffCoords && !routeLineRef.current) {
       calculateRoute(bookingData.pickupCoords, bookingData.dropoffCoords);
     }
+
+    return () => {
+      if (mapInstance) {
+        mapInstance.remove();
+        mapRef.current = null;
+        markersRef.current = { pickup: null, dropoff: null };
+        routeLineRef.current = null;
+      }
+    };
   }, [step, bookingData.pickupCoords, bookingData.dropoffCoords]);
 
   // Invalidate map size when step changes (for layout transitions)
@@ -1353,7 +1386,7 @@ export default function App() {
         mapRef.current?.invalidateSize();
         
         // Ensure the route is visible if it exists
-        if (routeLineRef.current && (step >= 2 && step <= 4)) {
+        if (routeLineRef.current && (step >= 1 && step <= 4)) {
           if ('getBounds' in routeLineRef.current) {
             mapRef.current?.fitBounds((routeLineRef.current as any).getBounds(), { padding: [50, 50] });
           }
@@ -3035,6 +3068,20 @@ export default function App() {
                           )}
                         </button>
                       </div>
+
+                      {/* Map Container - Relocated to Step 1 below View Prices button */}
+                      <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm relative h-[220px] md:h-[280px] mt-4 animate-in fade-in duration-500 block">
+                        <div ref={mapContainerRef} className="w-full h-full z-0" />
+                        {bookingData.distance > 0 && (
+                          <div className="absolute bottom-4 right-4 z-10">
+                            <div className="bg-white border border-stone-200 rounded-lg p-2 px-3 text-[10px] font-bold text-stone-900 uppercase tracking-widest flex items-center gap-3 shadow-lg">
+                              <span>{Math.round(bookingData.distance)} KM</span>
+                              <div className="w-px h-3 bg-stone-200"></div>
+                              <span>{Math.round(bookingData.duration)} MIN</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )}
 
@@ -3373,27 +3420,11 @@ export default function App() {
                   )}
                 </div>
 
-                {/* Right Side: Map & Dynamic Summary */}
-                <div className={`col-span-full lg:col-span-5 bg-stone-50 ${step === 2 ? 'px-5 py-4 pb-4 md:p-10' : 'px-5 py-6 md:p-10'} flex flex-col transition-all duration-500 ${step === 1 || step === 5 ? 'hidden lg:flex' : 'flex'}`}>
+                {/* Right Side: Dynamic Summary */}
+                <div className={`col-span-full lg:col-span-5 bg-stone-50 px-5 py-6 md:p-10 flex flex-col transition-all duration-500 ${step === 1 || step === 5 ? 'hidden lg:flex' : 'flex'}`}>
                   
-                  {/* Map Container - Consistent height across all steps */}
-                  {step === 2 && (
-                    <div className={`bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm relative h-[180px] md:h-[250px] ${step === 2 ? 'mb-0' : 'mb-4 md:mb-6'} animate-in fade-in duration-500 block`}>
-                      <div ref={mapContainerRef} className="w-full h-full z-0" />
-                      {bookingData.distance > 0 && (
-                        <div className="absolute bottom-4 right-4 z-10">
-                          <div className="bg-white border border-stone-200 rounded-lg p-2 px-3 text-[10px] font-bold text-stone-900 uppercase tracking-widest flex items-center gap-3 shadow-lg">
-                            <span>{Math.round(bookingData.distance)} KM</span>
-                            <div className="w-px h-3 bg-stone-200"></div>
-                            <span>{Math.round(bookingData.duration)} MIN</span>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
                   {/* Summary - Visible from Step 1 with Dark Design */}
-                  <div className={`flex-1 flex-col transition-all duration-500 overflow-hidden bg-stone-900 rounded-2xl p-4 md:p-6 border border-white/5 ${step >= 1 && step !== 2 && step < 5 ? 'opacity-100 translate-y-0 flex' : 'opacity-0 translate-y-10 pointer-events-none h-0 hidden'} ${step === 1 ? 'hidden md:flex' : ''}`}>
+                  <div className={`flex-1 flex-col transition-all duration-500 overflow-hidden bg-stone-900 rounded-2xl p-4 md:p-6 border border-white/5 ${step >= 1 && step < 5 ? 'opacity-100 translate-y-0 flex' : 'opacity-0 translate-y-10 pointer-events-none h-0 hidden'} ${step === 1 ? 'hidden md:flex' : ''}`}>
                     <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] mb-4">{t('orderSummary')}</h3>
                     
                     <div className="space-y-4 flex-1">

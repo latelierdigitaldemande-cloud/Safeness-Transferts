@@ -2417,7 +2417,7 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="flex flex-col items-center mb-14 md:mb-24 text-center"
+              className="flex flex-col items-center mb-16 md:mb-24 text-center"
             >
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-7 md:mb-8">
                 <Navigation size={12} className="text-white/60" />

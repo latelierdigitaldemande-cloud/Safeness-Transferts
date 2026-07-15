@@ -508,7 +508,7 @@ export default function App() {
 
   const vehicles = {
     business: { name: 'Business Class', model: 'Mercedes Classe E', basePrice: 80, hourlyPrice: 60, pax: 3, bag: 3, img: 'https://mcslimo.fr/wp-content/uploads/2023/04/eclass.png' },
-    van: { name: 'Business Van', model: 'Mercedes Classe V', basePrice: 120, hourlyPrice: 90, pax: 7, bag: 7, img: 'https://mcslimo.fr/wp-content/uploads/2023/04/vclass.png' },
+    van: { name: 'Business Van', model: 'Mercedes Classe V', basePrice: 120, hourlyPrice: 90, pax: 7, bag: 7, img: 'https://i.ibb.co/KpKpkmqP/d2baa86d-beb9-42eb-9ba0-a2e127210aee.png' },
     first: { name: 'First Class', model: 'Mercedes Classe S', basePrice: 160, hourlyPrice: 120, pax: 3, bag: 3, img: 'https://mcslimo.fr/wp-content/uploads/2023/04/sclass.png' }
   };
 
@@ -2428,8 +2428,9 @@ export default function App() {
             </motion.div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 text-base font-light text-stone-400 tracking-wide">
               {[
+                { type: 'Confort', model: 'Tesla', img: 'https://pngimg.com/uploads/tesla_car/tesla_car_PNG21.png', pax: `3 ${t('passengers')}`, bag: `3 ${t('luggage')}`, mobileOnly: true },
                 { type: 'Business', model: 'Classe E', img: 'https://mcslimo.fr/wp-content/uploads/2023/04/eclass.png', pax: `3 ${t('passengers')}`, bag: `3 ${t('luggage')}` },
-                { type: 'Premium', model: 'Classe V', img: 'https://mcslimo.fr/wp-content/uploads/2023/04/vclass.png', pax: `7 ${t('passengers')}`, bag: `7 ${t('luggage')}`, isPremium: true },
+                { type: 'Premium', model: 'Classe V', img: 'https://i.ibb.co/KpKpkmqP/d2baa86d-beb9-42eb-9ba0-a2e127210aee.png', pax: `7 ${t('passengers')}`, bag: `7 ${t('luggage')}`, isPremium: true },
                 { type: 'Luxe', model: 'Classe S', img: 'https://mcslimo.fr/wp-content/uploads/2023/04/sclass.png', pax: `3 ${t('passengers')}`, bag: `3 ${t('luggage')}` }
               ].map((car, i) => (
                 <motion.div 
@@ -2438,7 +2439,7 @@ export default function App() {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: i * 0.2 }}
-                  className={`border ${car.isPremium ? 'border-white/20 bg-stone-800/40' : 'border-white/10 bg-stone-900/30'} rounded-[2.5rem] p-8 flex flex-col items-center backdrop-blur-sm shadow-2xl relative overflow-hidden group`}
+                  className={`border ${car.isPremium ? 'border-white/20 bg-stone-800/40' : 'border-white/10 bg-stone-900/30'} rounded-[2.5rem] p-8 flex flex-col items-center backdrop-blur-sm shadow-2xl relative overflow-hidden group ${car.mobileOnly ? 'lg:hidden' : ''}`}
                 >
                   {car.isPremium && <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>}
                   <span className={`${car.isPremium ? 'bg-white text-stone-950' : 'bg-white/5 border border-white/10 text-white/80'} rounded-full px-5 py-2 text-xs font-normal tracking-[0.2em] uppercase mb-8 shadow-lg`}>

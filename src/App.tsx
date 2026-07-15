@@ -2361,7 +2361,7 @@ export default function App() {
               </div>
 
               <div className="flex flex-col gap-6 lg:gap-0 w-full lg:max-w-[95%] lg:ml-auto">
-                <div className="relative w-full aspect-square md:aspect-[4/3] lg:aspect-[4/3.3] rounded-3xl overflow-hidden border border-white/10 bg-stone-900/50 flex items-end justify-center p-8">
+                <div className="relative w-full aspect-[4/4.5] md:aspect-[4/3] lg:aspect-[4/3.3] rounded-3xl overflow-hidden border border-white/10 bg-stone-900/50 flex items-end justify-center p-5 xs:p-8">
                   <img 
                     src="https://i.ibb.co/HL730gdy/Image.jpg" 
                     alt="Chauffeur Service background" 
@@ -2369,7 +2369,7 @@ export default function App() {
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-black/15"></div>
-                  <div className="w-full max-w-sm border border-white/10 rounded-2xl bg-stone-800/85 backdrop-blur-md p-6 relative z-10 shadow-2xl">
+                  <div className="w-full max-w-sm border border-white/10 rounded-2xl bg-stone-800/85 backdrop-blur-md p-4 xs:p-6 relative z-10 shadow-2xl">
                     <div className="flex justify-between items-center mb-6 pb-6 border-b border-white/5">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">

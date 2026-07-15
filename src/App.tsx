@@ -507,6 +507,7 @@ export default function App() {
   };
 
   const vehicles = {
+    confort: { name: 'Confort Class', model: 'Tesla Model 3 / Y', basePrice: 70, hourlyPrice: 50, pax: 3, bag: 3, img: 'https://i.ibb.co/5gGysbdL/tesla.png' },
     business: { name: 'Business Class', model: 'Mercedes Classe E', basePrice: 80, hourlyPrice: 60, pax: 3, bag: 3, img: 'https://i.ibb.co/DPTqpP5k/classe-e.png' },
     van: { name: 'Business Van', model: 'Mercedes Classe V', basePrice: 120, hourlyPrice: 90, pax: 7, bag: 7, img: 'https://i.ibb.co/cK654DjV/classe-v.png' },
     first: { name: 'First Class', model: 'Mercedes Classe S', basePrice: 160, hourlyPrice: 120, pax: 3, bag: 3, img: 'https://i.ibb.co/B7Vvx9F/classe-s.png' }
@@ -570,6 +571,7 @@ export default function App() {
       field_returnDate: 'Date de retour',
       field_returnTime: 'Heure de retour',
       returnTime: 'Heure Retour',
+      vehicle_confort: 'Gamme Confort',
       vehicle_business: 'Business Class',
       vehicle_van: 'Business Van',
       vehicle_first: 'First Class',
@@ -805,6 +807,7 @@ export default function App() {
       field_returnDate: 'Return trip date',
       field_returnTime: 'Return time',
       returnTime: 'Return Time',
+      vehicle_confort: 'Confort Class',
       vehicle_business: 'Business Class',
       vehicle_van: 'Business Van',
       vehicle_first: 'First Class',
@@ -1040,6 +1043,7 @@ export default function App() {
       field_returnDate: 'Fecha de vuelta',
       field_returnTime: 'Hora de vuelta',
       returnTime: 'Hora de vuelta',
+      vehicle_confort: 'Confort Class',
       vehicle_business: 'Business Class',
       vehicle_van: 'Business Van',
       vehicle_first: 'First Class',
@@ -2368,7 +2372,7 @@ export default function App() {
                     className="absolute inset-0 w-full h-full object-cover opacity-100"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute inset-0 bg-black/15"></div>
+                  <div className="absolute inset-0 bg-black/5"></div>
                   <div className="w-full max-w-sm border border-white/10 rounded-2xl bg-stone-800/85 backdrop-blur-md p-4 xs:p-6 relative z-10 shadow-2xl">
                     <div className="flex justify-between items-center mb-6 pb-6 border-b border-white/5">
                       <div className="flex items-center gap-3">
@@ -2875,12 +2879,8 @@ export default function App() {
                           <div className="relative flex items-center md:flex-1">
                             <Calendar size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
                             <input
-                              type={bookingData.date ? "date" : "text"}
+                              type="date"
                               placeholder={lang === 'fr' ? 'Choisir une date' : lang === 'es' ? 'Seleccionar fecha' : 'Select a date'}
-                              onFocus={(e) => (e.target.type = "date")}
-                              onBlur={(e) => {
-                                if (!bookingData.date) e.target.type = "text";
-                              }}
                               value={bookingData.date}
                               min={new Date().toISOString().split('T')[0]}
                               onChange={(e) => {
@@ -2948,12 +2948,8 @@ export default function App() {
                               <div className="relative flex items-center md:flex-1">
                                 <Calendar size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
                                 <input
-                                  type={bookingData.returnDate ? "date" : "text"}
+                                  type="date"
                                   placeholder={lang === 'fr' ? 'Choisir une date de retour' : lang === 'es' ? 'Seleccionar fecha de vuelta' : 'Select a return date'}
-                                  onFocus={(e) => (e.target.type = "date")}
-                                  onBlur={(e) => {
-                                    if (!bookingData.returnDate) e.target.type = "text";
-                                  }}
                                   value={bookingData.returnDate}
                                   min={bookingData.date || new Date().toISOString().split('T')[0]}
                                   onChange={(e) => {

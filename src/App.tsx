@@ -297,6 +297,14 @@ export default function App() {
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
   const [isGalleryPaused, setIsGalleryPaused] = useState(false);
 
+  const getLocalDateString = () => {
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   // Booking Form State
   const [bookingData, setBookingData] = useState({
     serviceType: 'transfer' as 'transfer' | 'hourly',
@@ -306,7 +314,7 @@ export default function App() {
     dropoff: '',
     pickupCoords: null as [number, number] | null,
     dropoffCoords: null as [number, number] | null,
-    date: '',
+    date: getLocalDateString(),
     time: '',
     vehicle: 'business',
     passengers: 1,

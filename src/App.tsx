@@ -12,7 +12,7 @@ import {
   ChevronRight, ChevronLeft, ChevronDown, ArrowUpRight, Check, CreditCard, Plane, Tag, Sparkles, Palette,
   Train, Info, ShieldCheck, Star, ArrowRight, ArrowLeft, X, Menu, Plus,
   Phone, Mail, MessageSquare, Globe, Search, Loader2,
-  Instagram, Linkedin
+  Instagram, Linkedin, ArrowLeftRight
 } from 'lucide-react';
 
 // Initialize Stripe with the public key from environment
@@ -223,6 +223,8 @@ export default function App() {
             setStep(4);
             setBookingError(lang === 'fr' 
               ? "La vérification du paiement a échoué. Veuillez contacter le support si vous avez été débité." 
+              : lang === 'es'
+              ? "La verificación del pago ha fallado. Póngase en contacto con el soporte si se le ha cobrado."
               : "Payment verification failed. Please contact support if you have been charged.");
           }
         })
@@ -231,6 +233,8 @@ export default function App() {
           setStep(4);
           setBookingError(lang === 'fr'
             ? "Une erreur est survenue lors de la vérification de votre paiement."
+            : lang === 'es'
+            ? "Ocurrió un error al verificar su pago."
             : "An error occurred while verifying your payment.");
         })
         .finally(() => {
@@ -242,6 +246,8 @@ export default function App() {
       setStep(4);
       setBookingError(lang === 'fr' 
         ? "Le paiement a été annulé. Vous pouvez réessayer." 
+        : lang === 'es'
+        ? "El pago ha sido cancelado. Puede volver a intentarlo."
         : "Payment was cancelled. You can try again.");
       window.history.replaceState({}, '', window.location.pathname);
     }
@@ -359,7 +365,7 @@ export default function App() {
   useEffect(() => {
     if (pickupInputRef.current) {
       if (bookingData.pickup.trim() !== "" && !bookingData.pickupCoords) {
-        pickupInputRef.current.setCustomValidity(lang === 'fr' ? "Veuillez sélectionner une adresse dans la liste." : "Please select an address from the list.");
+        pickupInputRef.current.setCustomValidity(lang === 'fr' ? "Veuillez sélectionner une adresse dans la liste." : lang === 'es' ? "Por favor, seleccione una dirección de la lista." : "Please select an address from the list.");
       } else {
         pickupInputRef.current.setCustomValidity("");
       }
@@ -369,7 +375,7 @@ export default function App() {
   useEffect(() => {
     if (dropoffInputRef.current) {
       if (bookingData.dropoff.trim() !== "" && !bookingData.dropoffCoords) {
-        dropoffInputRef.current.setCustomValidity(lang === 'fr' ? "Veuillez sélectionner une adresse dans la liste." : "Please select an address from the list.");
+        dropoffInputRef.current.setCustomValidity(lang === 'fr' ? "Veuillez sélectionner une adresse dans la liste." : lang === 'es' ? "Por favor, seleccione una dirección de la lista." : "Please select an address from the list.");
       } else {
         dropoffInputRef.current.setCustomValidity("");
       }
@@ -721,9 +727,10 @@ export default function App() {
       footer_desc: "L'élite du transport : prestige mondial, excellence sans compromis",
       legal: 'Mentions légales',
       privacy: 'Mentions légales',
-      whatsapp_tooltip: 'Réserver sur WhatsApp',
+      whatsapp_tooltip: 'Book on WhatsApp',
       lang_fr: 'Français',
       lang_en: 'Anglais',
+      lang_es: 'Espagnol',
       rev1_text: '"Service impeccable pour mon transfert vers Orly. Le chauffeur était en avance, le véhicule (Classe S) d\'une propreté absolue. Conduite très douce. Je recommande vivement Safeness transport."',
       rev2_text: '"Nous avons réservé un Van pour nous rendre à Disneyland depuis Paris intra-muros avec les enfants. Voyage spacieux, bouteilles d\'eau à disposition, service très courtois."',
       rev3_text: '"Utilisé pour un déplacement professionnel de Paris vers Milan. Un trajet longue distance qui s\'est déroulé dans un confort parfait. Mon bureau mobile le temps d\'une journée."',
@@ -958,6 +965,7 @@ export default function App() {
       whatsapp_tooltip: 'Book on WhatsApp',
       lang_fr: 'French',
       lang_en: 'English',
+      lang_es: 'Spanish',
       rev1_text: '"Impeccable service for my transfer to Orly. The driver was early, the vehicle (S-Class) was absolutely clean. Very smooth driving. I highly recommend Safeness transport."',
       rev2_text: '"We booked a Van to go to Disneyland from central Paris with the children. Spacious journey, water bottles available, very courteous service."',
       rev3_text: '"Used for a business trip from Paris to Milan. A long-distance journey that took place in perfect comfort. My mobile office for a day."',
@@ -980,6 +988,241 @@ export default function App() {
       why_stat2_label: 'Customer satisfaction',
       why_stat3_val: '24/7',
       why_stat3_label: 'Availability',
+    },
+    es: {
+      title: 'Reservar su viaje',
+      step1: 'Trayecto',
+      step2: 'Itinierario',
+      step3: 'Vehículo',
+      step4: 'Contacto',
+      pickup: 'Lugar de salida',
+      dropoff: 'Lugar de llegada',
+      date: 'Fecha de salida',
+      time: 'Hora',
+      field_time: 'Hora de salida',
+      service_transfer: 'Traslado',
+      service_hourly: 'Vehículo con chófer',
+      field_service_category: 'Tipo de servicio',
+      placeholder_service_category: 'Seleccionar un servicio...',
+      service_cat_intercity: 'Trayectos interurbanos',
+      service_cat_airport: 'Traslados de aeropuerto/estación',
+      service_cat_vip: 'Bienvenida VIP y traslados de viaje',
+      service_cat_hourly: 'Vehículo con chófer a disposición',
+      service_cat_prestige: 'Vehículos para bodas y eventos',
+      duration_label: 'Duración deseada',
+      hours_count: 'horas',
+      view_prices: 'Ver precios',
+      next: 'Siguiente',
+      back: 'Volver',
+      confirm: 'Confirmar reserva',
+      summary: 'Resumen',
+      total: 'Total estimado',
+      passengers: 'Pasajeros',
+      passenger_singular: 'Pasajero',
+      passenger_plural: 'Pasajeros',
+      luggage: 'Equipaje',
+      luggage_label: 'Equipaje',
+      extras_label: 'Opciones adicionales',
+      payment: 'Método de pago',
+      payment_mode: 'Método de pago',
+      card: 'Pago en línea (Stripe)',
+      cash: 'Efectivo (a bordo)',
+      transfer: 'Transferencia bancaria (adelantado)',
+      firstName: 'Nombre',
+      lastName: 'Apellido',
+      email: 'Correo electrónico',
+      phone: 'Teléfono',
+      flight: 'Nº de vuelo / tren (opcional)',
+      returnTrip: 'Trayecto de vuelta',
+      add_return: 'Añadir trayecto de vuelta',
+      itinerary_return: 'Itinerario de vuelta',
+      returnDate: 'Fecha de vuelta',
+      field_returnDate: 'Fecha de vuelta',
+      field_returnTime: 'Hora de vuelta',
+      returnTime: 'Hora de vuelta',
+      vehicle_business: 'Business Class',
+      vehicle_van: 'Business Van',
+      vehicle_first: 'First Class',
+      extra_child_seat: 'Silla de bebé / Elevador',
+      extra_greeter: 'Bienvenida con cartel',
+      extra_extra_luggage: 'Equipaje adicional',
+      success: '¡Solicitud enviada!',
+      successMsg: 'Su solicitud de reserva ha sido enviada. Un asesor se pondrá en contacto con usted por SMS o correo electrónico para confirmar la disponibilidad.',
+      newReservation: 'Nueva reserva',
+      orderSummary: 'Resumen del pedido',
+      departure: 'Salida',
+      arrival: 'Llegada',
+      dateTime: 'Fecha y hora',
+      vatIncluded: 'IVA incluido',
+      itinerary_label: 'Su itinerario',
+      pickup_label: 'Lugar de recogida',
+      pickup_placeholder: 'Dirección, aeropuerto, estación...',
+      dropoff_label: 'Destino',
+      dropoff_placeholder: 'Destino',
+      placeholder_firstName: 'Su nombre',
+      placeholder_lastName: 'Su apellido',
+      placeholder_email: 'juan@ejemplo.com',
+      placeholder_phone: 'Su número de teléfono',
+      swap_addresses: 'Invertir direcciones',
+      nav_services: 'Servicios',
+      nav_fleet: 'Flota',
+      nav_gallery: 'Galería',
+      nav_business: 'Corporativo',
+      nav_contact: 'Contacto',
+      nav_booking: 'Reserva',
+      hero_badge: 'Transporte Ejecutivo, Flota de Élite e Itinerarios a Medida',
+      hero_brand: 'SAFENESS',
+      hero_worldwide: 'Worldwide',
+      hero_book: 'RESERVAR UN VEHÍCULO',
+      hero_estimate: 'SOLICITAR PRESUPUESTO PERSONALIZADO',
+      europe_tag: 'Europa',
+      europe_title: 'Presencia',
+      europe_subtitle: 'Europea',
+      europe_desc: 'Aunque nuestro centro de operaciones está en París, ofrecemos conexiones de larga distancia a las principales metrópolis europeas.',
+      europe_hub_tag: 'Sede Principal',
+      europe_hub_title: 'París Centro',
+      europe_hub_desc: 'El corazón de nuestra red. Chóferes de élite disponibles 24/7 para necesidades locales y traslados internacionales.',
+      europe_munich_tag: 'Centro de negocios bávaro',
+      europe_milan_tag: 'Centro del diseño italiano',
+      europe_berlin_tag: 'Centro tecnológico europeo',
+      europe_connect_title: 'Europe Connect',
+      europe_connect_desc: 'Conexiones diarias con Ámsterdam, Bruselas y las principales ciudades regionales francesas.',
+      services_tag: 'Experiencia',
+      services_title: 'Nuestros Servicios',
+      services_desc: 'Soluciones de transporte de primera clase diseñadas específicamente para satisfacer todas sus necesidades de viaje profesionales y personales más exigentes.',
+      service1_title: 'Trayectos interurbanos',
+      service1_desc: 'Conexiones nacionales y viajes de ciudad a ciudad con un confort absoluto.',
+      service2_title: 'Traslados de aeropuerto/estación',
+      service2_desc: 'Traslados a aeropuertos y estaciones con puntualidad garantizada.',
+      service3_title: 'Bienvenida VIP y traslados de viaje',
+      service3_desc: 'Bienvenida personalizada y acompañamiento para una transición fluida.',
+      service4_title: 'Vehículo con chófer a disposición',
+      service4_desc: 'Un chófer dedicado a su entera disposición para todas sus necesidades.',
+      service5_title: 'Bodas y eventos especiales',
+      service5_desc: 'Servicio de prestigio para sus bodas, galas y eventos especiales.',
+      service1_feat1: 'Conexiones nacionales',
+      service1_feat2: 'Confort de larga distancia',
+      service1_feat3: 'Viajes ciudad a ciudad',
+      service2_feat1: 'Aeropuertos y estaciones',
+      service2_feat2: 'Puntualidad garantizada',
+      service2_feat3: 'Wi-Fi y refrescos',
+      service3_feat1: 'Bienvenida con cartel',
+      service3_feat2: 'Gestión de equipaje',
+      service3_feat3: 'Salida prioritaria',
+      service4_feat1: 'Chófer dedicado',
+      service4_feat2: 'Flexibilidad total',
+      service4_feat3: 'Discreción absoluta',
+      service5_feat1: 'Bodas y galas',
+      service5_feat2: 'Logística completa',
+      service5_feat3: 'Vehículos decorados',
+      service_more: 'Ver más servicios',
+      service_book: 'Reservar este servicio',
+      section_book_btn: 'Reservar un servicio',
+      engagement_tag: 'Compromiso',
+      engagement_title: 'Excelencia Absoluta',
+      val1_title: 'Chóferes Expertos',
+      val1_desc: 'Más de 10 años de experiencia. Discretos, bilingües y formados para la excelencia.',
+      val2_title: 'Gama Alta',
+      val2_desc: 'Vehículos recientes y lujosos, mantenidos meticulosamente para su confort.',
+      val3_title: 'Servicio 24/7',
+      val3_desc: 'Una conserjería permanente disponible a cualquier hora para gestionar sus viajes.',
+      val4_title: 'Puntualidad',
+      val4_desc: 'Su tiempo es oro. Nuestros chóferes llegan 15 minutos antes de cada servicio.',
+      corp_tag: 'Corporativo',
+      corp_title: 'Soluciones de Negocio',
+      corp_subtitle: 'Soluciones para empresas',
+      corp_desc: 'Safeness Transport ofrece cuentas corporativas a medida para empresas, hoteles de lujo y agencias de eventos. Optimice la gestión de los viajes de sus colaboradores y clientes VIP con un socio de confianza.',
+      corp_li1: 'Facturación simplificada y estados de cuenta mensuales detallados.',
+      corp_li2: 'Prioridad en las reservas y soporte al cliente dedicado 24/7.',
+      corp_li3: 'Coordinación completa para sus roadshows y grandes eventos.',
+      corp_cta: 'Contacto para traslados de empresas',
+      contact_pro: 'Contacto Pro',
+      vip_tag: 'En aproximación',
+      vip_guest: 'Invitado VIP',
+      vip_flight: 'Vuelo AF1234',
+      vip_pickup_label: 'Recogida',
+      vip_pickup_val: 'Aeropuerto CDG, Terminal 2E',
+      vip_dropoff_label: 'Destino',
+      vip_dropoff_val: 'Sede central, París 8',
+      vip_vehicle_label: 'Vehículo',
+      vip_vehicle_val: 'Mercedes Clase S',
+      field_name: 'Nombre completo',
+      field_date: 'Fecha de salida',
+      field_company: 'Empresa (opcional)',
+      phone_contact: 'Número de teléfono',
+      field_message: 'Mensaje',
+      placeholder_name: 'Juan Pérez',
+      placeholder_company: 'Empresa S.A.',
+      placeholder_message: 'Describa su necesidad...',
+      contact_btn: 'Enviar solicitud',
+      fleet_tag: 'Flota',
+      fleet_title: 'Nuestra Flota',
+      fleet_wifi: 'Wi-Fi a bordo',
+      fleet_drinks: 'Bebidas',
+      vision_tag: 'Visión',
+      vision_title: 'La Experiencia Safeness',
+      vision_desc: 'Descubra la excelencia de nuestros servicios a través de nuestra selección de momentos privilegiados y vehículos excepcionales.',
+      gallery_img1_alt: 'Interior de lujo',
+      gallery_img2_alt: 'Vista de Mercedes Clase V',
+      gallery_img3_alt: 'Detalle de cabina premium',
+      reviews_tag: 'Opiniones',
+      reviews_title: 'Opiniones de clientes',
+      transfers_tag: 'Tarifas',
+      transfers_title: 'Traslados populares',
+      transfers_desc: 'Nuestras rutas más solicitadas con precios fijos y transparentes.',
+      route_cdg: 'Aeropuerto CDG ↔ París',
+      route_orly: 'Aeropuerto Orly ↔ París',
+      route_beauvais: 'Aeropuerto Beauvais ↔ París',
+      route_disney: 'Disneyland París ↔ París',
+      route_versailles: 'Palacio de Versalles ↔ París',
+      route_giverny: 'Giverny (Jardín de Monet) ↔ París',
+      from_price: 'Desde',
+      excellent: 'Excelente',
+      verified_count: '48 opiniones verificadas',
+      verified_label: 'Verificado',
+      faq_tag: 'FAQ',
+      faq_title: 'Preguntas Frecuentes',
+      q1: '¿Hasta dónde pueden realizar los traslados?',
+      a1: 'Aunque nuestra base está en París, cubrimos toda Francia y realizamos traslados regulares a las principales ciudades europeas (Múnich, Milán, Berlín, Ámsterdam, Ginebra, etc.). Consúltenos para un presupuesto para su trayecto de larga distancia.',
+      q2: '¿Cómo funciona la bienvenida en el aeropuerto o en la estación?',
+      a2: 'Su chófer le esperará a la salida de la zona de aduanas (aeropuertos) o al final del andén (estaciones) con un cartel con su nombre. Le ayudará con su equipaje y le llevará directamente al vehículo.',
+      q3: '¿Los precios son fijos?',
+      a3: 'Sí, al reservar le comunicamos un precio fijo y definitivo. No hay cargos ocultos por tráfico o tiempo de viaje (excepto por tiempo de espera excepcional no previsto).',
+      q4: '¿Qué ocurre si mi vuelo o tren se retrasa?',
+      a4: 'Monitoreamos el estado de su vuelo o tren en tiempo real utilizando el número proporcionado al reservar. El chófer ajustará su hora de llegada en consecuencia, sin costes adicionales.',
+      q5: '¿Qué métodos de pago aceptan?',
+      a5: 'Aceptamos pagos con tarjeta de crédito (Visa, Mastercard, Amex) directamente a bordo del vehículo, efectivo, así como transferencias bancarias para reservas realizadas con antelación.',
+      q6: '¿Puedo modificar o cancelar mi reserva?',
+      a6: 'Sí, puede modificar o cancelar su reserva. Recomendamos ponerse en contacto con nosotros al menos con 24 horas de antelación. Las condiciones de cancelación específicas se proporcionarán al confirmar.',
+      footer_desc: 'Transporte de élite: prestigio global, excelencia sin compromisos',
+      legal: 'Aviso legal',
+      privacy: 'Política de privacidad',
+      whatsapp_tooltip: 'Book on WhatsApp',
+      lang_fr: 'Francés',
+      lang_en: 'Inglés',
+      lang_es: 'Español',
+      rev1_text: '"Servicio impecable para mi traslado a Orly. El conductor llegó antes de tiempo, el vehículo (Clase S) estaba impecable. Conducción muy suave. Recomiendo altamente Safeness transport."',
+      rev2_text: '"Reservamos una furgoneta para ir a Disneyland desde el centro de París con los niños. Trayecto espacioso, botellas de agua disponibles, servicio muy cortés."',
+      rev3_text: '"Utilizado para un viaje de negocios de París a Milán. Un viaje de larga distancia en perfecta comodidad. Mi oficina móvil por un día."',
+      rev4_text: '"Una experiencia de lujo de principio a fin. La bienvenida VIP en el aeropuerto CDG hizo que mi llegada a París fuera totalmente libre de estrés. No viajaré de otra manera."',
+      rev5_text: '"Chófer extremadamente profesional y discreto. El Clase E fue perfecto para mis reuniones de negocios durante todo el día. Un servicio de 5 estrellas."',
+      rev6_text: '"Puntualidad y discreción. El servicio de conserjería a bordo es una gran ventaja. Recomiendo Safeness transport para todos sus viajes de negocios en París."',
+      why_tag: 'Sobre nosotros',
+      why_title: 'Por qué elegirnos',
+      why_item1_title: 'Más de 10 años de experiencia',
+      why_item1_desc: 'Con más de una década de excelencia en el transporte de lujo internacional, Safeness transport ha perfeccionado el arte del viaje a medida. Dominamos cada aspecto logístico y cada ruta europea para garantizarle una puntualidad absoluta, una seguridad rigurosa y una serenidad total en todos sus viajes, sin importar su complejidad.',
+      why_item2_title: 'Red Global',
+      why_item2_desc: 'Nuestra red se extiende por los centros económicos más dinámicos de Europa, incluyendo París, Milán, Berlín y Londres. Esta presencia estratégica nos permite asegurar traslados transfronterizos fluidos y una continuidad de servicio intachable. Así, se beneficia de la experiencia local combinada con un estándar de calidad internacional constante en cualquier lugar.',
+      why_item3_title: 'Conserjería a Medida',
+      why_item3_desc: 'Mucho más que un simple servicio de chófer, nuestro servicio de conserjería dedicado se encarga de cada detalle de su viaje. Desde la bienvenida personalizada en terminales privadas hasta la reserva de restaurantes exclusivos o la gestión de equipajes delicados, nos anticipamos a sus necesidades para transformar cada trayecto en una experiencia de lujo única.',
+      why_item4_title: 'Soluciones para empresas',
+      why_item4_desc: 'Ofrecemos a las empresas soluciones de movilidad inteligentes y personalizadas. Disfrute de una plataforma de gestión centralizada, facturación transparente y soporte prioritario 24/7. Nuestros servicios están diseñados para adaptarse a las altas exigencias del mundo empresarial, permitiendo que sus colaboradores y directivos sigan siendo productivos mientras viajan cómodamente.',
+      why_stat1_val: '10+',
+      why_stat1_label: 'Años de experiencia',
+      why_stat2_val: '98%',
+      why_stat2_label: 'Satisfacción del cliente',
+      why_stat3_val: '24/7',
+      why_stat3_label: 'Disponibilidad',
     }
   };
 
@@ -1314,17 +1557,24 @@ export default function App() {
           
           <div className="flex gap-6 mt-6 pt-10 border-t border-white/10 w-48 justify-center">
             <button 
-              onClick={() => { setLang('fr'); setIsMobileMenuOpen(false); }}
-              className={`text-xs font-bold tracking-[0.2em] uppercase transition-all ${lang === 'fr' ? 'text-white' : 'text-white/30 hover:text-white/60'}`}
-            >
-              FR
-            </button>
-            <div className="w-px h-4 bg-white/10"></div>
-            <button 
               onClick={() => { setLang('en'); setIsMobileMenuOpen(false); }}
               className={`text-xs font-bold tracking-[0.2em] uppercase transition-all ${lang === 'en' ? 'text-white' : 'text-white/30 hover:text-white/60'}`}
             >
               EN
+            </button>
+            <div className="w-px h-4 bg-white/10"></div>
+            <button 
+              onClick={() => { setLang('es'); setIsMobileMenuOpen(false); }}
+              className={`text-xs font-bold tracking-[0.2em] uppercase transition-all ${lang === 'es' ? 'text-white' : 'text-white/30 hover:text-white/60'}`}
+            >
+              ES
+            </button>
+            <div className="w-px h-4 bg-white/10"></div>
+            <button 
+              onClick={() => { setLang('fr'); setIsMobileMenuOpen(false); }}
+              className={`text-xs font-bold tracking-[0.2em] uppercase transition-all ${lang === 'fr' ? 'text-white' : 'text-white/30 hover:text-white/60'}`}
+            >
+              FR
             </button>
           </div>
 
@@ -1397,19 +1647,27 @@ export default function App() {
             className={`absolute right-0 top-full mt-1 w-40 bg-stone-900/95 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-300 z-50 ${isLangMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}`}
           >
             <button 
-              onClick={() => { setLang('fr'); setIsLangMenuOpen(false); }}
-              className={`w-full text-left px-5 py-4 text-xs font-bold tracking-widest uppercase transition-all flex items-center justify-between group/item ${lang === 'fr' ? 'text-white bg-white/5' : 'text-white/50 hover:bg-white/5 hover:text-white'}`}
-            >
-              <span>{t('lang_fr')}</span>
-              {lang === 'fr' && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
-            </button>
-            <div className="h-px w-full bg-white/5"></div>
-            <button 
               onClick={() => { setLang('en'); setIsLangMenuOpen(false); }}
               className={`w-full text-left px-5 py-4 text-xs font-bold tracking-widest uppercase transition-all flex items-center justify-between group/item ${lang === 'en' ? 'text-white bg-white/5' : 'text-white/50 hover:bg-white/5 hover:text-white'}`}
             >
               <span>{t('lang_en')}</span>
               {lang === 'en' && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
+            </button>
+            <div className="h-px w-full bg-white/5"></div>
+            <button 
+              onClick={() => { setLang('es'); setIsLangMenuOpen(false); }}
+              className={`w-full text-left px-5 py-4 text-xs font-bold tracking-widest uppercase transition-all flex items-center justify-between group/item ${lang === 'es' ? 'text-white bg-white/5' : 'text-white/50 hover:bg-white/5 hover:text-white'}`}
+            >
+              <span>{t('lang_es')}</span>
+              {lang === 'es' && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
+            </button>
+            <div className="h-px w-full bg-white/5"></div>
+            <button 
+              onClick={() => { setLang('fr'); setIsLangMenuOpen(false); }}
+              className={`w-full text-left px-5 py-4 text-xs font-bold tracking-widest uppercase transition-all flex items-center justify-between group/item ${lang === 'fr' ? 'text-white bg-white/5' : 'text-white/50 hover:bg-white/5 hover:text-white'}`}
+            >
+              <span>{t('lang_fr')}</span>
+              {lang === 'fr' && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
             </button>
           </div>
         </div>
@@ -1532,7 +1790,7 @@ export default function App() {
         {/* COUVERTURE EUROPE - REDESIGNED BENTO GRID */}
         <section 
           id="europe"
-          className="bg-stone-900 w-full py-28 md:py-32 px-6 border-t border-white/5 relative overflow-hidden"
+          className="bg-stone-900 w-full py-28 md:py-32 border-t border-white/5 relative overflow-hidden"
         >
           {/* Decorative background elements: Subtle map-inspired lines (always visible on mobile and desktop) */}
           <div className="absolute inset-0 pointer-events-none opacity-20">
@@ -1547,7 +1805,7 @@ export default function App() {
           
           <div 
             ref={el => { if (el) revealRefs.current[0] = el; }}
-            className="max-w-7xl mx-auto relative z-10"
+            className="max-w-7xl mx-auto relative z-10 px-6"
           >
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
@@ -1968,8 +2226,16 @@ export default function App() {
                               {item.icon}
                             </div>
                             <div className="min-w-0">
-                              <h4 className="text-lg md:text-xl font-bold uppercase tracking-tight text-white leading-tight">
-                                {t(item.key)}
+                              <h4 className="text-lg md:text-xl font-bold uppercase tracking-tight text-white leading-tight flex flex-wrap items-center gap-x-2">
+                                {t(item.key).includes(' ↔ ') ? (
+                                  <>
+                                    <span>{t(item.key).split(' ↔ ')[0]}</span>
+                                    <ArrowLeftRight size={16} className="text-white/60 shrink-0 inline-block" />
+                                    <span>{t(item.key).split(' ↔ ')[1]}</span>
+                                  </>
+                                ) : (
+                                  t(item.key)
+                                )}
                               </h4>
                             </div>
                           </div>
@@ -2018,7 +2284,7 @@ export default function App() {
         {/* BUSINESS B2B */}
         <section 
           id="business" 
-          className="bg-[#181514] w-full py-28 md:py-32 px-6 relative overflow-hidden"
+          className="bg-[#181514] w-full py-28 md:py-32 relative overflow-hidden"
         >
 
           {/* Decorative rounded SVG background (fluid curves & organic luxury waves on corners and edges only) */}
@@ -2057,7 +2323,7 @@ export default function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="max-w-7xl mx-auto relative z-10"
+            className="max-w-7xl mx-auto relative z-10 px-6"
           >
 
 
@@ -2094,8 +2360,8 @@ export default function App() {
                 </a>
               </div>
 
-              <div className="flex flex-col gap-6 lg:gap-0 w-full">
-                <div className="relative w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden border border-white/10 bg-stone-900/50 flex items-end justify-center p-8">
+              <div className="flex flex-col gap-6 lg:gap-0 w-full lg:max-w-[95%] lg:ml-auto">
+                <div className="relative w-full aspect-square md:aspect-[4/3] lg:aspect-[4/3.3] rounded-3xl overflow-hidden border border-white/10 bg-stone-900/50 flex items-end justify-center p-8">
                   <img 
                     src="https://i.ibb.co/HL730gdy/Image.jpg" 
                     alt="Chauffeur Service background" 
@@ -2151,7 +2417,7 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="flex flex-col items-center mb-12 md:mb-24 text-center"
+              className="flex flex-col items-center mb-14 md:mb-24 text-center"
             >
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-7 md:mb-8">
                 <Navigation size={12} className="text-white/60" />
@@ -2367,7 +2633,7 @@ export default function App() {
                           ))}
                         </div>
                         <p className="leading-relaxed mb-8 text-stone-200/90 font-light text-[15px] italic flex-grow">
-                          "{review.text}"
+                          {review.text}
                         </p>
                         <div className="flex items-center gap-4 pt-6 border-t border-white/5 mt-auto">
                           <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xs font-semibold text-white">
@@ -2596,7 +2862,7 @@ export default function App() {
                       {/* Unified Date & Time Field */}
                       <div className="space-y-2 relative flex flex-col">
                         <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">
-                          {lang === 'fr' ? 'Date & Heure' : 'Date & Time'}
+                          {lang === 'fr' ? 'Date & Heure' : lang === 'es' ? 'Fecha y hora' : 'Date & Time'}
                         </label>
                         <div className="flex flex-col md:flex-row border border-stone-300 rounded-xl bg-white overflow-hidden divide-y md:divide-y-0 md:divide-x divide-stone-200">
                           {/* Date Selector */}
@@ -2604,7 +2870,7 @@ export default function App() {
                             <Calendar size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
                             <input
                               type={bookingData.date ? "date" : "text"}
-                              placeholder={lang === 'fr' ? 'Choisir une date' : 'Select a date'}
+                              placeholder={lang === 'fr' ? 'Choisir une date' : lang === 'es' ? 'Seleccionar fecha' : 'Select a date'}
                               onFocus={(e) => (e.target.type = "date")}
                               onBlur={(e) => {
                                 if (!bookingData.date) e.target.type = "text";
@@ -2631,7 +2897,7 @@ export default function App() {
                               className={`w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 font-medium focus:ring-0 outline-none appearance-none cursor-pointer text-[16px] ${bookingData.time ? 'text-stone-950' : 'text-stone-700/90'}`}
                             >
                               <option value="" disabled className="text-stone-700/90 bg-white font-medium">
-                                {lang === 'fr' ? 'Choisir un créneau' : 'Select a time'}
+                                {lang === 'fr' ? 'Choisir un créneau' : lang === 'es' ? 'Seleccionar hora' : 'Select a time'}
                               </option>
                               {timeSlots.map(slot => (
                                 <option key={slot} value={slot} className="text-stone-950 bg-white font-medium">{slot}</option>
@@ -2669,7 +2935,7 @@ export default function App() {
                         {bookingData.isReturnTrip && (
                           <div className="space-y-2 relative flex flex-col animate-in fade-in slide-in-from-top-2 duration-300">
                             <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">
-                              {lang === 'fr' ? 'Date & Heure de retour' : 'Return Date & Time'}
+                              {lang === 'fr' ? 'Date & Heure de retour' : lang === 'es' ? 'Fecha y hora de vuelta' : 'Return Date & Time'}
                             </label>
                             <div className="flex flex-col md:flex-row border border-stone-300 rounded-xl bg-white overflow-hidden divide-y md:divide-y-0 md:divide-x divide-stone-200">
                               {/* Return Date Selector */}
@@ -2677,7 +2943,7 @@ export default function App() {
                                 <Calendar size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
                                 <input
                                   type={bookingData.returnDate ? "date" : "text"}
-                                  placeholder={lang === 'fr' ? 'Choisir une date de retour' : 'Select a return date'}
+                                  placeholder={lang === 'fr' ? 'Choisir une date de retour' : lang === 'es' ? 'Seleccionar fecha de vuelta' : 'Select a return date'}
                                   onFocus={(e) => (e.target.type = "date")}
                                   onBlur={(e) => {
                                     if (!bookingData.returnDate) e.target.type = "text";
@@ -2704,7 +2970,7 @@ export default function App() {
                                   className={`w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 font-medium focus:ring-0 outline-none appearance-none cursor-pointer text-[16px] ${bookingData.returnTime ? 'text-stone-950' : 'text-stone-700/90'}`}
                                 >
                                   <option value="" disabled className="text-stone-700/90 bg-white font-medium">
-                                    {lang === 'fr' ? 'Choisir un créneau de retour' : 'Select a return time'}
+                                    {lang === 'fr' ? 'Choisir un créneau de retour' : lang === 'es' ? 'Seleccionar hora de vuelta' : 'Select a return time'}
                                   </option>
                                   {timeSlots.map(slot => (
                                     <option key={slot} value={slot} className="text-stone-950 bg-white font-medium">{slot}</option>

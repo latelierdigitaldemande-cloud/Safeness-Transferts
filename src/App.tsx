@@ -341,10 +341,10 @@ export default function App() {
   const timeSlots = useMemo(() => {
     const slots = [];
     for (let hour = 0; hour <= 23; hour++) {
-      for (let min = 0; min < 60; min += 15) {
+      for (let min = 0; min < 60; min += 30) {
         const start = `${hour.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}`;
         let endHour = hour;
-        let endMin = min + 15;
+        let endMin = min + 30;
         if (endMin === 60) {
           endMin = 0;
           endHour++;
@@ -2812,10 +2812,10 @@ export default function App() {
                                       dropoffCoords: prev.pickupCoords
                                     }));
                                   }}
-                                  className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white border border-stone-200 rounded-full flex items-center justify-center text-stone-700 hover:text-stone-950 shadow-md hover:shadow-lg transition-all z-30"
+                                  className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 w-[37px] h-[37px] bg-white border border-stone-200 rounded-full flex items-center justify-center text-stone-700 hover:text-stone-950 shadow-md hover:shadow-lg transition-all z-30"
                                   title={t('swap_addresses')}
                                 >
-                                  <iconify-icon icon="solar:transfer-vertical-linear" width="16"></iconify-icon>
+                                  <iconify-icon icon="solar:transfer-vertical-linear" width="19"></iconify-icon>
                                 </button>
                               </div>
 
@@ -2993,6 +2993,30 @@ export default function App() {
                             </div>
                           </div>
                         )}
+                      </div>
+
+                      {/* Passengers Selector */}
+                      <div className="space-y-2 relative flex flex-col">
+                        <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">
+                          {t('passengers')}
+                        </label>
+                        <div className="relative flex items-center border border-stone-300 rounded-xl bg-white overflow-hidden">
+                          <Users size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
+                          <select 
+                            value={bookingData.passengers}
+                            onChange={(e) => setBookingData(prev => ({ ...prev, passengers: parseInt(e.target.value) }))}
+                            className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 font-medium focus:ring-0 outline-none appearance-none cursor-pointer text-[16px] text-stone-950"
+                          >
+                            {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
+                              <option key={n} value={n} className="text-stone-950 bg-white font-semibold">
+                                {n} {n > 1 ? t('passenger_plural') : t('passenger_singular')}
+                              </option>
+                            ))}
+                          </select>
+                          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-800">
+                            <ChevronDown size={18} />
+                          </div>
+                        </div>
                       </div>
 
                       <div className="flex gap-4">
@@ -3228,31 +3252,17 @@ export default function App() {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('passengers')}</label>
-                          <select 
-                            value={bookingData.passengers}
-                            onChange={(e) => setBookingData(prev => ({ ...prev, passengers: parseInt(e.target.value) }))}
-                            className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-950 font-semibold outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
-                          >
-                            {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
-                              <option key={n} value={n} className="text-stone-950 bg-white font-semibold">{n} {n > 1 ? t('passenger_plural') : t('passenger_singular')}</option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="space-y-2 relative">
-                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('luggage')}</label>
-                          <select 
-                            value={bookingData.luggage}
-                            onChange={(e) => setBookingData(prev => ({ ...prev, luggage: parseInt(e.target.value) }))}
-                            className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-950 font-semibold outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
-                          >
-                            {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
-                              <option key={n} value={n} className="text-stone-950 bg-white font-semibold">{n} {t('luggage_label')}</option>
-                            ))}
-                          </select>
-                        </div>
+                      <div className="space-y-2 relative">
+                        <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('luggage')}</label>
+                        <select 
+                          value={bookingData.luggage}
+                          onChange={(e) => setBookingData(prev => ({ ...prev, luggage: parseInt(e.target.value) }))}
+                          className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-950 font-semibold outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
+                        >
+                          {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
+                            <option key={n} value={n} className="text-stone-950 bg-white font-semibold">{n} {t('luggage_label')}</option>
+                          ))}
+                        </select>
                       </div>
 
                       <div className="space-y-2">

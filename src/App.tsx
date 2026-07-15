@@ -12,7 +12,7 @@ import {
   ChevronRight, ChevronLeft, ChevronDown, ArrowUpRight, Check, CreditCard, Plane, Tag, Sparkles, Palette,
   Train, Info, ShieldCheck, Star, ArrowRight, ArrowLeft, X, Menu, Plus,
   Phone, Mail, MessageSquare, Globe, Search, Loader2,
-  Instagram, Linkedin, ArrowLeftRight
+  Instagram, Facebook, ArrowLeftRight
 } from 'lucide-react';
 
 // Initialize Stripe with the public key from environment
@@ -509,7 +509,7 @@ export default function App() {
   const vehicles = {
     business: { name: 'Business Class', model: 'Mercedes Classe E', basePrice: 80, hourlyPrice: 60, pax: 3, bag: 3, img: 'https://mcslimo.fr/wp-content/uploads/2023/04/eclass.png' },
     van: { name: 'Business Van', model: 'Mercedes Classe V', basePrice: 120, hourlyPrice: 90, pax: 7, bag: 7, img: 'https://i.ibb.co/KpKpkmqP/d2baa86d-beb9-42eb-9ba0-a2e127210aee.png' },
-    first: { name: 'First Class', model: 'Mercedes Classe S', basePrice: 160, hourlyPrice: 120, pax: 3, bag: 3, img: 'https://mcslimo.fr/wp-content/uploads/2023/04/sclass.png' }
+    first: { name: 'First Class', model: 'Mercedes Classe S', basePrice: 160, hourlyPrice: 120, pax: 3, bag: 3, img: 'https://i.ibb.co/mxSK38h/9019b055-8de3-499d-b0c2-ce9e669fb9d5.png' }
   };
 
   const extras = {
@@ -1579,14 +1579,14 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-10 mt-8">
-            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-all hover:scale-110 active:scale-95" aria-label="TikTok">
+            <a href="https://www.tiktok.com/@safeness.transport?is_from_webapp=1&amp;sender_device=pc" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-all hover:scale-110 active:scale-95" aria-label="TikTok">
               <iconify-icon icon="ic:baseline-tiktok" width="24"></iconify-icon>
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-all hover:scale-110 active:scale-95" aria-label="Instagram">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-all hover:scale-110 active:scale-95" aria-label="Instagram">
               <Instagram size={24} strokeWidth={1.5} />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-all hover:scale-110 active:scale-95" aria-label="LinkedIn">
-              <Linkedin size={24} strokeWidth={1.5} />
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-all hover:scale-110 active:scale-95" aria-label="Facebook">
+              <Facebook size={24} strokeWidth={1.5} />
             </a>
           </div>
         </nav>
@@ -2431,7 +2431,7 @@ export default function App() {
                 { type: 'Confort', model: 'Tesla', img: 'https://pngimg.com/uploads/tesla_car/tesla_car_PNG21.png', pax: `3 ${t('passengers')}`, bag: `3 ${t('luggage')}`, mobileOnly: true },
                 { type: 'Business', model: 'Classe E', img: 'https://mcslimo.fr/wp-content/uploads/2023/04/eclass.png', pax: `3 ${t('passengers')}`, bag: `3 ${t('luggage')}` },
                 { type: 'Premium', model: 'Classe V', img: 'https://i.ibb.co/KpKpkmqP/d2baa86d-beb9-42eb-9ba0-a2e127210aee.png', pax: `7 ${t('passengers')}`, bag: `7 ${t('luggage')}`, isPremium: true },
-                { type: 'Luxe', model: 'Classe S', img: 'https://mcslimo.fr/wp-content/uploads/2023/04/sclass.png', pax: `3 ${t('passengers')}`, bag: `3 ${t('luggage')}` }
+                { type: 'Luxe', model: 'Classe S', img: 'https://i.ibb.co/mxSK38h/9019b055-8de3-499d-b0c2-ce9e669fb9d5.png', pax: `3 ${t('passengers')}`, bag: `3 ${t('luggage')}` }
               ].map((car, i) => (
                 <motion.div 
                   key={i} 
@@ -2446,8 +2446,13 @@ export default function App() {
                     {car.type}
                   </span>
                   <h3 className="text-3xl font-bold tracking-tight uppercase text-white/90 mb-10">{car.model}</h3>
-                  <div className="w-full aspect-[4/3] flex items-center justify-center mb-10 bg-white rounded-3xl p-6">
-                    <img src={car.img} alt={car.model} className="w-full object-contain group-hover:scale-105 transition-transform duration-700 mix-blend-multiply" referrerPolicy="no-referrer" />
+                  <div className="w-full aspect-[4/3] flex items-center justify-center mb-10 bg-white rounded-3xl p-6 overflow-hidden">
+                    <img 
+                      src={car.img} 
+                      alt={car.model} 
+                      className="w-full object-contain transition-transform duration-700 mix-blend-multiply group-hover:scale-105" 
+                      referrerPolicy="no-referrer" 
+                    />
                   </div>
                   <div className={`w-full grid grid-cols-2 gap-y-6 pt-8 border-t ${car.isPremium ? 'border-white/20' : 'border-white/10'}`}>
                     <div className="flex items-center gap-3 justify-center">
@@ -3075,8 +3080,12 @@ export default function App() {
                             onClick={() => setBookingData(prev => ({ ...prev, vehicle: key }))}
                             className={`w-full flex items-center justify-between gap-4 md:gap-8 p-4 md:p-6 rounded-2xl border-2 transition-all ${bookingData.vehicle === key ? 'border-stone-900 bg-stone-50' : 'border-stone-100 bg-white hover:border-stone-200'}`}
                           >
-                            <div className="w-24 md:w-32 h-16 md:h-20 bg-stone-100 rounded-xl flex items-center justify-center p-2 shrink-0">
-                              <img src={vehicle.img} alt={vehicle.name} className="w-full object-contain mix-blend-multiply" />
+                            <div className="w-24 md:w-32 h-16 md:h-20 bg-stone-100 rounded-xl flex items-center justify-center p-2 shrink-0 overflow-hidden">
+                              <img 
+                                src={vehicle.img} 
+                                alt={vehicle.name} 
+                                className="w-full object-contain mix-blend-multiply" 
+                              />
                             </div>
                             <div className="flex-1 text-left min-w-0">
                               <div className="text-sm md:text-base font-bold text-stone-900 truncate">{t(`vehicle_${key}`)}</div>

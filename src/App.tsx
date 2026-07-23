@@ -142,6 +142,17 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [bookingError, setBookingError] = useState<string | null>(null);
 
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkIsDesktop = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    checkIsDesktop();
+    window.addEventListener('resize', checkIsDesktop);
+    return () => window.removeEventListener('resize', checkIsDesktop);
+  }, []);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
@@ -218,9 +229,9 @@ export default function App() {
         .then(res => res.json())
         .then(data => {
           if (data.status === 'success') {
-            setStep(5);
-          } else {
             setStep(4);
+          } else {
+            setStep(3);
             setBookingError(lang === 'fr' 
               ? "La vérification du paiement a échoué. Veuillez contacter le support si vous avez été débité." 
               : lang === 'es'
@@ -230,7 +241,7 @@ export default function App() {
         })
         .catch(err => {
           console.error("Verification error:", err);
-          setStep(4);
+          setStep(3);
           setBookingError(lang === 'fr'
             ? "Une erreur est survenue lors de la vérification de votre paiement."
             : lang === 'es'
@@ -243,7 +254,7 @@ export default function App() {
           window.history.replaceState({}, '', window.location.pathname);
         });
     } else if (status === 'cancel') {
-      setStep(4);
+      setStep(3);
       setBookingError(lang === 'fr' 
         ? "Le paiement a été annulé. Vous pouvez réessayer." 
         : lang === 'es'
@@ -531,9 +542,8 @@ export default function App() {
     fr: {
       title: 'Réserver votre trajet',
       step1: 'Trajet',
-      step2: 'Itinéraire',
-      step3: 'Véhicule',
-      step4: 'Contact',
+      step2: 'Véhicule',
+      step3: 'Contact',
       pickup: 'Lieu de départ',
       dropoff: 'Lieu d\'arrivée',
       date: 'Date de départ',
@@ -767,9 +777,8 @@ export default function App() {
     en: {
       title: 'Premium Booking',
       step1: 'Route',
-      step2: 'Itinerary',
-      step3: 'Vehicle',
-      step4: 'Contact',
+      step2: 'Vehicle',
+      step3: 'Contact',
       pickup: 'Pickup Location',
       dropoff: 'Drop-off Location',
       date: 'Pick-up date',
@@ -1003,9 +1012,8 @@ export default function App() {
     es: {
       title: 'Reservar su viaje',
       step1: 'Trayecto',
-      step2: 'Itinierario',
-      step3: 'Vehículo',
-      step4: 'Contacto',
+      step2: 'Vehículo',
+      step3: 'Contacto',
       pickup: 'Lugar de salida',
       dropoff: 'Lugar de llegada',
       date: 'Fecha de salida',
@@ -1377,7 +1385,7 @@ export default function App() {
         routeLineRef.current = null;
       }
     };
-  }, [step, bookingData.pickupCoords, bookingData.dropoffCoords]);
+  }, [step, bookingData.pickupCoords, bookingData.dropoffCoords, isDesktop]);
 
   // Invalidate map size when step changes (for layout transitions)
   useEffect(() => {
@@ -1574,7 +1582,7 @@ export default function App() {
     } else {
       // Mock logic for other payment methods (e.g., cash)
       await new Promise(resolve => setTimeout(resolve, 1500));
-      setStep(5);
+      setStep(4);
       setLoading(false);
     }
   };
@@ -2247,9 +2255,9 @@ export default function App() {
                     <div
                       onTouchStart={() => setActiveTransferCard(i)}
                       onClick={() => setActiveTransferCard(i)}
-                      className={`group relative border rounded-[2.5rem] transition-all duration-[1200ms] ease-[0.16,1,0.3,1] overflow-hidden h-full bg-stone-900 shadow-2xl flex flex-col ${
+                      className={`group relative border rounded-[2.5rem] transition-all duration-[1200ms] ease-[0.16,1,0.3,1] overflow-hidden h-full bg-stone-900 flex flex-col ${
                         isTouchDevice && activeTransferCard === i 
-                          ? 'border-white/35 scale-[1.015] shadow-[0_0_25px_rgba(255,255,255,0.06),_0_25px_50px_-12px_rgba(0,0,0,0.5)]' 
+                          ? 'border-white/35 scale-[1.015]' 
                           : 'border-white/10 hover:border-white/20 hover:scale-[1.008]'
                       }`}
                     >
@@ -2739,11 +2747,11 @@ export default function App() {
             <div className="h-1 w-12 bg-white/20 rounded-full mt-7 md:mt-8"></div>
           </motion.div>
           
-          <div ref={bookingRef} className="w-full max-w-6xl mx-auto px-4 md:px-6 relative z-10">
+          <div ref={bookingRef} className={`w-full mx-auto px-4 md:px-6 relative z-10 transition-all duration-500 ${step === 4 ? 'max-w-3xl' : 'max-w-6xl'}`}>
             {/* Mobile-only Step Indicators Block */}
             <div className="md:hidden w-full mb-4">
               <div className="w-full flex items-center justify-between py-5 px-4 rounded-xl bg-white border border-stone-100 shadow-xl">
-                {[1, 2, 3, 4].map((s) => (
+                {[1, 2, 3].map((s) => (
                   <Fragment key={s}>
                     <button
                       onClick={() => {
@@ -2755,7 +2763,7 @@ export default function App() {
                         {s}
                       </div>
                     </button>
-                    {s < 4 && (
+                    {s < 3 && (
                       <div className="flex-1 h-px mx-2 relative">
                         <div className="absolute inset-0 bg-stone-100"></div>
                         <div className={`absolute inset-0 bg-stone-900 transition-all duration-700 ${step > s ? 'w-full' : 'w-0'}`}></div>
@@ -2770,15 +2778,15 @@ export default function App() {
               <div className="grid grid-cols-1 lg:grid-cols-12">
                 
                 {/* Left Side: Form */}
-                <div className="col-span-full lg:col-span-7 px-5 py-6 md:p-12 border-b lg:border-b-0 lg:border-r border-stone-100">
+                <div className={`col-span-full px-5 py-6 md:p-12 border-b lg:border-b-0 border-stone-100 ${step === 4 ? 'lg:col-span-12' : 'lg:col-span-7 lg:border-r'}`}>
                   {/* Progress - Desktop Only */}
                   <div className="hidden md:flex items-center gap-4 mb-8 md:mb-12">
-                    {[1, 2, 3, 4].map((s) => (
+                    {[1, 2, 3].map((s) => (
                       <div key={s} className="flex items-center gap-2">
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold transition-all ${step >= s ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-400'}`}>
                           {s}
                         </div>
-                        {s < 4 && <div className={`w-8 h-px ${step > s ? 'bg-stone-900' : 'bg-stone-200'}`}></div>}
+                        {s < 3 && <div className={`w-8 h-px ${step > s ? 'bg-stone-900' : 'bg-stone-200'}`}></div>}
                       </div>
                     ))}
                   </div>
@@ -3028,30 +3036,8 @@ export default function App() {
                         )}
                       </div>
 
-                      {/* Passengers Selector */}
-                      <div className="space-y-2 relative flex flex-col">
-                        <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">
-                          {t('passengers')}
-                        </label>
-                        <div className="relative flex items-center border border-stone-300 rounded-xl bg-white overflow-hidden">
-                          <Users size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
-                          <select 
-                            value={bookingData.passengers}
-                            onChange={(e) => setBookingData(prev => ({ ...prev, passengers: parseInt(e.target.value) }))}
-                            className="w-full bg-transparent border-none py-4 md:py-5 pl-12 pr-10 font-medium focus:ring-0 outline-none appearance-none cursor-pointer text-[16px] text-stone-950"
-                          >
-                            {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
-                              <option key={n} value={n} className="text-stone-950 bg-white font-semibold">
-                                {n} {n > 1 ? t('passenger_plural') : t('passenger_singular')}
-                              </option>
-                            ))}
-                          </select>
-                          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-800">
-                            <ChevronDown size={18} />
-                          </div>
-                        </div>
-                      </div>
-
+                      {/* Passengers Selector removed from here */}
+                      
                       <div className="flex gap-4">
                         <button 
                           onClick={handleNextStep1}
@@ -3069,84 +3055,26 @@ export default function App() {
                         </button>
                       </div>
 
-                      {/* Map Container - Relocated to Step 1 below View Prices button */}
-                      <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm relative h-[220px] md:h-[280px] mt-4 animate-in fade-in duration-500 block">
-                        <div ref={mapContainerRef} className="w-full h-full z-0" />
-                        {bookingData.distance > 0 && (
-                          <div className="absolute bottom-4 right-4 z-10">
-                            <div className="bg-white border border-stone-200 rounded-lg p-2 px-3 text-[10px] font-bold text-stone-900 uppercase tracking-widest flex items-center gap-3 shadow-lg">
-                              <span>{Math.round(bookingData.distance)} KM</span>
-                              <div className="w-px h-3 bg-stone-200"></div>
-                              <span>{Math.round(bookingData.duration)} MIN</span>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Step 2: Itinerary Preview */}
-                  {step === 2 && (
-                    <div className="space-y-4 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                      <div className="space-y-4">
-                        <div className="bg-stone-50 border border-stone-100 rounded-2xl p-4 md:p-6 space-y-4">
-                          <div className="flex items-center gap-3 pb-4 border-b border-stone-100">
-                             <div className="w-10 h-10 bg-stone-900 text-white rounded-xl flex items-center justify-center">
-                                <iconify-icon icon="solar:route-linear" width="22"></iconify-icon>
-                             </div>
-                             <div>
-                               <div className="text-xs font-bold text-stone-900 uppercase tracking-widest">{t('itinerary_label')}</div>
-                               <div className="text-[10px] text-stone-400 font-medium">{Math.round(bookingData.distance)} KM • {Math.round(bookingData.duration)} MIN</div>
-                             </div>
-                          </div>
-                          
-                          <div className="space-y-3">
-                             <div className="flex gap-3">
-                               <div className="w-0.5 h-full bg-stone-200 rounded-full shrink-0"></div>
-                               <div className="space-y-2">
-                                  <div className="text-[10px] font-bold text-stone-400 uppercase tracking-wider">{t('departure')}</div>
-                                  <div className="text-sm text-stone-900 font-medium">{bookingData.pickup}</div>
-                                  <div className="text-[10px] font-bold text-stone-400 uppercase tracking-wider">{t('arrival')}</div>
-                                  <div className="text-sm text-stone-900 font-medium">{bookingData.dropoff}</div>
-                               </div>
-                             </div>
-                          </div>
-
-                          {bookingData.isReturnTrip && (
-                            <div className="space-y-3 pt-4 border-t border-stone-100">
-                               <div className="flex gap-3">
-                                 <div className="w-0.5 h-full bg-stone-200 rounded-full shrink-0"></div>
-                                 <div className="space-y-2">
-                                    <div className="text-[10px] font-bold text-stone-400 uppercase tracking-wider">{t('itinerary_return')}</div>
-                                    <div className="text-sm text-stone-900 font-medium">{bookingData.returnPickup} → {bookingData.returnDropoff}</div>
-                                 </div>
-                               </div>
+                      {/* Map Container - Relocated to Step 1 below View Prices button (Mobile/Tablet Only) */}
+                      {!isDesktop && (
+                        <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm relative h-[220px] md:h-[280px] mt-4 animate-in fade-in duration-500 block">
+                          <div ref={mapContainerRef} className="w-full h-full z-0" />
+                          {bookingData.distance > 0 && (
+                            <div className="absolute bottom-4 right-4 z-10">
+                              <div className="bg-white border border-stone-200 rounded-lg p-2 px-3 text-[10px] font-bold text-stone-900 uppercase tracking-widest flex items-center gap-3 shadow-lg">
+                                <span>{Math.round(bookingData.distance)} KM</span>
+                                <div className="w-px h-3 bg-stone-200"></div>
+                                <span>{Math.round(bookingData.duration)} MIN</span>
+                              </div>
                             </div>
                           )}
                         </div>
-                      </div>
-
-                      <div className="flex gap-4">
-                        <button 
-                          onClick={() => setStep(1)}
-                          className="w-14 h-12 md:h-14 bg-stone-100 text-stone-600 rounded-xl flex items-center justify-center hover:bg-stone-200 transition-all shrink-0"
-                          title={t('back')}
-                        >
-                          <ChevronLeft size={20} />
-                        </button>
-                        <button 
-                          onClick={() => setStep(3)}
-                          className="flex-1 bg-stone-900 text-white py-3 md:py-4 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 flex items-center justify-center gap-2"
-                        >
-                          {t('next')}
-                          <ArrowRight size={18} />
-                        </button>
-                      </div>
+                      )}
                     </div>
                   )}
 
-                  {/* Step 3: Vehicle */}
-                   {step === 3 && (
+                  {/* Step 2: Vehicle */}
+                   {step === 2 && (
                     <div className="w-full space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                       <div className="w-full space-y-3 md:space-y-4">
                         {Object.entries(vehicles).map(([key, vehicle]) => (
@@ -3207,14 +3135,14 @@ export default function App() {
 
                       <div className="flex gap-4">
                         <button 
-                          onClick={() => setStep(2)}
+                          onClick={() => setStep(1)}
                           className="w-14 h-12 md:h-14 bg-stone-100 text-stone-600 rounded-xl flex items-center justify-center hover:bg-stone-200 transition-all shrink-0"
                           title={t('back')}
                         >
                           <ChevronLeft size={20} />
                         </button>
                         <button 
-                          onClick={() => setStep(4)}
+                          onClick={() => setStep(3)}
                           className="flex-1 bg-stone-900 text-white py-3 md:py-4 rounded-xl font-bold hover:bg-stone-800 transition-all shadow-lg shadow-stone-200 flex items-center justify-center gap-2"
                         >
                           {t('next')}
@@ -3224,8 +3152,8 @@ export default function App() {
                     </div>
                   )}
 
-                  {/* Step 4: Contact & Recap */}
-                  {step === 4 && (
+                  {/* Step 3: Contact & Recap */}
+                  {step === 3 && (
                     <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                       <div className="grid grid-cols-2 gap-3 md:gap-4">
                         <div className="space-y-2">
@@ -3299,17 +3227,54 @@ export default function App() {
                         </div>
                       </div>
 
-                      <div className="space-y-2 relative">
-                        <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">{t('luggage')}</label>
-                        <select 
-                          value={bookingData.luggage}
-                          onChange={(e) => setBookingData(prev => ({ ...prev, luggage: parseInt(e.target.value) }))}
-                          className="w-full bg-stone-50 border border-stone-300 rounded-xl py-3 md:py-4 px-4 text-stone-950 font-semibold outline-none focus:border-stone-900 focus:bg-white transition-all appearance-none"
-                        >
-                          {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
-                            <option key={n} value={n} className="text-stone-950 bg-white font-semibold">{n} {t('luggage_label')}</option>
-                          ))}
-                        </select>
+                      <div className="grid grid-cols-2 gap-3 md:gap-4">
+                        {/* Passengers Selector */}
+                        <div className="space-y-2 relative flex flex-col">
+                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">
+                            {t('passengers')}
+                          </label>
+                          <div className="relative flex items-center border border-stone-300 rounded-xl bg-stone-50 overflow-hidden focus-within:border-stone-900 focus-within:bg-white transition-all">
+                            <Users size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
+                            <select 
+                              value={bookingData.passengers}
+                              onChange={(e) => setBookingData(prev => ({ ...prev, passengers: parseInt(e.target.value) }))}
+                              className="w-full bg-transparent border-none py-3 md:py-4 pl-12 pr-10 font-semibold focus:ring-0 outline-none appearance-none cursor-pointer text-stone-950"
+                            >
+                              {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
+                                <option key={n} value={n} className="text-stone-950 bg-white font-semibold">
+                                  {n} {n > 1 ? t('passenger_plural') : t('passenger_singular')}
+                                </option>
+                              ))}
+                            </select>
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-800">
+                              <ChevronDown size={18} />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Luggage Selector */}
+                        <div className="space-y-2 relative flex flex-col">
+                          <label className="text-xs font-bold text-stone-900 uppercase tracking-wider ml-1">
+                            {t('luggage')}
+                          </label>
+                          <div className="relative flex items-center border border-stone-300 rounded-xl bg-stone-50 overflow-hidden focus-within:border-stone-900 focus-within:bg-white transition-all">
+                            <Briefcase size={18} className="absolute left-4 text-stone-800 pointer-events-none" />
+                            <select 
+                              value={bookingData.luggage}
+                              onChange={(e) => setBookingData(prev => ({ ...prev, luggage: parseInt(e.target.value) }))}
+                              className="w-full bg-transparent border-none py-3 md:py-4 pl-12 pr-10 font-semibold focus:ring-0 outline-none appearance-none cursor-pointer text-stone-950"
+                            >
+                              {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
+                                <option key={n} value={n} className="text-stone-950 bg-white font-semibold">
+                                  {n} {t('luggage_label')}
+                                </option>
+                              ))}
+                            </select>
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-800">
+                              <ChevronDown size={18} />
+                            </div>
+                          </div>
+                        </div>
                       </div>
 
                       <div className="space-y-2">
@@ -3344,7 +3309,7 @@ export default function App() {
 
                       <div className="flex gap-4">
                         <button 
-                          onClick={() => setStep(3)}
+                          onClick={() => setStep(2)}
                           className="w-14 h-11 md:h-12 bg-stone-100 text-stone-600 rounded-xl flex items-center justify-center hover:bg-stone-200 transition-all shrink-0"
                           title={t('back')}
                         >
@@ -3362,8 +3327,8 @@ export default function App() {
                     </div>
                   )}
 
-                  {/* Step 5: Success */}
-                  {step === 5 && (
+                  {/* Step 4: Success */}
+                  {step === 4 && (
                     <div className="py-8 md:py-12 text-center space-y-6 md:space-y-8 animate-in zoom-in duration-500">
                       <div className="w-20 h-20 md:w-24 md:h-24 bg-stone-900 rounded-full flex items-center justify-center mx-auto shadow-2xl">
                         <Check size={40} className="text-white" strokeWidth={3} />
@@ -3421,10 +3386,26 @@ export default function App() {
                 </div>
 
                 {/* Right Side: Dynamic Summary */}
-                <div className={`col-span-full lg:col-span-5 bg-stone-50 px-5 py-6 md:p-10 flex flex-col transition-all duration-500 ${step === 1 || step === 5 ? 'hidden lg:flex' : 'flex'}`}>
+                <div className={`col-span-full lg:col-span-5 bg-stone-50 px-5 py-6 md:p-10 flex flex-col transition-all duration-500 ${step === 4 ? 'hidden' : (step === 1 ? 'hidden lg:flex' : 'flex')}`}>
                   
-                  {/* Summary - Visible from Step 1 with Dark Design */}
-                  <div className={`flex-1 flex-col transition-all duration-500 overflow-hidden bg-stone-900 rounded-2xl p-4 md:p-6 border border-white/5 ${step >= 1 && step < 5 ? 'opacity-100 translate-y-0 flex' : 'opacity-0 translate-y-10 pointer-events-none h-0 hidden'} ${step === 1 ? 'hidden md:flex' : ''}`}>
+                  {/* Desktop Step 1 Map Card */}
+                  {step === 1 && isDesktop && (
+                    <div className="flex-1 flex flex-col h-full bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm relative min-h-[400px] animate-in fade-in duration-500">
+                      <div ref={mapContainerRef} className="w-full h-full z-0" />
+                      {bookingData.distance > 0 && (
+                        <div className="absolute bottom-4 right-4 z-10">
+                          <div className="bg-white border border-stone-200 rounded-lg p-2.5 px-3.5 text-[10px] font-bold text-stone-900 uppercase tracking-widest flex items-center gap-3 shadow-lg">
+                            <span>{Math.round(bookingData.distance)} KM</span>
+                            <div className="w-px h-3 bg-stone-200"></div>
+                            <span>{Math.round(bookingData.duration)} MIN</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Summary - Visible from Step 2 to 3 with Dark Design */}
+                  <div className={`flex-1 flex-col transition-all duration-500 overflow-hidden bg-stone-900 rounded-2xl p-4 md:p-6 border border-white/5 ${step >= 2 && step < 4 ? 'opacity-100 translate-y-0 flex' : 'opacity-0 translate-y-10 pointer-events-none h-0 hidden'}`}>
                     <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] mb-4">{t('orderSummary')}</h3>
                     
                     <div className="space-y-4 flex-1">
@@ -3454,14 +3435,14 @@ export default function App() {
                           <div className="text-xs text-white/80 font-medium">{bookingData.time || '—'}</div>
                         </div>
                         <div className="space-y-0.5">
-                          <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{step < 3 ? (bookingData.serviceType === 'transfer' ? 'Distance' : t('duration_label')) : t('step3')}</div>
+                          <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{step < 2 ? (bookingData.serviceType === 'transfer' ? 'Distance' : t('duration_label')) : t('step2')}</div>
                           <div className="text-xs text-white/80 font-medium">
-                            {step < 3 
+                            {step < 2 
                               ? (bookingData.serviceType === 'transfer' ? `${Math.round(bookingData.distance)} KM` : `${bookingData.durationHours} ${t('hours_count')}`) 
                               : t(`vehicle_${bookingData.vehicle}`)}
                           </div>
                         </div>
-                        {step >= 3 && bookingData.extras.length > 0 && (
+                        {step >= 2 && bookingData.extras.length > 0 && (
                           <div className="col-span-2 space-y-0.5">
                             <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('extras_label')}</div>
                             <div className="text-xs text-white/80 font-medium">
@@ -3476,7 +3457,7 @@ export default function App() {
                       <div className="flex items-end justify-between">
                         <div className="space-y-0.5">
                           <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider">{t('total')}</div>
-                          <div className="text-3xl font-bold text-white">{step < 3 ? '...' : `${totalPrice}€`}</div>
+                          <div className="text-3xl font-bold text-white">{step < 2 ? '...' : `${totalPrice}€`}</div>
                         </div>
                         <div className="text-[9px] font-bold text-white/20 uppercase tracking-wider mb-1">{t('vatIncluded')}</div>
                       </div>
